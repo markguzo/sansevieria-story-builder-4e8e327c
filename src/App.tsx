@@ -7,10 +7,8 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Technology from "./pages/Technology";
 import Products from "./pages/Products";
 import Market from "./pages/Market";
-import Impact from "./pages/Impact";
 import Founder from "./pages/Founder";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -29,10 +27,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
-              <Route path="/technology" element={<Technology />} />
               <Route path="/products" element={<Products />} />
               <Route path="/market" element={<Market />} />
-              <Route path="/impact" element={<Impact />} />
               <Route path="/founder" element={<Founder />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />

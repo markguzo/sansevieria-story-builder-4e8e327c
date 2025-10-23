@@ -88,7 +88,7 @@ const About = () => {
 
             <div className="text-center mt-12">
               <Button asChild size="lg" variant="default">
-                <Link to="/technology">Discover Our Technology</Link>
+                <Link to="/products">See Our Products</Link>
               </Button>
             </div>
           </div>

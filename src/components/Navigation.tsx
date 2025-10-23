@@ -20,10 +20,8 @@ const Navigation = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Technology", path: "/technology" },
     { name: "Products", path: "/products" },
     { name: "Market", path: "/market" },
-    { name: "Impact", path: "/impact" },
     { name: "Founder", path: "/founder" },
   ];
 
