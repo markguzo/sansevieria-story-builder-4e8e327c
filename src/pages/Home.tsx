@@ -25,7 +25,7 @@ const Home = () => {
     offset: ["start start", "end end"]
   });
 
-  const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [97, 96, 95, 96, 97, 98]);
+  const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [82, 80, 78, 80, 82, 84]);
   
   const isProblemInView = useInView(problemRef, { amount: 0.5 });
   const isProcessInView = useInView(processRef, { amount: 0.3 });
@@ -35,35 +35,32 @@ const Home = () => {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground relative">
-      {/* Unified Continuous Light Background */}
+      {/* Unified Background with Depth */}
       <motion.div 
-        className="fixed inset-0 -z-10"
+        className="fixed inset-0 -z-20"
         style={{
-          background: `linear-gradient(180deg, hsl(120, 30%, ${backgroundLightness}%), hsl(120, 25%, 92%))`
+          background: `linear-gradient(180deg, hsl(150, 25%, ${backgroundLightness}%), hsl(150, 20%, 75%))`
         }}
       />
       
-      {/* Soft Ambient Glow Effects */}
-      <motion.div
-        className="fixed inset-0 -z-10 pointer-events-none"
-        style={{
-          opacity: useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0.4, 0.3, 0.35, 0.3, 0.4, 0.25])
-        }}
-      >
+      {/* Layered Glow from Behind - Deep Layer */}
+      <motion.div className="fixed inset-0 -z-10 pointer-events-none">
         <motion.div
-          className="absolute w-[800px] h-[800px] rounded-full blur-[100px]"
+          className="absolute w-[1200px] h-[1200px] rounded-full blur-[150px]"
           style={{
-            background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.25), transparent)',
-            top: useTransform(scrollYProgress, [0, 1], ['10%', '80%']),
-            left: useTransform(scrollYProgress, [0, 1], ['15%', '55%'])
+            background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.35), transparent 60%)',
+            top: useTransform(scrollYProgress, [0, 1], ['-10%', '70%']),
+            left: useTransform(scrollYProgress, [0, 1], ['10%', '50%']),
+            opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.4, 0.5])
           }}
         />
         <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full blur-[100px]"
+          className="absolute w-[900px] h-[900px] rounded-full blur-[120px]"
           style={{
-            background: 'radial-gradient(circle, hsl(43, 90%, 72%, 0.2), transparent)',
-            top: useTransform(scrollYProgress, [0, 1], ['50%', '15%']),
-            right: useTransform(scrollYProgress, [0, 1], ['10%', '45%'])
+            background: 'radial-gradient(circle, hsl(43, 90%, 72%, 0.3), transparent 60%)',
+            top: useTransform(scrollYProgress, [0, 1], ['40%', '10%']),
+            right: useTransform(scrollYProgress, [0, 1], ['5%', '40%']),
+            opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.5, 0.3, 0.4])
           }}
         />
       </motion.div>
@@ -87,18 +84,18 @@ const Home = () => {
           />
         </motion.div>
         
-        {/* Soft Lime Green Glow */}
+        {/* Deeper Glow Behind Circle */}
         <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          initial={{ opacity: 0, scale: 0.8 }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10"
+          initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 2, delay: 0.5 }}
+          transition={{ duration: 2, delay: 0.3 }}
         >
           <motion.div
-            className="w-[700px] h-[700px]"
+            className="w-[900px] h-[900px]"
             animate={{
-              opacity: [0.3, 0.5, 0.3],
-              scale: [1, 1.15, 1],
+              opacity: [0.4, 0.6, 0.4],
+              scale: [1, 1.2, 1],
             }}
             transition={{
               duration: 5,
@@ -106,8 +103,8 @@ const Home = () => {
               ease: "easeInOut"
             }}
             style={{
-              background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.4) 0%, hsl(88, 68%, 66%, 0.2) 40%, transparent 70%)',
-              filter: 'blur(80px)'
+              background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.5) 0%, hsl(43, 90%, 72%, 0.3) 35%, transparent 65%)',
+              filter: 'blur(100px)'
             }}
           />
         </motion.div>
