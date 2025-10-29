@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
+import heroCircularFlow from "@/assets/hero-circular-flow.jpg";
+import problemParticles from "@/assets/problem-particles.jpg";
+import processAbstract from "@/assets/process-abstract.jpg";
+import productsEnergy from "@/assets/products-energy.jpg";
+import roadmapTimeline from "@/assets/roadmap-timeline.jpg";
+import visionLeaf from "@/assets/vision-leaf.jpg";
 
 const Home = () => {
   const containerRef = useRef(null);
@@ -65,73 +71,19 @@ const Home = () => {
 
       {/* HERO SECTION - Opening Scene */}
       <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        {/* Circular Energy Flow Animation */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-20">
-          <svg className="w-full h-full max-w-4xl" viewBox="0 0 800 800">
-            {/* Infinite circular flow */}
-            <motion.circle
-              cx="400"
-              cy="400"
-              r="200"
-              stroke="url(#circularGradient)"
-              strokeWidth="3"
-              fill="none"
-              strokeDasharray="10 5"
-              animate={{
-                rotate: 360,
-                strokeDashoffset: [0, -100]
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
-            <motion.circle
-              cx="400"
-              cy="400"
-              r="280"
-              stroke="url(#circularGradient)"
-              strokeWidth="2"
-              fill="none"
-              strokeDasharray="8 4"
-              animate={{
-                rotate: -360,
-                strokeDashoffset: [0, 100]
-              }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
-            
-            {/* Pulsing center */}
-            <motion.circle
-              cx="400"
-              cy="400"
-              r="40"
-              fill="hsl(88, 68%, 66%)"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.6, 0.3]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            
-            <defs>
-              <linearGradient id="circularGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="hsl(88, 68%, 66%)" />
-                <stop offset="50%" stopColor="hsl(43, 74%, 57%)" />
-                <stop offset="100%" stopColor="hsl(88, 68%, 66%)" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
+        {/* Hero Background Image */}
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.4 }}
+          transition={{ duration: 2 }}
+        >
+          <img 
+            src={heroCircularFlow} 
+            alt="Circular energy flow" 
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
 
         <motion.div 
           className="container mx-auto px-6 text-center relative z-10"
@@ -140,8 +92,8 @@ const Home = () => {
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <h1 className="text-7xl md:text-9xl font-bold mb-8 leading-tight">
-            <span className="text-foreground">The End Is</span><br />
-            <span className="text-primary">Just the Start</span>
+            <span className="text-foreground">The Circle That</span><br />
+            <span className="text-primary">Powers Tomorrow</span>
           </h1>
           
           <motion.p 
@@ -172,30 +124,19 @@ const Home = () => {
 
       {/* THE PROBLEM SECTION - Floating Particles */}
       <section ref={problemRef} className="min-h-screen flex items-center justify-center relative py-32">
-        {/* Animated particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-3 h-3 bg-muted rounded-full opacity-30"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -100, 0],
-                x: [0, Math.random() * 50 - 25, 0],
-                opacity: [0.3, 0.6, 0.3]
-              }}
-              transition={{
-                duration: 5 + Math.random() * 3,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </div>
+        {/* Problem Background Image */}
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={isProblemInView ? { opacity: 0.3 } : { opacity: 0 }}
+          transition={{ duration: 1.5 }}
+        >
+          <img 
+            src={problemParticles} 
+            alt="Plastic particles" 
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
 
         <motion.div 
           className="container mx-auto px-6 text-center relative z-10"
@@ -230,31 +171,18 @@ const Home = () => {
 
       {/* PROCESS SECTION - Morphing Flow */}
       <section ref={processRef} className="min-h-screen flex items-center justify-center relative py-32">
-        {/* Glowing connectors */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none"
+        {/* Process Background Image */}
+        <motion.div 
+          className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={isProcessInView ? { opacity: 0.1 } : { opacity: 0 }}
+          animate={isProcessInView ? { opacity: 0.25 } : { opacity: 0 }}
+          transition={{ duration: 1.5 }}
         >
-          <svg className="w-full h-full" viewBox="0 0 1200 600">
-            <motion.path
-              d="M 100 300 L 300 300 L 500 300 L 700 300 L 900 300 L 1100 300"
-              stroke="url(#flowGradient)"
-              strokeWidth="2"
-              fill="none"
-              strokeDasharray="1000"
-              initial={{ strokeDashoffset: 1000 }}
-              animate={isProcessInView ? { strokeDashoffset: 0 } : { strokeDashoffset: 1000 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-            />
-            <defs>
-              <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="hsl(88, 68%, 66%)" />
-                <stop offset="50%" stopColor="hsl(43, 74%, 57%)" />
-                <stop offset="100%" stopColor="hsl(0, 0%, 96%)" />
-              </linearGradient>
-            </defs>
-          </svg>
+          <img 
+            src={processAbstract} 
+            alt="Energy flow transformation" 
+            className="w-full h-full object-cover"
+          />
         </motion.div>
 
         <div className="container mx-auto px-6 relative z-10">
@@ -313,46 +241,18 @@ const Home = () => {
 
       {/* PRODUCTS SECTION - Splitting Streams */}
       <section ref={productsRef} className="min-h-screen flex items-center justify-center relative py-32">
-        {/* Animated splitting lines */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10"
+        {/* Products Background Image */}
+        <motion.div 
+          className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={isProductsInView ? { opacity: 0.1 } : { opacity: 0 }}
+          animate={isProductsInView ? { opacity: 0.2 } : { opacity: 0 }}
+          transition={{ duration: 1.5 }}
         >
-          <svg className="w-full h-full" viewBox="0 0 800 600">
-            <motion.path
-              d="M 400 100 L 400 300"
-              stroke="hsl(88, 68%, 66%)"
-              strokeWidth="3"
-              initial={{ pathLength: 0 }}
-              animate={isProductsInView ? { pathLength: 1 } : { pathLength: 0 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            />
-            <motion.path
-              d="M 400 300 L 200 500"
-              stroke="hsl(88, 68%, 66%)"
-              strokeWidth="2"
-              initial={{ pathLength: 0 }}
-              animate={isProductsInView ? { pathLength: 1 } : { pathLength: 0 }}
-              transition={{ duration: 1, delay: 1 }}
-            />
-            <motion.path
-              d="M 400 300 L 400 500"
-              stroke="hsl(43, 74%, 57%)"
-              strokeWidth="2"
-              initial={{ pathLength: 0 }}
-              animate={isProductsInView ? { pathLength: 1 } : { pathLength: 0 }}
-              transition={{ duration: 1, delay: 1.2 }}
-            />
-            <motion.path
-              d="M 400 300 L 600 500"
-              stroke="hsl(0, 0%, 96%)"
-              strokeWidth="2"
-              initial={{ pathLength: 0 }}
-              animate={isProductsInView ? { pathLength: 1 } : { pathLength: 0 }}
-              transition={{ duration: 1, delay: 1.4 }}
-            />
-          </svg>
+          <img 
+            src={productsEnergy} 
+            alt="Energy products" 
+            className="w-full h-full object-cover"
+          />
         </motion.div>
 
         <div className="container mx-auto px-6 relative z-10">
@@ -399,6 +299,19 @@ const Home = () => {
 
       {/* ROADMAP SECTION - Filling Progress */}
       <section ref={roadmapRef} className="min-h-screen flex items-center justify-center relative py-32">
+        {/* Roadmap Background Image */}
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={isRoadmapInView ? { opacity: 0.15 } : { opacity: 0 }}
+          transition={{ duration: 1.5 }}
+        >
+          <img 
+            src={roadmapTimeline} 
+            alt="Technology roadmap" 
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             className="text-center mb-20"
@@ -456,36 +369,17 @@ const Home = () => {
 
       {/* VISION SECTION - Closing Scene */}
       <section ref={visionRef} className="min-h-screen flex items-center justify-center relative py-32">
-        {/* Circular pulse animation */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        {/* Vision Background Image */}
+        <motion.div 
+          className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={isVisionInView ? { opacity: 0.15 } : { opacity: 0 }}
+          animate={isVisionInView ? { opacity: 0.25 } : { opacity: 0 }}
+          transition={{ duration: 2 }}
         >
-          <motion.div
-            className="w-96 h-96 rounded-full border-2 border-primary"
-            animate={{
-              scale: [1, 2, 1],
-              opacity: [0.5, 0, 0.5]
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeOut"
-            }}
-          />
-          <motion.div
-            className="absolute w-96 h-96 rounded-full border-2 border-secondary"
-            animate={{
-              scale: [1, 2.5, 1],
-              opacity: [0.4, 0, 0.4]
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeOut",
-              delay: 1
-            }}
+          <img 
+            src={visionLeaf} 
+            alt="Sansevieria leaf" 
+            className="w-full h-full object-cover"
           />
         </motion.div>
 
