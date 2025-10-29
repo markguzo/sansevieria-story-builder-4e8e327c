@@ -92,59 +92,66 @@ const Home = () => {
 
       {/* HERO SECTION */}
       <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden pb-0">
-        {/* Hero Image with Dramatic Rush-In Animation */}
+        {/* Hero Circular Image with Dramatic Energy Rush */}
         <motion.div 
-          className="absolute inset-0"
-          initial={{ scale: 3, opacity: 0, rotate: 180, x: "100%" }}
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ scale: 0.3, opacity: 0 }}
           animate={{ 
-            scale: 1, 
-            opacity: 0.5,
-            rotate: 0,
-            x: "0%"
+            scale: [0.3, 1.5, 1],
+            opacity: [0, 1, 1],
+            rotate: [0, 360, 360]
           }}
           transition={{ 
-            duration: 1.8,
-            ease: [0.34, 1.56, 0.64, 1], // Custom easing: fast start, smooth slowdown
-            scale: { duration: 1.8 },
-            opacity: { duration: 1.2, delay: 0.3 },
-            rotate: { duration: 1.8 },
-            x: { duration: 1.5, ease: [0.16, 1, 0.3, 1] }
+            duration: 2.5,
+            times: [0, 0.6, 1],
+            ease: [0.16, 1, 0.3, 1], // Fast start, smooth deceleration
           }}
         >
-          <img 
+          <motion.img 
             src={heroCircularFlow} 
             alt="Circular energy flow" 
-            className="w-full h-full object-cover"
+            className="w-[800px] h-[800px] object-contain"
+            animate={{
+              rotate: 360
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 2.5 // Start slow spin after settling
+            }}
           />
         </motion.div>
         
         {/* Intense Green Glow Behind Circle - Synced with Circle Movement */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          initial={{ opacity: 0, scale: 2 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.3 }}
+          animate={{ 
+            opacity: [0, 1, 1], 
+            scale: [0.3, 1.8, 1] 
+          }}
           transition={{ 
-            duration: 1.8, 
-            delay: 0.3,
-            ease: [0.34, 1.56, 0.64, 1]
+            duration: 2.5,
+            times: [0, 0.6, 1],
+            ease: [0.16, 1, 0.3, 1]
           }}
         >
           <motion.div
-            className="w-[600px] h-[600px]"
-            initial={{ opacity: 0 }}
+            className="w-[800px] h-[800px]"
             animate={{
-              opacity: [0, 0.6, 1, 0.6],
-              scale: [0.8, 1, 1.2, 1],
+              opacity: [0.6, 1, 0.6],
+              scale: [1, 1.15, 1],
             }}
             transition={{
               duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: 1.8 // Start pulsing after circle settles
+              delay: 2.5 // Start pulsing after circle settles
             }}
             style={{
               background: 'radial-gradient(circle, hsl(88, 68%, 55%, 0.8) 0%, hsl(88, 68%, 45%, 0.4) 40%, transparent 70%)',
-              filter: 'blur(80px)'
+              filter: 'blur(100px)'
             }}
           />
         </motion.div>
@@ -155,8 +162,8 @@ const Home = () => {
           initial={{ opacity: 0, y: 40, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ 
-            duration: 1,
-            delay: 2, // Wait for circle to settle
+            duration: 1.2,
+            delay: 2.5, // Wait for circle to fully settle
             ease: "easeOut" 
           }}
         >
@@ -169,7 +176,7 @@ const Home = () => {
             className="text-lg md:text-xl mb-10 max-w-2xl mx-auto text-muted-foreground font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2.5, duration: 1 }} // Stagger after headline
+            transition={{ delay: 3.2, duration: 1 }} // Stagger after headline
           >
             Sansevieria transforms non-recyclable plastics into circular energy —<br />
             closing the loop between waste and power.
@@ -178,7 +185,7 @@ const Home = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 3.2, duration: 0.6 }} // Appears last
+            transition={{ delay: 3.8, duration: 0.6 }} // Appears last
           >
             <Button 
               size="lg"
