@@ -8,73 +8,73 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Sansevieria Brand Colors */
-    --background: 210 29% 97%; /* Off-White #F7F9FB */
-    --foreground: 0 0% 13%; /* Charcoal #222222 */
+    /* Sansevieria Brand Colors - Nature Inspired */
+    --background: 0 0% 97%; /* Off-White */
+    --foreground: 0 0% 4%; /* Black #0A0A0A */
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
+    --card-foreground: 0 0% 4%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    --popover-foreground: 0 0% 4%;
 
-    --primary: 214 64% 14%; /* Deep Navy #0C1F3A */
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 4%; /* Black #0A0A0A */
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 146 88% 33%; /* Emerald #0A9D58 */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 120 39% 62%; /* Green #7FBF7F */
+    --secondary-foreground: 120 20% 10%;
 
-    --muted: 210 14% 93%; /* Soft Gray #EAECEE */
-    --muted-foreground: 0 0% 40%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 146 88% 33%; /* Emerald */
-    --accent-foreground: 0 0% 100%;
+    --accent: 47 73% 61%; /* Yellow #EACB48 */
+    --accent-foreground: 0 0% 4%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 210 14% 93%;
-    --input: 210 14% 93%;
-    --ring: 214 64% 14%;
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
+    --ring: 120 39% 62%;
 
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(214, 64%, 14%), hsl(214, 64%, 20%));
-    --gradient-accent: linear-gradient(135deg, hsl(146, 88%, 33%), hsl(146, 88%, 40%));
-    --shadow-premium: 0 20px 60px -15px hsl(214 64% 14% / 0.15);
-    --shadow-card: 0 4px 20px -4px hsl(214 64% 14% / 0.08);
+    --gradient-hero: linear-gradient(135deg, hsl(0, 0%, 4%), hsl(120, 39%, 62%));
+    --gradient-nature: linear-gradient(135deg, hsl(120, 39%, 62%), hsl(47, 73%, 61%));
+    --shadow-premium: 0 20px 60px -15px hsl(0 0% 4% / 0.2);
+    --shadow-card: 0 4px 20px -4px hsl(0 0% 4% / 0.1);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 214 64% 14%;
-    --foreground: 210 29% 97%;
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
 
-    --card: 214 64% 18%;
-    --card-foreground: 210 29% 97%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 214 64% 18%;
-    --popover-foreground: 210 29% 97%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 210 29% 97%;
-    --primary-foreground: 214 64% 14%;
+    --primary: 120 39% 62%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 146 88% 33%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 120 30% 25%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 214 64% 20%;
-    --muted-foreground: 210 14% 80%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 146 88% 33%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 47 73% 61%;
+    --accent-foreground: 0 0% 4%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 29% 97%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214 64% 20%;
-    --input: 214 64% 20%;
-    --ring: 146 88% 33%;
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 120 39% 62%;
   }
 }
 

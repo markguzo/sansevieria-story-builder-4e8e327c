@@ -1,207 +1,277 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Recycle, Droplet, Factory, TrendingUp, ChevronRight } from "lucide-react";
+import { ArrowDown, Droplet, Plane, Truck, Beaker, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import CountUpMetric from "@/components/CountUpMetric";
-import heroImage from "@/assets/hero-refinery.jpg";
+import processFlow from "@/assets/process-flow.png";
+import plant1 from "@/assets/plant-1.png";
+import plant3 from "@/assets/plant-3.png";
 
 const Home = () => {
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section - Enhanced */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/85 to-secondary/30" />
+    <div className="min-h-screen bg-background">
+      {/* Hero Section - From Waste to Value */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-secondary/40">
+        <div className="absolute inset-0 opacity-5">
+          <img src={plant1} alt="" className="w-full h-full object-cover" />
         </div>
-
-        <div className="relative z-10 container mx-auto px-6 text-center text-primary-foreground">
-          <div className="inline-block mb-6 px-6 py-2 bg-secondary/20 backdrop-blur-sm rounded-full border border-secondary/30">
-            <span className="text-sm font-semibold text-secondary">Advanced Chemical Recycling</span>
+        
+        <div className="relative z-10 container mx-auto px-6 text-center">
+          <div className="inline-block mb-8 px-8 py-3 bg-secondary/20 backdrop-blur-sm rounded-full border border-secondary/40">
+            <span className="text-lg font-semibold text-secondary">Chemical Recycling Innovation</span>
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 animate-fade-in leading-tight">
-            From Waste<br />To <span className="text-secondary">Value</span>
+          
+          <h1 className="text-7xl md:text-9xl font-bold mb-8 text-primary-foreground leading-none">
+            From Waste<br />To <span className="text-accent">Value</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto opacity-95 animate-slide-up">
-            Transforming complex plastic waste into sustainable aviation fuel and premium petrochemical feedstocks
+          
+          <p className="text-2xl md:text-3xl mb-12 max-w-4xl mx-auto text-primary-foreground/95 leading-relaxed">
+            Transforming non-recyclable plastic into clean, sustainable fuels
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center animate-slide-up">
-            <Button asChild size="lg" variant="secondary" className="text-lg px-8 py-6">
-              <Link to="/about">
-                Discover Our Mission <ArrowRight className="ml-2" size={20} />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 bg-transparent border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-              <Link to="/contact">Partner With Us</Link>
-            </Button>
-          </div>
-        </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronRight className="text-primary-foreground rotate-90" size={32} />
-        </div>
-      </section>
-
-      {/* How We Turn Waste Into Value - With Arrows */}
-      <section className="py-32 bg-background relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-muted/20 to-transparent" />
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-primary">The Process</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A simple, scalable system that transforms waste into opportunity
-            </p>
+          {/* Problem Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
+            <Card className="p-6 bg-primary-foreground/10 backdrop-blur-md border-primary-foreground/20">
+              <div className="text-4xl font-bold text-accent mb-2">1.8B</div>
+              <p className="text-sm text-primary-foreground/90">tonnes GHG from plastic</p>
+            </Card>
+            <Card className="p-6 bg-primary-foreground/10 backdrop-blur-md border-primary-foreground/20">
+              <div className="text-4xl font-bold text-accent mb-2">390M+</div>
+              <p className="text-sm text-primary-foreground/90">tonnes produced yearly</p>
+            </Card>
+            <Card className="p-6 bg-primary-foreground/10 backdrop-blur-md border-primary-foreground/20">
+              <div className="text-4xl font-bold text-accent mb-2">22M+</div>
+              <p className="text-sm text-primary-foreground/90">tonnes leak to oceans</p>
+            </Card>
+            <Card className="p-6 bg-primary-foreground/10 backdrop-blur-md border-primary-foreground/20">
+              <div className="text-4xl font-bold text-accent mb-2">9%</div>
+              <p className="text-sm text-primary-foreground/90">recycled globally</p>
+            </Card>
           </div>
 
-          <div className="relative max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
-              {[
-                { icon: Recycle, title: "Plastic Waste Intake", desc: "Mixed & contaminated plastics" },
-                { icon: Factory, title: "Clean & Convert", desc: "Remove contaminants and crack the material" },
-                { icon: Droplet, title: "Separate Outputs", desc: "Fuels and feedstocks ready for use" },
-                { icon: TrendingUp, title: "Reuse & Energy Recovery", desc: "Syngas powers the system; char goes to construction" },
-              ].map((step, index) => (
-                <div key={index} className="relative">
-                  <Card className="p-8 text-center hover-lift border-2 border-muted h-full bg-card">
-                    <div className="mb-6 flex justify-center">
-                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/5 flex items-center justify-center">
-                        <step.icon className="text-secondary" size={36} />
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-bold mb-3 text-primary">{step.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
-                  </Card>
-                  
-                  {/* Arrow between cards (hidden on mobile, shown on desktop) */}
-                  {index < 3 && (
-                    <div className="hidden md:flex absolute top-1/2 -right-6 transform -translate-y-1/2 z-20">
-                      <ArrowRight className="text-secondary" size={32} strokeWidth={3} />
-                    </div>
-                  )}
-                </div>
-              ))}
+          {/* Video Placeholder */}
+          <div className="max-w-4xl mx-auto mb-12 rounded-2xl overflow-hidden border-4 border-accent/40">
+            <div className="aspect-video bg-primary-foreground/5 backdrop-blur-sm flex items-center justify-center">
+              <p className="text-primary-foreground/70 text-lg">Video: Plastic Waste Transformation (Coming Soon)</p>
             </div>
           </div>
 
-          <p className="text-center mt-12 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Our modular units integrate seamlessly into existing refineries or waste centers
+          <Button 
+            size="lg" 
+            onClick={() => scrollToSection('problem')}
+            className="bg-accent text-accent-foreground hover:bg-accent/90 text-xl px-12 py-7 rounded-full"
+          >
+            Discover Our Solution <ArrowDown className="ml-2" size={24} />
+          </Button>
+        </div>
+
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronRight className="text-primary-foreground/70 rotate-90" size={40} />
+        </div>
+      </section>
+
+      {/* The Problem */}
+      <section id="problem" className="py-32 bg-gradient-to-br from-muted to-background relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-secondary rounded-full filter blur-3xl" />
+        </div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <h2 className="text-6xl md:text-7xl font-bold mb-8 text-foreground">The Problem</h2>
+            <p className="text-3xl md:text-4xl leading-relaxed text-muted-foreground font-light">
+              The world is drowning in plastic.<br />
+              <span className="text-foreground font-semibold">Only 9% is recycled.</span>
+            </p>
+          </div>
+
+          <div className="text-center">
+            <Button 
+              size="lg"
+              onClick={() => scrollToSection('solution')}
+              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-xl px-12 py-7 rounded-full"
+            >
+              See How We Transform It <ArrowDown className="ml-2" size={24} />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Solution - Process Flow */}
+      <section id="solution" className="py-32 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-6xl md:text-7xl font-bold mb-6 text-foreground">From Non-Recyclable Plastic to Clean Fuels</h2>
+            <p className="text-2xl text-muted-foreground max-w-3xl mx-auto">
+              Sansevieria's proprietary process converts waste into valuable fuel fractions
+            </p>
+          </div>
+
+          {/* Process Diagram */}
+          <div className="max-w-6xl mx-auto mb-16 rounded-2xl overflow-hidden border-4 border-secondary/30 shadow-2xl">
+            <img src={processFlow} alt="Sansevieria Process Flow" className="w-full" />
+          </div>
+
+          {/* Process Steps */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto mb-16">
+            <Card className="p-8 hover-lift border-2 border-muted">
+              <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-6">
+                <span className="text-3xl font-bold text-secondary">1</span>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">Non-Recyclable Plastic Waste</h3>
+              <p className="text-muted-foreground">Feedstock includes mixed post-consumer and industrial plastics</p>
+            </Card>
+
+            <Card className="p-8 hover-lift border-2 border-muted">
+              <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-6">
+                <span className="text-3xl font-bold text-secondary">2</span>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">Washing and Shredding</h3>
+              <p className="text-muted-foreground">Removes dirt, organics, and salts for cleaner feedstock</p>
+            </Card>
+
+            <Card className="p-8 hover-lift border-2 border-muted">
+              <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-6">
+                <span className="text-3xl font-bold text-secondary">3</span>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">Melting & Contaminant Removal</h3>
+              <p className="text-muted-foreground">Proprietary technology removes halogens, metals, and impurities under controlled conditions</p>
+            </Card>
+
+            <Card className="p-8 hover-lift border-2 border-muted">
+              <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-6">
+                <span className="text-3xl font-bold text-secondary">4</span>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">Final Fractions</h3>
+              <p className="text-muted-foreground">PlastiNaphtha, PlastiSAF, and PlastiDiesel ready for market</p>
+            </Card>
+          </div>
+
+          <p className="text-center text-xl text-muted-foreground max-w-4xl mx-auto">
+            Each Sansevieria unit can operate <span className="font-semibold text-foreground">stand-alone</span> or integrate into existing waste or refinery facilities — <span className="font-semibold text-foreground">skipping new infrastructure or bureaucracy</span>.
           </p>
         </div>
       </section>
 
-      {/* Problem & Proof */}
-      <section className="py-32 bg-gradient-to-br from-primary to-primary/90 text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-secondary rounded-full filter blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary rounded-full filter blur-3xl" />
-        </div>
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">The Challenge</h2>
-            <p className="text-xl opacity-95 max-w-2xl mx-auto">
-              Plastic waste is accelerating. Traditional recycling isn't enough.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="p-10 text-center bg-primary-foreground/10 backdrop-blur-md border-primary-foreground/20 hover-lift">
-              <div className="text-6xl font-bold text-secondary mb-3">
-                <CountUpMetric end={400} suffix="M" />
-              </div>
-              <p className="text-lg opacity-95">tons of plastic waste produced annually</p>
-            </Card>
-
-            <Card className="p-10 text-center bg-primary-foreground/10 backdrop-blur-md border-primary-foreground/20 hover-lift">
-              <div className="text-6xl font-bold text-secondary mb-3">
-                <CountUpMetric end={90} suffix="%" />
-              </div>
-              <p className="text-lg opacity-95">not recycled globally</p>
-            </Card>
-
-            <Card className="p-10 text-center bg-primary-foreground/10 backdrop-blur-md border-primary-foreground/20 hover-lift">
-              <div className="text-6xl font-bold text-secondary mb-3">
-                <CountUpMetric end={70} suffix="%" />
-              </div>
-              <p className="text-lg opacity-95">CO₂ reduction per refinery</p>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Impact That Scales */}
-      <section className="py-32 bg-background">
+      {/* Products */}
+      <section className="py-32 bg-gradient-to-br from-secondary/5 to-accent/5">
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-primary">Impact That Scales</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Real environmental and economic benefits, measured and proven
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {[
-              { value: "70%", label: "Lower CO₂ Emissions", desc: "Compared to conventional fuel production" },
-              { value: "80%", label: "CAPEX Reduction", desc: "Versus traditional refineries" },
-              { value: "100%", label: "Circular Economy", desc: "All waste streams utilized" },
-              { value: "400M+", label: "Tons Addressable", desc: "Annual plastic waste potential" },
-            ].map((metric, index) => (
-              <Card key={index} className="p-8 text-center hover-lift bg-gradient-to-br from-secondary/5 to-transparent border-2 border-muted">
-                <div className="text-5xl font-bold text-secondary mb-3">{metric.value}</div>
-                <h3 className="text-xl font-bold mb-2 text-primary">{metric.label}</h3>
-                <p className="text-sm text-muted-foreground">{metric.desc}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Products Teaser */}
-      <section className="py-32 bg-muted/30">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-primary">What We Create</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              High-value outputs from plastic waste
+            <h2 className="text-6xl md:text-7xl font-bold mb-6 text-foreground">Our Products</h2>
+            <p className="text-2xl text-muted-foreground max-w-3xl mx-auto">
+              Three clean fuel fractions from plastic waste
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              { name: "PlastiSAF", desc: "Sustainable aviation fuel for the future of flight" },
-              { name: "PlastiDiesel", desc: "Clean transportation fuel for logistics" },
-              { name: "PlastiNaphtha", desc: "Premium petrochemical feedstock for circularity" },
-            ].map((product, index) => (
-              <Card key={index} className="p-10 text-center hover-lift border-2 border-muted cursor-pointer group bg-card">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/5 flex items-center justify-center group-hover:from-secondary/30 group-hover:to-secondary/10 transition-all">
-                  <Droplet className="text-secondary" size={40} />
-                </div>
-                <h3 className="text-2xl font-bold mb-3 text-primary">{product.name}</h3>
-                <p className="text-muted-foreground">{product.desc}</p>
-              </Card>
-            ))}
+            <Card className="p-10 text-center hover-lift border-2 border-muted cursor-pointer group">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-secondary/30 to-secondary/10 flex items-center justify-center group-hover:from-secondary/40 group-hover:to-secondary/20 transition-all">
+                <Beaker className="text-secondary" size={48} />
+              </div>
+              <h3 className="text-3xl font-bold mb-4 text-foreground">PlastiNaphtha</h3>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Petrochemical feedstock for polymer production
+              </p>
+            </Card>
+
+            <Card className="p-10 text-center hover-lift border-2 border-muted cursor-pointer group">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-accent/30 to-accent/10 flex items-center justify-center group-hover:from-accent/40 group-hover:to-accent/20 transition-all">
+                <Plane className="text-accent" size={48} />
+              </div>
+              <h3 className="text-3xl font-bold mb-4 text-foreground">PlastiSAF</h3>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Sustainable Aviation Fuel meeting ASTM D7566
+              </p>
+            </Card>
+
+            <Card className="p-10 text-center hover-lift border-2 border-muted cursor-pointer group">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-secondary/30 to-secondary/10 flex items-center justify-center group-hover:from-secondary/40 group-hover:to-secondary/20 transition-all">
+                <Truck className="text-secondary" size={48} />
+              </div>
+              <h3 className="text-3xl font-bold mb-4 text-foreground">PlastiDiesel</h3>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Ultra-clean diesel for transport and industry
+              </p>
+            </Card>
           </div>
 
           <div className="text-center mt-16">
-            <Button asChild size="lg" variant="default" className="text-lg px-8 py-6">
+            <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-xl px-12 py-7 rounded-full">
               <Link to="/products">
-                Explore Our Products <ArrowRight className="ml-2" size={20} />
+                Learn More About Our Products <ChevronRight className="ml-2" size={24} />
               </Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Vision */}
-      <section className="py-32 bg-gradient-to-br from-primary via-primary/95 to-primary/80 text-primary-foreground">
+      {/* Technology Roadmap */}
+      <section className="py-32 bg-background">
         <div className="container mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-6xl md:text-7xl font-bold mb-6 text-foreground">Technology Roadmap</h2>
+            <p className="text-2xl text-muted-foreground max-w-3xl mx-auto">
+              From lab to industrial scale
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            {/* Timeline Bar */}
+            <div className="relative">
+              <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-secondary/30 via-accent/50 to-secondary transform -translate-y-1/2 rounded-full" />
+              
+              <div className="grid grid-cols-3 gap-8">
+                <div className="text-center relative">
+                  <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-secondary border-4 border-background flex items-center justify-center relative z-10">
+                    <span className="text-2xl font-bold text-secondary-foreground">1-2</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2 text-foreground">Lab Tests</h3>
+                  <p className="text-muted-foreground">Initial research and proof of concept</p>
+                </div>
+
+                <div className="text-center relative">
+                  <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-accent border-4 border-background flex items-center justify-center relative z-10">
+                    <span className="text-2xl font-bold text-accent-foreground">3-5</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2 text-foreground">Pilot Phase</h3>
+                  <p className="text-muted-foreground">Active testing and optimization</p>
+                </div>
+
+                <div className="text-center relative">
+                  <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-secondary to-accent border-4 border-background flex items-center justify-center relative z-10">
+                    <span className="text-2xl font-bold text-secondary-foreground">7-8</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2 text-foreground">Industrial Deployment</h3>
+                  <p className="text-muted-foreground">Full-scale commercial operation</p>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-center mt-16 text-xl text-muted-foreground">
+              Sansevieria's technology is currently in <span className="font-semibold text-foreground">active testing and optimization phase</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Vision - With Plant Background */}
+      <section className="py-32 bg-gradient-to-br from-primary via-primary/95 to-secondary/40 text-primary-foreground relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <img src={plant3} alt="" className="w-full h-full object-cover" />
+        </div>
+        
+        <div className="container mx-auto px-6 relative z-10">
           <div className="text-center max-w-5xl mx-auto">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8">Our Vision</h2>
-            <p className="text-2xl leading-relaxed opacity-95">
-              By 2030, we aim to be among the world's leading producers of sustainable aviation fuel and petrochemical feedstocks — all from plastic waste.
+            <h2 className="text-6xl md:text-7xl font-bold mb-12">Our Vision</h2>
+            <p className="text-3xl md:text-4xl leading-relaxed font-light">
+              We are building <span className="text-accent font-semibold">smart, modular, and organic</span> waste refineries that bring <span className="text-accent font-semibold">circularity and energy sustainability</span> to life —
+            </p>
+            <p className="text-3xl md:text-4xl leading-relaxed font-light mt-6">
+              inspired by nature, engineered for impact.
             </p>
           </div>
         </div>
@@ -211,14 +281,14 @@ const Home = () => {
       <section className="py-32 bg-background">
         <div className="container mx-auto px-6 text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary">
-              Partner With Us
+            <h2 className="text-5xl md:text-6xl font-bold mb-8 text-foreground">
+              Join the Journey
             </h2>
-            <p className="text-xl text-muted-foreground mb-10">
-              We collaborate with waste operators, municipalities, refineries, and industry partners worldwide
+            <p className="text-2xl text-muted-foreground mb-12">
+              Partner with us to transform plastic waste into sustainable value
             </p>
-            <Button asChild size="lg" variant="default" className="text-lg px-10 py-6">
-              <Link to="/contact">Start the Conversation</Link>
+            <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-xl px-12 py-7 rounded-full">
+              <Link to="/contact">Get in Touch</Link>
             </Button>
           </div>
         </div>
