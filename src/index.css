@@ -8,73 +8,75 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Sansevieria Brand Colors - Nature Inspired */
-    --background: 0 0% 97%; /* Off-White */
-    --foreground: 0 0% 4%; /* Black #0A0A0A */
+    /* Sansevieria Brand Colors - Deep Tech Nature Vibe */
+    --background: 155 43% 8%; /* Dark Forest Green #0C1B13 */
+    --foreground: 0 0% 96%; /* Off-White #F5F5F5 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
+    --card: 155 35% 12%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
+    --popover: 155 35% 12%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 0 0% 4%; /* Black #0A0A0A */
-    --primary-foreground: 0 0% 98%;
+    --primary: 88 68% 62%; /* Bright Green #9BE15D */
+    --primary-foreground: 155 43% 8%;
 
-    --secondary: 120 39% 62%; /* Green #7FBF7F */
-    --secondary-foreground: 120 20% 10%;
+    --secondary: 43 74% 57%; /* Energy Yellow #E3B341 */
+    --secondary-foreground: 155 43% 8%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 155 20% 20%;
+    --muted-foreground: 143 8% 76%; /* Subtext #BFC7C2 */
 
-    --accent: 47 73% 61%; /* Yellow #EACB48 */
-    --accent-foreground: 0 0% 4%;
+    --accent: 43 74% 57%; /* Energy Yellow #E3B341 */
+    --accent-foreground: 155 43% 8%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 91%;
-    --input: 0 0% 91%;
-    --ring: 120 39% 62%;
+    --border: 155 20% 25%;
+    --input: 155 20% 25%;
+    --ring: 88 68% 62%;
 
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(0, 0%, 4%), hsl(120, 39%, 62%));
-    --gradient-nature: linear-gradient(135deg, hsl(120, 39%, 62%), hsl(47, 73%, 61%));
-    --shadow-premium: 0 20px 60px -15px hsl(0 0% 4% / 0.2);
-    --shadow-card: 0 4px 20px -4px hsl(0 0% 4% / 0.1);
+    --gradient-hero: linear-gradient(135deg, hsl(155, 43%, 8%), hsl(88, 68%, 62%));
+    --gradient-nature: linear-gradient(135deg, hsl(88, 68%, 62%), hsl(43, 74%, 57%));
+    --gradient-flow: linear-gradient(90deg, hsl(88, 68%, 62%), hsl(43, 74%, 57%), hsl(0, 0%, 96%));
+    --shadow-premium: 0 20px 60px -15px hsl(88 68% 62% / 0.3);
+    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+    --shadow-glow: 0 0 40px hsl(88 68% 62% / 0.4);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 98%;
+    --background: 155 43% 8%;
+    --foreground: 0 0% 96%;
 
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 155 35% 12%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 155 35% 12%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 120 39% 62%;
-    --primary-foreground: 0 0% 4%;
+    --primary: 88 68% 62%;
+    --primary-foreground: 155 43% 8%;
 
-    --secondary: 120 30% 25%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 43 74% 57%;
+    --secondary-foreground: 155 43% 8%;
 
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 155 20% 20%;
+    --muted-foreground: 143 8% 76%;
 
-    --accent: 47 73% 61%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 43 74% 57%;
+    --accent-foreground: 155 43% 8%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 25%;
-    --input: 0 0% 25%;
-    --ring: 120 39% 62%;
+    --border: 155 20% 25%;
+    --input: 155 20% 25%;
+    --ring: 88 68% 62%;
   }
 }
 
