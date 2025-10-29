@@ -206,8 +206,8 @@ const Home = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-7xl md:text-9xl font-bold mb-6 text-foreground">
-              Turning Plastic Waste<br />
-              <span className="text-primary">into Clean Energy</span>
+              The Circle That<br />
+              <span className="text-primary">Powers Tomorrow</span>
             </h1>
             
             <p className="text-2xl md:text-3xl mb-12 text-muted-foreground">
