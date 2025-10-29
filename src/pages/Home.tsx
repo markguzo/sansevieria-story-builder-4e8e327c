@@ -92,17 +92,20 @@ const Home = () => {
 
       {/* HERO SECTION */}
       <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden pb-0">
-        {/* Hero Image with Enhanced Glow */}
+        {/* Hero Image - Spinning Circle Animation */}
         <motion.div 
-          className="absolute inset-0"
-          initial={{ scale: 1.1, opacity: 0 }}
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ scale: 2, opacity: 1 }}
           animate={{ scale: 1, opacity: 0.5 }}
-          transition={{ duration: 2 }}
+          transition={{ duration: 2.5, ease: [0.34, 1.56, 0.64, 1] }}
         >
-          <img 
+          <motion.img 
             src={heroCircularFlow} 
             alt="Circular energy flow" 
             className="w-full h-full object-cover"
+            initial={{ rotate: 0 }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, ease: "easeInOut" }}
           />
         </motion.div>
         
@@ -135,7 +138,7 @@ const Home = () => {
           className="container mx-auto px-6 text-center relative z-10"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1.2, delay: 2, ease: "easeOut" }}
         >
           <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
             <span className="text-foreground">The Circle That</span><br />
@@ -146,7 +149,7 @@ const Home = () => {
             className="text-lg md:text-xl mb-10 max-w-2xl mx-auto text-muted-foreground font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
+            transition={{ delay: 2.5, duration: 1 }}
           >
             Sansevieria transforms non-recyclable plastics into circular energy —<br />
             closing the loop between waste and power.
@@ -155,7 +158,7 @@ const Home = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
+            transition={{ delay: 3, duration: 0.6 }}
           >
             <Button 
               size="lg"
