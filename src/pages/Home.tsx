@@ -25,7 +25,7 @@ const Home = () => {
     offset: ["start start", "end end"]
   });
 
-  const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [8, 6, 7, 8, 9, 12]);
+  const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [30, 25, 28, 32, 35, 40]);
   
   const isProblemInView = useInView(problemRef, { amount: 0.5 });
   const isProcessInView = useInView(processRef, { amount: 0.3 });

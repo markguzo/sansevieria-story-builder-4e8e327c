@@ -8,33 +8,33 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Sansevieria Deep Tech Nature - One Continuous Background */
-    --background: 155 50% 8%; /* Deep Forest Green #0C1B13 */
-    --foreground: 0 0% 96%; /* Off-White #F5F5F5 */
+    /* Sansevieria Deep Tech Nature - Brighter Version */
+    --background: 155 40% 28%; /* Brighter Forest Green */
+    --foreground: 0 0% 98%; /* Off-White #F5F5F5 */
 
-    --card: 155 40% 12%;
-    --card-foreground: 0 0% 96%;
+    --card: 155 35% 35%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 155 40% 12%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 155 35% 35%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 88 68% 66%; /* Bright Green #9BE15D */
-    --primary-foreground: 155 50% 8%;
+    --primary-foreground: 155 50% 12%;
 
     --secondary: 43 74% 57%; /* Warm Yellow #E3B341 */
-    --secondary-foreground: 155 50% 8%;
+    --secondary-foreground: 155 50% 12%;
 
-    --muted: 155 30% 18%;
-    --muted-foreground: 143 8% 76%; /* Light Gray #BFC7C2 */
+    --muted: 155 25% 40%;
+    --muted-foreground: 0 0% 95%; /* Light Gray */
 
     --accent: 43 74% 57%; /* Warm Yellow #E3B341 */
-    --accent-foreground: 155 50% 8%;
+    --accent-foreground: 155 50% 12%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 155 25% 25%;
-    --input: 155 25% 25%;
+    --border: 155 20% 45%;
+    --input: 155 20% 45%;
     --ring: 88 68% 66%;
 
     --radius: 0.75rem;
@@ -49,32 +49,32 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 155 50% 8%;
-    --foreground: 0 0% 96%;
+    --background: 155 40% 28%;
+    --foreground: 0 0% 98%;
 
-    --card: 155 40% 12%;
-    --card-foreground: 0 0% 96%;
+    --card: 155 35% 35%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 155 40% 12%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 155 35% 35%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 88 68% 66%;
-    --primary-foreground: 155 50% 8%;
+    --primary-foreground: 155 50% 12%;
 
     --secondary: 43 74% 57%;
-    --secondary-foreground: 155 50% 8%;
+    --secondary-foreground: 155 50% 12%;
 
-    --muted: 155 30% 18%;
-    --muted-foreground: 143 8% 76%;
+    --muted: 155 25% 40%;
+    --muted-foreground: 0 0% 95%;
 
     --accent: 43 74% 57%;
-    --accent-foreground: 155 50% 8%;
+    --accent-foreground: 155 50% 12%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 155 25% 25%;
-    --input: 155 25% 25%;
+    --border: 155 20% 45%;
+    --input: 155 20% 45%;
     --ring: 88 68% 66%;
   }
 }
