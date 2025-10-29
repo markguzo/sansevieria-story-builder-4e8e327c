@@ -104,13 +104,49 @@ All colors MUST be HSL.
     animation: slide-up 0.6s ease-out forwards;
   }
 
+  .animate-slide-in-left {
+    animation: slide-in-left 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.8s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.6s ease-out forwards;
+  }
+
+  .animate-text-reveal {
+    animation: text-reveal 1s ease-out forwards;
+  }
+
+  .animate-draw-circle {
+    animation: draw-circle 2s ease-out forwards;
+  }
+
   .hover-lift {
-    transition: var(--transition-smooth);
+    transition: var(--transition-cinematic);
   }
 
   .hover-lift:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-premium);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .hover-glow {
+    transition: var(--transition-cinematic);
+  }
+
+  .hover-glow:hover {
+    box-shadow: var(--glow-primary);
+  }
+
+  .section-spacing {
+    padding: 8rem 0;
+  }
+
+  .content-spacing {
+    margin-bottom: 4rem;
   }
 }
 
@@ -133,5 +169,60 @@ All colors MUST be HSL.
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes text-reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes draw-circle {
+  from {
+    stroke-dashoffset: 1000;
+    opacity: 0.5;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }

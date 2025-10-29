@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight } from "lucide-react";
+import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
@@ -18,6 +18,7 @@ const Home = () => {
   const processRef = useRef(null);
   const productsRef = useRef(null);
   const roadmapRef = useRef(null);
+  const videoRef = useRef(null);
   const visionRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -27,11 +28,12 @@ const Home = () => {
 
   const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [82, 80, 78, 80, 82, 84]);
   
-  const isProblemInView = useInView(problemRef, { amount: 0.5 });
-  const isProcessInView = useInView(processRef, { amount: 0.3 });
-  const isProductsInView = useInView(productsRef, { amount: 0.3 });
-  const isRoadmapInView = useInView(roadmapRef, { amount: 0.3 });
-  const isVisionInView = useInView(visionRef, { amount: 0.5 });
+  const isProblemInView = useInView(problemRef, { amount: 0.3, once: true });
+  const isProcessInView = useInView(processRef, { amount: 0.2, once: true });
+  const isProductsInView = useInView(productsRef, { amount: 0.2, once: true });
+  const isRoadmapInView = useInView(roadmapRef, { amount: 0.2, once: true });
+  const isVideoInView = useInView(videoRef, { amount: 0.3, once: true });
+  const isVisionInView = useInView(visionRef, { amount: 0.3, once: true });
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground relative">
@@ -67,21 +69,37 @@ const Home = () => {
 
       {/* HERO SECTION */}
       <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden pb-0">
-        {/* Hero Circle - Spinning Animation */}
+        {/* Hero Circle - Enhanced Spinning Animation with 3D Lighting */}
         <motion.div 
           className="absolute inset-0 flex items-center justify-center"
-          initial={{ scale: 2, opacity: 1 }}
+          initial={{ scale: 2.5, opacity: 1 }}
           animate={{ scale: 1, opacity: 0.15 }}
-          transition={{ duration: 2.5, ease: [0.34, 1.56, 0.64, 1] }}
+          transition={{ duration: 3, ease: [0.34, 1.56, 0.64, 1] }}
         >
-          <motion.img 
-            src={heroCircularFlow} 
-            alt="Circular energy flow" 
-            className="w-full h-full object-cover mix-blend-multiply"
-            initial={{ rotate: 0 }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, ease: "easeInOut" }}
-          />
+          <motion.div className="relative w-full h-full">
+            <motion.img 
+              src={heroCircularFlow} 
+              alt="Circular energy flow" 
+              className="w-full h-full object-cover mix-blend-multiply"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2.5, ease: "easeInOut" }}
+              style={{
+                filter: 'drop-shadow(0 0 80px hsl(88 68% 66% / 0.4))'
+              }}
+            />
+            {/* 3D Lighting Overlay */}
+            <motion.div
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 2, delay: 1 }}
+              style={{
+                background: 'radial-gradient(circle at 30% 30%, hsl(88 68% 66% / 0.3), transparent 50%)',
+                mixBlendMode: 'overlay'
+              }}
+            />
+          </motion.div>
         </motion.div>
         
         {/* Deeper Glow Behind Circle */}
@@ -113,41 +131,62 @@ const Home = () => {
           className="container mx-auto px-6 text-center relative z-10"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 2, ease: "easeOut" }}
+          transition={{ duration: 1.2, delay: 2.8, ease: "easeOut" }}
         >
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
-            <span className="text-foreground">The Circle That</span><br />
-            <span className="text-primary">Powers Tomorrow</span>
+          {/* Animated Headline with Staggered Word Reveal */}
+          <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight overflow-hidden">
+            <motion.span 
+              className="inline-block text-foreground"
+              initial={{ opacity: 0, y: 80 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 3, ease: [0.34, 1.56, 0.64, 1] }}
+            >
+              The Circle That
+            </motion.span>
+            <br />
+            <motion.span 
+              className="inline-block text-primary"
+              initial={{ opacity: 0, y: 80 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 3.3, ease: [0.34, 1.56, 0.64, 1] }}
+              style={{
+                filter: 'drop-shadow(0 0 20px hsl(88 68% 66% / 0.5))'
+              }}
+            >
+              Powers Tomorrow
+            </motion.span>
           </h1>
           
           <motion.p 
-            className="text-lg md:text-xl mb-10 max-w-2xl mx-auto text-muted-foreground font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.5, duration: 1 }}
+            className="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-muted-foreground font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 3.6, duration: 0.8 }}
           >
             Sansevieria transforms non-recyclable plastics into circular energy —<br />
             closing the loop between waste and power.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 3, duration: 0.6 }}
+            transition={{ delay: 4, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             <Button 
               size="lg"
               onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-base px-8 py-5 rounded-full shadow-lg hover:shadow-[var(--glow-primary)] transition-all"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-base px-10 py-6 rounded-full shadow-lg hover:shadow-[var(--glow-primary)] transition-all"
             >
-              Discover the Journey <ArrowRight className="ml-2" size={18} />
+              Discover the Journey <ArrowRight className="ml-2" size={20} />
             </Button>
           </motion.div>
         </motion.div>
       </section>
 
       {/* THE PROBLEM SECTION */}
-      <section ref={problemRef} className="min-h-[80vh] flex items-center justify-center relative py-16 -mt-20">
+      <section ref={problemRef} className="min-h-[90vh] flex items-center justify-center relative py-24 mt-12">
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
@@ -167,24 +206,44 @@ const Home = () => {
           animate={isProblemInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 1 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-foreground">The Scale of the Challenge</h2>
+          <motion.h2 
+            className="text-5xl md:text-7xl font-bold mb-16 text-center text-foreground"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.8 }}
+          >
+            The Scale of the Challenge
+          </motion.h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
-              { value: "1.8B", label: "tonnes of GHG from plastics", delay: 0 },
-              { value: "390M+", label: "tonnes produced yearly", delay: 0.1 },
-              { value: "22M+", label: "tonnes leak into oceans", delay: 0.2 },
-              { value: "9%", label: "recycled globally", delay: 0.3 }
+              { value: "1.8B", label: "tonnes of GHG from plastics", delay: 0.2 },
+              { value: "390M+", label: "tonnes produced yearly", delay: 0.3 },
+              { value: "22M+", label: "tonnes leak into oceans", delay: 0.4 },
+              { value: "9%", label: "recycled globally", delay: 0.5 }
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ delay: stat.delay, duration: 0.6 }}
+                initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                animate={isProblemInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.8, y: 30 }}
+                transition={{ delay: stat.delay, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
+                whileHover={{ 
+                  y: -12, 
+                  scale: 1.05,
+                  boxShadow: 'var(--glow-primary)',
+                  transition: { duration: 0.3 }
+                }}
               >
-                <Card className="p-6 bg-white/60 backdrop-blur-sm border-primary/30 hover:border-primary/60 transition-all shadow-sm hover:shadow-md">
-                  <div className="text-4xl font-bold text-primary mb-2">{stat.value}</div>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                <Card className="p-8 bg-white/70 backdrop-blur-sm border-primary/40 hover:border-primary/70 transition-all shadow-md hover:shadow-xl">
+                  <motion.div 
+                    className="text-5xl md:text-6xl font-bold text-primary mb-3"
+                    initial={{ scale: 0 }}
+                    animate={isProblemInView ? { scale: 1 } : { scale: 0 }}
+                    transition={{ delay: stat.delay + 0.2, duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+                  >
+                    {stat.value}
+                  </motion.div>
+                  <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
                 </Card>
               </motion.div>
             ))}
@@ -193,7 +252,7 @@ const Home = () => {
       </section>
 
       {/* PROCESS SECTION */}
-      <section ref={processRef} className="min-h-screen flex items-center justify-center relative py-20 -mt-10">
+      <section ref={processRef} className="min-h-screen flex items-center justify-center relative py-32 mt-16">
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
@@ -209,15 +268,15 @@ const Home = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0 }}
-            animate={isProcessInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 1 }}
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isProcessInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-foreground">
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">
               The Transformation
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
               Five steps. One continuous flow. Complete circularity.
             </p>
           </motion.div>
@@ -275,7 +334,7 @@ const Home = () => {
       </section>
 
       {/* PRODUCTS SECTION */}
-      <section ref={productsRef} className="min-h-[90vh] flex items-center justify-center relative py-16 -mt-10">
+      <section ref={productsRef} className="min-h-[95vh] flex items-center justify-center relative py-28 mt-12">
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
@@ -291,13 +350,13 @@ const Home = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0 }}
-            animate={isProductsInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 1 }}
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isProductsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-foreground">Three Clean Solutions</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">Three Clean Solutions</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
               From waste to specialized fuel fractions
             </p>
           </motion.div>
@@ -331,8 +390,85 @@ const Home = () => {
         </div>
       </section>
 
+      {/* VIDEO SECTION */}
+      <section ref={videoRef} className="min-h-[85vh] flex items-center justify-center relative py-28 mt-12">
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={isVideoInView ? { opacity: 0.03 } : { opacity: 0 }}
+          transition={{ duration: 1.5 }}
+        >
+          <img 
+            src={processAbstract} 
+            alt="Technology background" 
+            className="w-full h-full object-cover mix-blend-multiply"
+          />
+        </motion.div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isVideoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">See It In Action</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
+              Watch how we transform waste into energy
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="max-w-5xl mx-auto"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isVideoInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            {/* Video Placeholder */}
+            <motion.div 
+              className="relative aspect-video bg-white/20 backdrop-blur-sm rounded-3xl border-2 border-primary/40 overflow-hidden shadow-2xl group cursor-pointer"
+              whileHover={{ 
+                scale: 1.02,
+                boxShadow: 'var(--glow-primary)',
+                borderColor: 'hsl(88 68% 66% / 0.7)',
+                transition: { duration: 0.3 }
+              }}
+            >
+              {/* Subtle gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-secondary/20 to-accent/30 opacity-60" />
+              
+              {/* Video will go here - currently placeholder */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <motion.div
+                  className="flex flex-col items-center gap-4"
+                  initial={{ opacity: 0.7 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  <motion.div 
+                    className="w-24 h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Play className="text-primary ml-1" size={40} fill="hsl(88 68% 66%)" />
+                  </motion.div>
+                  <p className="text-foreground text-lg font-semibold">Coming Soon</p>
+                  <p className="text-muted-foreground text-sm max-w-md text-center px-4">
+                    Video content will be added here showcasing our transformation process
+                  </p>
+                </motion.div>
+              </div>
+
+              {/* Soft vignette for blending */}
+              <div className="absolute inset-0 pointer-events-none" style={{
+                background: 'radial-gradient(circle at center, transparent 40%, hsl(150 25% 82% / 0.4) 100%)'
+              }} />
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ROADMAP SECTION */}
-      <section ref={roadmapRef} className="min-h-[80vh] flex items-center justify-center relative py-16 -mt-10">
+      <section ref={roadmapRef} className="min-h-[85vh] flex items-center justify-center relative py-28 mt-12">
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
@@ -348,13 +484,13 @@ const Home = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0 }}
-            animate={isRoadmapInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 1 }}
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isRoadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-foreground">Our Journey</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">Our Journey</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
               From laboratory to industrial impact
             </p>
           </motion.div>
@@ -401,7 +537,7 @@ const Home = () => {
       </section>
 
       {/* VISION SECTION */}
-      <section ref={visionRef} className="min-h-screen flex items-center justify-center relative py-20 -mt-10">
+      <section ref={visionRef} className="min-h-screen flex items-center justify-center relative py-32 mt-16">
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
@@ -421,25 +557,59 @@ const Home = () => {
           animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 1.2 }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-10 text-foreground">Our Vision</h2>
-          <p className="text-2xl md:text-3xl leading-relaxed font-light max-w-4xl mx-auto mb-12">
-            <span className="text-primary">Nature's design.</span>{" "}
-            <span className="text-secondary">Human innovation.</span>{" "}
-            <span className="text-foreground">Circular power for the planet.</span>
-          </p>
-
-          <motion.div
+          <motion.h2 
+            className="text-5xl md:text-8xl font-bold mb-16 text-foreground"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isVisionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ duration: 0.8 }}
+          >
+            Our Vision
+          </motion.h2>
+          
+          <div className="text-2xl md:text-4xl leading-relaxed font-light max-w-5xl mx-auto mb-16 space-y-4">
+            <motion.p
+              initial={{ opacity: 0, x: -40 }}
+              animate={isVisionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              <span className="text-primary font-medium" style={{ filter: 'drop-shadow(0 0 15px hsl(88 68% 66% / 0.4))' }}>
+                Nature's design.
+              </span>
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, x: 40 }}
+              animate={isVisionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            >
+              <span className="text-secondary font-medium" style={{ filter: 'drop-shadow(0 0 15px hsl(43 90% 72% / 0.4))' }}>
+                Human innovation.
+              </span>
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 40 }}
+              animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
+            >
+              <span className="text-foreground font-medium">
+                Circular power for the planet.
+              </span>
+            </motion.p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isVisionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            transition={{ delay: 0.9, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             <Button 
               asChild
               size="lg"
-              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 text-base px-8 py-5 rounded-full shadow-lg hover:shadow-[var(--glow-primary)] transition-all"
+              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 text-lg px-12 py-7 rounded-full shadow-xl hover:shadow-[var(--glow-primary)] transition-all"
             >
               <Link to="/contact">
-                Join the Movement <ArrowRight className="ml-2" size={18} />
+                Join the Movement <ArrowRight className="ml-2" size={22} />
               </Link>
             </Button>
           </motion.div>
@@ -452,30 +622,36 @@ const Home = () => {
 const ProcessStep = ({ icon: Icon, title, description, isInView, delay, highlighted = false }: any) => (
   <motion.div
     className="text-center relative"
-    initial={{ opacity: 0, y: 30 }}
-    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-    transition={{ delay, duration: 0.6 }}
+    initial={{ opacity: 0, y: 40, scale: 0.8 }}
+    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.8 }}
+    transition={{ delay, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
   >
     <motion.div
-      className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
+      className={`w-24 h-24 mx-auto mb-5 rounded-full flex items-center justify-center ${
         highlighted 
-          ? 'bg-gradient-to-br from-primary to-secondary shadow-lg' 
-          : 'bg-white/70 backdrop-blur-sm border-2 border-primary/40 shadow-sm'
+          ? 'bg-gradient-to-br from-primary to-secondary shadow-xl' 
+          : 'bg-white/80 backdrop-blur-sm border-2 border-primary/50 shadow-md'
       }`}
-      whileHover={{ scale: 1.15, boxShadow: 'var(--glow-primary)' }}
+      whileHover={{ 
+        scale: 1.2, 
+        rotate: 360,
+        boxShadow: 'var(--glow-primary)',
+        transition: { duration: 0.5 }
+      }}
       animate={highlighted ? {
         boxShadow: [
-          '0 0 20px hsl(88 68% 66% / 0.4)',
-          '0 0 30px hsl(43 90% 72% / 0.6)',
-          '0 0 20px hsl(88 68% 66% / 0.4)'
-        ]
+          '0 0 25px hsl(88 68% 66% / 0.5)',
+          '0 0 40px hsl(43 90% 72% / 0.7)',
+          '0 0 25px hsl(88 68% 66% / 0.5)'
+        ],
+        scale: [1, 1.05, 1]
       } : {}}
-      transition={highlighted ? { duration: 2, repeat: Infinity } : {}}
+      transition={highlighted ? { duration: 2.5, repeat: Infinity } : {}}
     >
-      <Icon className={highlighted ? "text-background" : "text-primary"} size={24} />
+      <Icon className={highlighted ? "text-background" : "text-primary"} size={28} />
     </motion.div>
-    <h3 className="text-base font-semibold mb-1 text-foreground">{title}</h3>
-    <p className="text-xs text-muted-foreground">{description}</p>
+    <h3 className="text-lg font-bold mb-2 text-foreground">{title}</h3>
+    <p className="text-sm text-muted-foreground">{description}</p>
   </motion.div>
 );
 
@@ -484,21 +660,29 @@ const ProductCard = ({ icon: Icon, title, description, color, isInView, delay }:
   
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ delay, duration: 0.6 }}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0.9 }}
+      transition={{ delay, duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
+      whileHover={{ 
+        y: -16, 
+        scale: 1.05,
+        transition: { duration: 0.4, ease: "easeOut" }
+      }}
     >
-      <Card className="p-6 h-full bg-white/60 backdrop-blur-sm border-primary/30 hover:border-primary/60 transition-all group cursor-pointer shadow-sm hover:shadow-lg">
+      <Card className="p-8 h-full bg-white/70 backdrop-blur-md border-primary/40 hover:border-primary/70 transition-all group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-primary/20">
         <motion.div
-          className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/80 flex items-center justify-center shadow-sm"
-          whileHover={{ rotate: 360 }}
+          className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/90 flex items-center justify-center shadow-md"
+          whileHover={{ 
+            rotate: 360,
+            scale: 1.1,
+            boxShadow: 'var(--glow-primary)'
+          }}
           transition={{ duration: 0.6 }}
         >
-          <Icon className={colorClass} size={28} />
+          <Icon className={colorClass} size={32} />
         </motion.div>
-        <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <h3 className="text-2xl font-bold mb-3 text-foreground">{title}</h3>
+        <p className="text-base text-muted-foreground leading-relaxed">{description}</p>
       </Card>
     </motion.div>
   );
@@ -511,18 +695,31 @@ const RoadmapNode = ({ label, title, status, isInView, delay }: any) => {
   return (
     <motion.div
       className="text-center"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-      transition={{ delay, duration: 0.6 }}
+      initial={{ opacity: 0, scale: 0.7, y: 30 }}
+      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.7, y: 30 }}
+      transition={{ delay, duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
     >
       <motion.div
-        className={`w-16 h-16 mx-auto mb-3 rounded-full ${bgClass} flex items-center justify-center border-4 border-background`}
-        whileHover={{ scale: 1.1 }}
+        className={`w-20 h-20 mx-auto mb-4 rounded-full ${bgClass} flex items-center justify-center border-4 border-background`}
+        whileHover={{ 
+          scale: 1.15,
+          rotate: 360,
+          transition: { duration: 0.5 }
+        }}
+        animate={status === 'current' ? {
+          scale: [1, 1.05, 1],
+          boxShadow: [
+            'var(--glow-secondary)',
+            '0 0 40px hsl(43 90% 72% / 0.8)',
+            'var(--glow-secondary)'
+          ]
+        } : {}}
+        transition={status === 'current' ? { duration: 2, repeat: Infinity } : {}}
       >
-        <span className="text-xl font-bold text-foreground">{statusIcon}</span>
+        <span className="text-2xl font-bold text-foreground">{statusIcon}</span>
       </motion.div>
-      <div className="text-sm font-bold text-primary mb-1">{label}</div>
-      <h3 className="text-base font-semibold text-foreground">{title}</h3>
+      <div className="text-base font-bold text-primary mb-2">{label}</div>
+      <h3 className="text-lg font-semibold text-foreground">{title}</h3>
     </motion.div>
   );
 };
