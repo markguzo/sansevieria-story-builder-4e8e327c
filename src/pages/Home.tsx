@@ -1,760 +1,577 @@
 import { Link } from "react-router-dom";
-import { ArrowDown, Beaker, Plane, Truck, ChevronRight, Droplets, Filter, Zap } from "lucide-react";
+import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const Home = () => {
+  const containerRef = useRef(null);
   const heroRef = useRef(null);
+  const problemRef = useRef(null);
   const processRef = useRef(null);
+  const productsRef = useRef(null);
   const roadmapRef = useRef(null);
+  const visionRef = useRef(null);
 
-  const isRoadmapInView = useInView(roadmapRef, { once: true, amount: 0.3 });
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Create depth and lighting variations as user scrolls
+  const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [8, 6, 7, 8, 9, 12]);
+  
+  const isProblemInView = useInView(problemRef, { amount: 0.5 });
+  const isProcessInView = useInView(processRef, { amount: 0.3 });
+  const isProductsInView = useInView(productsRef, { amount: 0.3 });
+  const isRoadmapInView = useInView(roadmapRef, { amount: 0.3 });
+  const isVisionInView = useInView(visionRef, { amount: 0.5 });
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Hero Section with Animation */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated Background Gradient */}
-        <motion.div 
-          className="absolute inset-0 bg-gradient-to-br from-background via-muted/30 to-background"
-          animate={{
-            backgroundPosition: ['0% 0%', '100% 100%'],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse"
+    <div ref={containerRef} className="min-h-screen bg-background text-foreground relative">
+      {/* Unified Continuous Background with Depth Variations */}
+      <motion.div 
+        className="fixed inset-0 -z-10"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, hsl(155, 50%, ${backgroundLightness}%), hsl(155, 50%, 6%))`
+        }}
+      />
+
+      {/* Ambient Glow Effects that Move with Scroll */}
+      <motion.div
+        className="fixed inset-0 -z-10 pointer-events-none"
+        style={{
+          opacity: useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0.8, 0.4, 0.6, 0.5, 0.7, 0.3])
+        }}
+      >
+        <motion.div
+          className="absolute w-96 h-96 rounded-full blur-3xl"
+          style={{
+            background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.2), transparent)',
+            top: useTransform(scrollYProgress, [0, 1], ['10%', '80%']),
+            left: useTransform(scrollYProgress, [0, 1], ['20%', '60%'])
           }}
         />
-        
-        {/* Video Placeholder with Animated Fallback */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-30">
-          <motion.div className="relative w-full h-full max-w-4xl">
-            {/* Animated Ribbon Flow */}
-            <svg className="w-full h-full" viewBox="0 0 800 600" fill="none">
-              {/* Plastic fragments entering */}
-              <motion.circle
-                cx="100"
-                cy="200"
-                r="8"
-                fill="hsl(var(--muted-foreground))"
-                animate={{
-                  x: [0, 100, 200],
-                  opacity: [0.6, 0.8, 0]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              <motion.circle
-                cx="120"
-                cy="250"
-                r="6"
-                fill="hsl(var(--muted-foreground))"
-                animate={{
-                  x: [0, 120, 240],
-                  opacity: [0.6, 0.8, 0]
-                }}
-                transition={{
-                  duration: 3.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5
-                }}
-              />
-              
-              {/* Flowing ribbon */}
-              <motion.path
-                d="M 200 250 Q 350 200 500 250 Q 650 300 700 250"
-                stroke="url(#ribbonGradient)"
-                strokeWidth="12"
-                fill="none"
-                strokeDasharray="0 1"
-                animate={{
-                  strokeDasharray: ["0 1", "1 0"],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-              
-              {/* Three filter gates */}
-              <motion.circle
-                cx="350"
-                cy="200"
-                r="20"
-                stroke="hsl(var(--primary))"
-                strokeWidth="3"
-                fill="none"
-                animate={{
-                  opacity: [0.3, 1, 0.3],
-                  scale: [0.9, 1.1, 0.9]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              <motion.circle
-                cx="500"
-                cy="250"
-                r="20"
-                stroke="hsl(var(--secondary))"
-                strokeWidth="3"
-                fill="none"
-                animate={{
-                  opacity: [0.3, 1, 0.3],
-                  scale: [0.9, 1.1, 0.9]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.7
-                }}
-              />
-              <motion.circle
-                cx="650"
-                cy="300"
-                r="20"
-                stroke="hsl(var(--accent))"
-                strokeWidth="3"
-                fill="none"
-                animate={{
-                  opacity: [0.3, 1, 0.3],
-                  scale: [0.9, 1.1, 0.9]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1.4
-                }}
-              />
-              
-              {/* Three output streams */}
-              <motion.line
-                x1="700"
-                y1="200"
-                x2="750"
-                y2="150"
-                stroke="hsl(var(--primary))"
-                strokeWidth="4"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeOut"
-                }}
-              />
-              <motion.line
-                x1="700"
-                y1="250"
-                x2="750"
-                y2="250"
-                stroke="hsl(var(--secondary))"
-                strokeWidth="4"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeOut",
-                  delay: 0.3
-                }}
-              />
-              <motion.line
-                x1="700"
-                y1="300"
-                x2="750"
-                y2="350"
-                stroke="hsl(var(--accent))"
-                strokeWidth="4"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeOut",
-                  delay: 0.6
-                }}
-              />
-              
-              <defs>
-                <linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="hsl(var(--primary))" />
-                  <stop offset="50%" stopColor="hsl(var(--secondary))" />
-                  <stop offset="100%" stopColor="hsl(var(--accent))" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </motion.div>
+        <motion.div
+          className="absolute w-96 h-96 rounded-full blur-3xl"
+          style={{
+            background: 'radial-gradient(circle, hsl(43, 74%, 57%, 0.15), transparent)',
+            top: useTransform(scrollYProgress, [0, 1], ['60%', '20%']),
+            right: useTransform(scrollYProgress, [0, 1], ['10%', '50%'])
+          }}
+        />
+      </motion.div>
+
+      {/* HERO SECTION - Opening Scene */}
+      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        {/* Circular Energy Flow Animation */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-20">
+          <svg className="w-full h-full max-w-4xl" viewBox="0 0 800 800">
+            {/* Infinite circular flow */}
+            <motion.circle
+              cx="400"
+              cy="400"
+              r="200"
+              stroke="url(#circularGradient)"
+              strokeWidth="3"
+              fill="none"
+              strokeDasharray="10 5"
+              animate={{
+                rotate: 360,
+                strokeDashoffset: [0, -100]
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            <motion.circle
+              cx="400"
+              cy="400"
+              r="280"
+              stroke="url(#circularGradient)"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="8 4"
+              animate={{
+                rotate: -360,
+                strokeDashoffset: [0, 100]
+              }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            
+            {/* Pulsing center */}
+            <motion.circle
+              cx="400"
+              cy="400"
+              r="40"
+              fill="hsl(88, 68%, 66%)"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.6, 0.3]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            
+            <defs>
+              <linearGradient id="circularGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="hsl(88, 68%, 66%)" />
+                <stop offset="50%" stopColor="hsl(43, 74%, 57%)" />
+                <stop offset="100%" stopColor="hsl(88, 68%, 66%)" />
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-7xl md:text-9xl font-bold mb-6 text-foreground">
-              The Circle That<br />
-              <span className="text-primary">Powers Tomorrow</span>
-            </h1>
-            
-            <p className="text-2xl md:text-3xl mb-12 text-muted-foreground">
-              Nature-inspired chemical recycling.
-            </p>
-          </motion.div>
-
-          {/* Problem Stats */}
-          <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <Card className="p-6 bg-card/50 backdrop-blur-md border-primary/20">
-              <div className="text-4xl font-bold text-primary mb-2">1.8B</div>
-              <p className="text-sm text-muted-foreground">tonnes GHG from plastic</p>
-            </Card>
-            <Card className="p-6 bg-card/50 backdrop-blur-md border-primary/20">
-              <div className="text-4xl font-bold text-primary mb-2">390M+</div>
-              <p className="text-sm text-muted-foreground">tonnes produced yearly</p>
-            </Card>
-            <Card className="p-6 bg-card/50 backdrop-blur-md border-primary/20">
-              <div className="text-4xl font-bold text-primary mb-2">22M+</div>
-              <p className="text-sm text-muted-foreground">tonnes leak to oceans</p>
-            </Card>
-            <Card className="p-6 bg-card/50 backdrop-blur-md border-primary/20">
-              <div className="text-4xl font-bold text-primary mb-2">9%</div>
-              <p className="text-sm text-muted-foreground">recycled globally</p>
-            </Card>
-          </motion.div>
-
-          <motion.div
+        <motion.div 
+          className="container mx-auto px-6 text-center relative z-10"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
+          <h1 className="text-7xl md:text-9xl font-bold mb-8 leading-tight">
+            <span className="text-foreground">The End Is</span><br />
+            <span className="text-primary">Just the Start</span>
+          </h1>
+          
+          <motion.p 
+            className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-muted-foreground font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ delay: 0.5, duration: 1 }}
+          >
+            Sansevieria transforms non-recyclable plastics into circular energy —<br />
+            closing the loop between waste and power.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
           >
             <Button 
               size="lg"
-              onClick={() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-xl px-12 py-7 rounded-full"
+              onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-10 py-6 rounded-full shadow-[var(--glow-primary)]"
             >
-              See how it works <ArrowDown className="ml-2" size={24} />
+              Discover the Journey <ArrowRight className="ml-2" size={20} />
             </Button>
           </motion.div>
-        </div>
-
-        <motion.div 
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <ChevronRight className="text-muted-foreground rotate-90" size={40} />
         </motion.div>
       </section>
 
-      {/* The Problem Section */}
-      <section className="py-32 bg-muted/30 relative overflow-hidden">
+      {/* THE PROBLEM SECTION - Floating Particles */}
+      <section ref={problemRef} className="min-h-screen flex items-center justify-center relative py-32">
+        {/* Animated particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-3 h-3 bg-muted rounded-full opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -100, 0],
+                x: [0, Math.random() * 50 - 25, 0],
+                opacity: [0.3, 0.6, 0.3]
+              }}
+              transition={{
+                duration: 5 + Math.random() * 3,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
+
+        <motion.div 
+          className="container mx-auto px-6 text-center relative z-10"
+          initial={{ opacity: 0 }}
+          animate={isProblemInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h2 className="text-5xl md:text-7xl font-bold mb-16 text-foreground">The Scale of the Challenge</h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {[
+              { value: "1.8B", label: "tonnes of GHG from plastics", delay: 0 },
+              { value: "390M+", label: "tonnes produced yearly", delay: 0.2 },
+              { value: "22M+", label: "tonnes leak into oceans", delay: 0.4 },
+              { value: "9%", label: "recycled globally", delay: 0.6 }
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ delay: stat.delay, duration: 0.8 }}
+              >
+                <Card className="p-8 bg-card/30 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-all">
+                  <div className="text-5xl font-bold text-primary mb-3">{stat.value}</div>
+                  <p className="text-sm text-muted-foreground">{stat.label}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* PROCESS SECTION - Morphing Flow */}
+      <section ref={processRef} className="min-h-screen flex items-center justify-center relative py-32">
+        {/* Glowing connectors */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={isProcessInView ? { opacity: 0.1 } : { opacity: 0 }}
+        >
+          <svg className="w-full h-full" viewBox="0 0 1200 600">
+            <motion.path
+              d="M 100 300 L 300 300 L 500 300 L 700 300 L 900 300 L 1100 300"
+              stroke="url(#flowGradient)"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="1000"
+              initial={{ strokeDashoffset: 1000 }}
+              animate={isProcessInView ? { strokeDashoffset: 0 } : { strokeDashoffset: 1000 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+            />
+            <defs>
+              <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="hsl(88, 68%, 66%)" />
+                <stop offset="50%" stopColor="hsl(43, 74%, 57%)" />
+                <stop offset="100%" stopColor="hsl(0, 0%, 96%)" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </motion.div>
+
         <div className="container mx-auto px-6 relative z-10">
-          <motion.div 
-            className="text-center max-w-4xl mx-auto mb-16"
+          <motion.div
+            className="text-center mb-20"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            animate={isProcessInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 1 }}
           >
-            <h2 className="text-6xl md:text-7xl font-bold mb-8 text-foreground">The Problem</h2>
-            <p className="text-3xl md:text-4xl leading-relaxed text-muted-foreground font-light">
-              The world is drowning in plastic.<br />
-              <span className="text-foreground font-semibold">Only 9% is recycled.</span>
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">The Transformation</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Five steps. One continuous flow. Complete circularity.
             </p>
           </motion.div>
 
-          <div className="text-center">
-            <Button 
-              size="lg"
-              onClick={() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-xl px-12 py-7 rounded-full"
-            >
-              See How We Transform It <ArrowDown className="ml-2" size={24} />
-            </Button>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 max-w-6xl mx-auto relative">
+            <ProcessStep
+              icon={Droplets}
+              title="Feedstock"
+              description="Mixed plastic waste"
+              isInView={isProcessInView}
+              delay={0.2}
+            />
+            <ProcessStep
+              icon={Filter}
+              title="Wash & Shred"
+              description="Cleaned uniformly"
+              isInView={isProcessInView}
+              delay={0.4}
+            />
+            <ProcessStep
+              icon={Zap}
+              title="Melt & Clean"
+              description="Proprietary removal"
+              isInView={isProcessInView}
+              delay={0.6}
+              highlighted
+            />
+            <ProcessStep
+              icon={Beaker}
+              title="Distill & Treat"
+              description="Stable molecules"
+              isInView={isProcessInView}
+              delay={0.8}
+            />
+            <ProcessStep
+              icon={ArrowRight}
+              title="Clean Fuels"
+              description="Three fractions"
+              isInView={isProcessInView}
+              delay={1}
+            />
           </div>
         </div>
       </section>
 
-      {/* Process Animation Section */}
-      <section id="process" ref={processRef} className="py-32 bg-background">
-        <div className="container mx-auto px-6">
-          <motion.div 
+      {/* PRODUCTS SECTION - Splitting Streams */}
+      <section ref={productsRef} className="min-h-screen flex items-center justify-center relative py-32">
+        {/* Animated splitting lines */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10"
+          initial={{ opacity: 0 }}
+          animate={isProductsInView ? { opacity: 0.1 } : { opacity: 0 }}
+        >
+          <svg className="w-full h-full" viewBox="0 0 800 600">
+            <motion.path
+              d="M 400 100 L 400 300"
+              stroke="hsl(88, 68%, 66%)"
+              strokeWidth="3"
+              initial={{ pathLength: 0 }}
+              animate={isProductsInView ? { pathLength: 1 } : { pathLength: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
+            <motion.path
+              d="M 400 300 L 200 500"
+              stroke="hsl(88, 68%, 66%)"
+              strokeWidth="2"
+              initial={{ pathLength: 0 }}
+              animate={isProductsInView ? { pathLength: 1 } : { pathLength: 0 }}
+              transition={{ duration: 1, delay: 1 }}
+            />
+            <motion.path
+              d="M 400 300 L 400 500"
+              stroke="hsl(43, 74%, 57%)"
+              strokeWidth="2"
+              initial={{ pathLength: 0 }}
+              animate={isProductsInView ? { pathLength: 1 } : { pathLength: 0 }}
+              transition={{ duration: 1, delay: 1.2 }}
+            />
+            <motion.path
+              d="M 400 300 L 600 500"
+              stroke="hsl(0, 0%, 96%)"
+              strokeWidth="2"
+              initial={{ pathLength: 0 }}
+              animate={isProductsInView ? { pathLength: 1 } : { pathLength: 0 }}
+              transition={{ duration: 1, delay: 1.4 }}
+            />
+          </svg>
+        </motion.div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
             className="text-center mb-20"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            animate={isProductsInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 1 }}
           >
-            <h2 className="text-6xl md:text-7xl font-bold mb-6 text-foreground">
-              From Waste to Value
-            </h2>
-            <p className="text-2xl text-muted-foreground max-w-3xl mx-auto">
-              Our proprietary process converts non-recyclable plastic into clean fuel fractions
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">Three Clean Solutions</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              From waste to specialized fuel fractions
             </p>
           </motion.div>
 
-          {/* Animated Process Steps */}
-          <div className="max-w-6xl mx-auto mb-20">
-            <div className="relative">
-              {/* Connection Line */}
-              <motion.div 
-                className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent -translate-y-1/2 hidden lg:block"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 0.3 }}
-              />
-              
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative z-10">
-                {/* Step 1: Feedstock */}
-                <ProcessStep
-                  icon={Droplets}
-                  number="1"
-                  title="Feedstock"
-                  description="Mixed plastic waste collected"
-                  delay={0}
-                />
-
-                {/* Step 2: Wash & Shred */}
-                <ProcessStep
-                  icon={Filter}
-                  number="2"
-                  title="Wash & Shred"
-                  description="Cleaned and uniformly sized"
-                  delay={0.2}
-                />
-
-                {/* Step 3: Melt & Clean (Proprietary) */}
-                <ProcessStep
-                  icon={Zap}
-                  number="3"
-                  title="Melt & Clean"
-                  description="Proprietary contaminant removal"
-                  delay={0.4}
-                  highlighted
-                />
-
-                {/* Step 4: Distill */}
-                <ProcessStep
-                  icon={Beaker}
-                  number="4"
-                  title="Distill & Treat"
-                  description="Refined to stable molecules"
-                  delay={0.6}
-                />
-
-                {/* Step 5: Products */}
-                <ProcessStep
-                  icon={ChevronRight}
-                  number="5"
-                  title="Clean Fuels"
-                  description="Three product fractions"
-                  delay={0.8}
-                />
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <ProductCard
+              icon={Beaker}
+              title="PlastiNaphtha"
+              description="Petrochemical feedstock for polymer production"
+              color="primary"
+              isInView={isProductsInView}
+              delay={0.5}
+            />
+            <ProductCard
+              icon={Plane}
+              title="PlastiSAF"
+              description="Sustainable Aviation Fuel meeting ASTM D7566"
+              color="secondary"
+              isInView={isProductsInView}
+              delay={0.7}
+            />
+            <ProductCard
+              icon={Truck}
+              title="PlastiDiesel"
+              description="Ultra-clean diesel for transport and industry"
+              color="accent"
+              isInView={isProductsInView}
+              delay={0.9}
+            />
           </div>
-
-          {/* Proprietary Cleaning Micro-Animation */}
-          <motion.div 
-            className="max-w-3xl mx-auto mb-20 p-8 bg-card/50 rounded-2xl border border-primary/30"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex items-center gap-6">
-              <div className="relative w-32 h-32 flex-shrink-0">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                  {/* Central molecule chain */}
-                  <motion.circle
-                    cx="50"
-                    cy="50"
-                    r="8"
-                    fill="hsl(var(--primary))"
-                  />
-                  <line x1="50" y1="50" x2="70" y2="40" stroke="hsl(var(--primary))" strokeWidth="2" />
-                  <motion.circle
-                    cx="70"
-                    cy="40"
-                    r="6"
-                    fill="hsl(var(--primary))"
-                  />
-                  
-                  {/* Contaminant dots that get removed */}
-                  <motion.circle
-                    cx="45"
-                    cy="35"
-                    r="4"
-                    fill="hsl(var(--destructive))"
-                    animate={{
-                      x: [0, -20],
-                      y: [0, -10],
-                      opacity: [1, 0]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeOut"
-                    }}
-                  />
-                  <motion.circle
-                    cx="55"
-                    cy="60"
-                    r="4"
-                    fill="hsl(var(--destructive))"
-                    animate={{
-                      x: [0, 20],
-                      y: [0, 15],
-                      opacity: [1, 0]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeOut",
-                      delay: 0.5
-                    }}
-                  />
-                  <motion.circle
-                    cx="60"
-                    cy="45"
-                    r="3"
-                    fill="hsl(var(--destructive))"
-                    animate={{
-                      x: [0, 25],
-                      y: [0, 0],
-                      opacity: [1, 0]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeOut",
-                      delay: 1
-                    }}
-                  />
-                  
-                  {/* Magnetic field effect */}
-                  <motion.circle
-                    cx="50"
-                    cy="50"
-                    r="30"
-                    stroke="hsl(var(--secondary))"
-                    strokeWidth="1"
-                    fill="none"
-                    strokeDasharray="4 4"
-                    animate={{
-                      rotate: 360
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                  />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-primary mb-2">Proprietary Contaminant Removal</h3>
-                <p className="text-muted-foreground">
-                  Removes halogens, metals, and impurities from the oil — clean in, stable out.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Distillation Column Mini-Sim */}
-          <motion.div 
-            className="max-w-5xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-4xl font-bold text-center mb-12">Distillation Process</h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
-              {/* Distillation Column */}
-              <div className="md:col-span-1 flex justify-center">
-                <div className="relative w-32 h-96">
-                  {/* Column body with gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-accent via-secondary to-primary rounded-lg border-2 border-primary overflow-hidden">
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent"
-                      animate={{
-                        y: ["100%", "0%"]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    />
-                  </div>
-                  
-                  {/* Three taps */}
-                  <motion.div 
-                    className="absolute top-1/4 -right-4 w-4 h-4 rounded-full bg-primary"
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: 0.5
-                    }}
-                  />
-                  <motion.div 
-                    className="absolute top-1/2 -right-4 w-4 h-4 rounded-full bg-secondary"
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: 1
-                    }}
-                  />
-                  <motion.div 
-                    className="absolute top-3/4 -right-4 w-4 h-4 rounded-full bg-accent"
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: 1.5
-                    }}
-                  />
-                  
-                  {/* Temperature labels */}
-                  <div className="absolute -left-12 top-1/4 text-xs text-muted-foreground">High</div>
-                  <div className="absolute -left-12 top-1/2 text-xs text-muted-foreground">Mid</div>
-                  <div className="absolute -left-12 top-3/4 text-xs text-muted-foreground">Low</div>
-                </div>
-              </div>
-
-              {/* Product Cards with Animated Lines */}
-              <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
-                <ProductCard
-                  icon={Beaker}
-                  title="PlastiNaphtha"
-                  description="Petrochemical feedstock for polymer production"
-                  color="primary"
-                  delay={0.5}
-                />
-                <ProductCard
-                  icon={Plane}
-                  title="PlastiSAF"
-                  description="Sustainable Aviation Fuel meeting ASTM D7566"
-                  color="secondary"
-                  delay={1}
-                />
-                <ProductCard
-                  icon={Truck}
-                  title="PlastiDiesel"
-                  description="Ultra-clean diesel for transport and industry"
-                  color="accent"
-                  delay={1.5}
-                />
-              </div>
-            </div>
-          </motion.div>
-
-          <p className="text-center text-xl text-muted-foreground max-w-4xl mx-auto mt-20">
-            Each Sansevieria unit can operate <span className="font-semibold text-foreground">stand-alone</span> or integrate into existing waste or refinery facilities — <span className="font-semibold text-foreground">skipping new infrastructure or bureaucracy</span>.
-          </p>
         </div>
       </section>
 
-      {/* Technology Roadmap */}
-      <section ref={roadmapRef} className="py-32 bg-muted/30">
-        <div className="container mx-auto px-6">
-          <motion.div 
+      {/* ROADMAP SECTION - Filling Progress */}
+      <section ref={roadmapRef} className="min-h-screen flex items-center justify-center relative py-32">
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
             className="text-center mb-20"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            animate={isRoadmapInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 1 }}
           >
-            <h2 className="text-6xl md:text-7xl font-bold mb-6 text-foreground">Technology Roadmap</h2>
-            <p className="text-2xl text-muted-foreground max-w-3xl mx-auto">
-              From lab to industrial scale
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">Our Journey</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              From laboratory to industrial impact
             </p>
           </motion.div>
 
-          <div className="max-w-5xl mx-auto">
-            {/* Animated Progress Bar */}
+          <div className="max-w-4xl mx-auto">
+            {/* Progress bar */}
             <div className="relative mb-16">
-              {/* Background bar */}
-              <div className="h-2 bg-muted rounded-full" />
-              
-              {/* Animated fill */}
-              <motion.div 
-                className="absolute top-0 left-0 h-2 bg-gradient-to-r from-primary via-secondary to-primary rounded-full"
+              <div className="h-1 bg-muted/30 rounded-full" />
+              <motion.div
+                className="absolute top-0 left-0 h-1 rounded-full"
+                style={{
+                  background: 'linear-gradient(90deg, hsl(88, 68%, 66%), hsl(43, 74%, 57%), hsl(0, 0%, 96%))'
+                }}
                 initial={{ width: "0%" }}
                 animate={isRoadmapInView ? { width: "66%" } : { width: "0%" }}
                 transition={{ duration: 2, ease: "easeOut" }}
               />
-              
+
               <div className="grid grid-cols-3 gap-8 mt-12">
-                {/* TRL 1-2 */}
                 <RoadmapNode
                   label="TRL 1-2"
                   title="Lab Tests"
-                  description="Initial research and proof of concept"
                   status="complete"
+                  isInView={isRoadmapInView}
                   delay={0.3}
                 />
-
-                {/* TRL 3-5 */}
                 <RoadmapNode
                   label="TRL 3-5"
                   title="Pilot Phase"
-                  description="Active testing and optimization"
                   status="current"
+                  isInView={isRoadmapInView}
                   delay={0.6}
                 />
-
-                {/* TRL 7-8 */}
                 <RoadmapNode
                   label="TRL 7-8"
-                  title="Industrial Deployment"
-                  description="Full-scale commercial operation"
+                  title="Industrial Scale"
                   status="target"
+                  isInView={isRoadmapInView}
                   delay={0.9}
                 />
               </div>
             </div>
-
-            <p className="text-center text-xl text-muted-foreground">
-              Sansevieria's technology is currently in <span className="font-semibold text-foreground">active testing and optimization phase</span>
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section className="py-32 bg-gradient-to-br from-primary/10 via-background to-secondary/10 relative overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.div 
-            className="text-center max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-6xl md:text-7xl font-bold mb-12">Our Vision</h2>
-            <p className="text-3xl md:text-4xl leading-relaxed font-light">
-              We are building <span className="text-primary font-semibold">smart, modular, and organic</span> waste refineries that bring <span className="text-secondary font-semibold">circularity and energy sustainability</span> to life —
-            </p>
-            <p className="text-3xl md:text-4xl leading-relaxed font-light mt-6">
-              inspired by nature, engineered for impact.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      {/* VISION SECTION - Closing Scene */}
+      <section ref={visionRef} className="min-h-screen flex items-center justify-center relative py-32">
+        {/* Circular pulse animation */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={isVisionInView ? { opacity: 0.15 } : { opacity: 0 }}
+        >
+          <motion.div
+            className="w-96 h-96 rounded-full border-2 border-primary"
+            animate={{
+              scale: [1, 2, 1],
+              opacity: [0.5, 0, 0.5]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeOut"
+            }}
+          />
+          <motion.div
+            className="absolute w-96 h-96 rounded-full border-2 border-secondary"
+            animate={{
+              scale: [1, 2.5, 1],
+              opacity: [0.4, 0, 0.4]
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeOut",
+              delay: 1
+            }}
+          />
+        </motion.div>
 
-      {/* CTA */}
-      <section className="py-32 bg-background">
-        <div className="container mx-auto px-6 text-center">
-          <motion.div 
-            className="max-w-4xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+        <motion.div
+          className="container mx-auto px-6 text-center relative z-10"
+          initial={{ opacity: 0, y: 40 }}
+          animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 1.2 }}
+        >
+          <h2 className="text-5xl md:text-7xl font-bold mb-12 text-foreground">Our Vision</h2>
+          <p className="text-3xl md:text-4xl leading-relaxed font-light max-w-4xl mx-auto mb-16">
+            <span className="text-primary">Nature's design.</span>{" "}
+            <span className="text-secondary">Human innovation.</span>{" "}
+            <span className="text-foreground">Circular power for the planet.</span>
+          </p>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isVisionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 text-foreground">
-              Join the Journey
-            </h2>
-            <p className="text-2xl text-muted-foreground mb-12">
-              Partner with us to transform plastic waste into sustainable value
-            </p>
-            <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-xl px-12 py-7 rounded-full">
-              <Link to="/contact">Get in Touch</Link>
+            <Button 
+              asChild
+              size="lg"
+              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 text-lg px-10 py-6 rounded-full shadow-[var(--glow-primary)]"
+            >
+              <Link to="/contact">
+                Join the Movement <ArrowRight className="ml-2" size={20} />
+              </Link>
             </Button>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
 };
 
 // Process Step Component
-const ProcessStep = ({ icon: Icon, number, title, description, delay, highlighted = false }: any) => (
+const ProcessStep = ({ icon: Icon, title, description, isInView, delay, highlighted = false }: any) => (
   <motion.div
     className="text-center relative"
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ delay, duration: 0.6 }}
+    initial={{ opacity: 0, y: 40 }}
+    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+    transition={{ delay, duration: 0.8 }}
   >
-    <motion.div 
-      className={`w-24 h-24 mx-auto mb-6 rounded-full border-4 border-background flex items-center justify-center relative z-10 ${
-        highlighted ? 'bg-gradient-to-br from-primary to-secondary' : 'bg-card'
+    <motion.div
+      className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
+        highlighted 
+          ? 'bg-gradient-to-br from-primary to-secondary' 
+          : 'bg-card/40 backdrop-blur-sm border-2 border-primary/30'
       }`}
-      whileHover={{ scale: 1.1 }}
+      whileHover={{ scale: 1.1, boxShadow: 'var(--glow-primary)' }}
       animate={highlighted ? {
         boxShadow: [
-          "0 0 20px hsl(var(--primary) / 0.3)",
-          "0 0 40px hsl(var(--secondary) / 0.5)",
-          "0 0 20px hsl(var(--primary) / 0.3)"
+          '0 0 20px hsl(88 68% 66% / 0.3)',
+          '0 0 40px hsl(43 74% 57% / 0.5)',
+          '0 0 20px hsl(88 68% 66% / 0.3)'
         ]
       } : {}}
-      transition={highlighted ? {
-        duration: 2,
-        repeat: Infinity
-      } : {}}
+      transition={highlighted ? { duration: 2, repeat: Infinity } : {}}
     >
-      <Icon className={highlighted ? "text-background" : "text-primary"} size={32} />
+      <Icon className={highlighted ? "text-background" : "text-primary"} size={28} />
     </motion.div>
-    <div className={`inline-block px-3 py-1 rounded-full text-sm font-bold mb-2 ${
-      highlighted ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground'
-    }`}>
-      {number}
-    </div>
-    <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
+    <h3 className="text-lg font-semibold mb-2 text-foreground">{title}</h3>
     <p className="text-sm text-muted-foreground">{description}</p>
   </motion.div>
 );
 
 // Product Card Component
-const ProductCard = ({ icon: Icon, title, description, color, delay }: any) => {
-  const colorMap: any = {
-    primary: "hsl(var(--primary))",
-    secondary: "hsl(var(--secondary))",
-    accent: "hsl(var(--accent))"
-  };
-
+const ProductCard = ({ icon: Icon, title, description, color, isInView, delay }: any) => {
+  const colorClass = color === 'primary' ? 'text-primary' : color === 'secondary' ? 'text-secondary' : 'text-accent';
+  
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay }}
-      whileHover={{ y: -8, scale: 1.02 }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ delay, duration: 0.8 }}
+      whileHover={{ y: -10, transition: { duration: 0.3 } }}
     >
-      <Card className="p-8 h-full border-2 hover:border-primary transition-all cursor-pointer group">
-        <motion.div 
-          className={`w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-${color}/30 to-${color}/10 flex items-center justify-center`}
+      <Card className="p-8 h-full bg-card/30 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all group cursor-pointer">
+        <motion.div
+          className="w-20 h-20 mx-auto mb-6 rounded-full bg-card/50 flex items-center justify-center"
           whileHover={{ rotate: 360 }}
           transition={{ duration: 0.6 }}
         >
-          <Icon size={40} style={{ color: colorMap[color] }} />
+          <Icon className={colorClass} size={36} />
         </motion.div>
         <h3 className="text-2xl font-bold mb-3 text-foreground">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
@@ -764,42 +581,25 @@ const ProductCard = ({ icon: Icon, title, description, color, delay }: any) => {
 };
 
 // Roadmap Node Component
-const RoadmapNode = ({ label, title, description, status, delay }: any) => {
-  const bgMap = {
-    complete: "bg-primary",
-    current: "bg-secondary",
-    target: "bg-muted"
-  };
+const RoadmapNode = ({ label, title, status, isInView, delay }: any) => {
+  const bgClass = status === 'complete' ? 'bg-primary' : status === 'current' ? 'bg-secondary' : 'bg-muted/40';
+  const statusIcon = status === 'complete' ? '✓' : status === 'current' ? '▶' : '◻';
   
-  const textMap = {
-    complete: "text-primary-foreground",
-    current: "text-secondary-foreground",
-    target: "text-muted-foreground"
-  };
-
-  const statusIcon = {
-    complete: "✓",
-    current: "▶",
-    target: "◻"
-  };
-
   return (
     <motion.div
-      className="text-center relative"
+      className="text-center"
       initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay }}
+      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+      transition={{ delay, duration: 0.6 }}
     >
-      <motion.div 
-        className={`w-24 h-24 mx-auto mb-6 rounded-full ${bgMap[status]} border-4 border-background flex items-center justify-center relative z-10`}
+      <motion.div
+        className={`w-20 h-20 mx-auto mb-4 rounded-full ${bgClass} flex items-center justify-center border-4 border-background`}
         whileHover={{ scale: 1.1 }}
       >
-        <span className={`text-3xl font-bold ${textMap[status]}`}>{statusIcon[status]}</span>
+        <span className="text-2xl font-bold text-foreground">{statusIcon}</span>
       </motion.div>
-      <div className="text-lg font-bold text-primary mb-2">{label}</div>
-      <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
-      <p className="text-sm text-muted-foreground">{description}</p>
+      <div className="text-sm font-bold text-primary mb-2">{label}</div>
+      <h3 className="text-lg font-semibold text-foreground">{title}</h3>
     </motion.div>
   );
 };
