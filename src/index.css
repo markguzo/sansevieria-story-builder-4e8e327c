@@ -8,73 +8,73 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Sansevieria Deep Tech Nature - Brighter Version */
-    --background: 155 40% 28%; /* Brighter Forest Green */
-    --foreground: 0 0% 98%; /* Off-White #F5F5F5 */
+    /* Sansevieria Bright Circular Energy Theme */
+    --background: 120 30% 97%; /* Very Light Green #F7FAF7 */
+    --foreground: 150 40% 18%; /* Dark Forest Green #1E392A */
 
-    --card: 155 35% 35%;
-    --card-foreground: 0 0% 98%;
+    --card: 120 25% 95%; /* Soft white-green */
+    --card-foreground: 150 40% 18%;
 
-    --popover: 155 35% 35%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 120 30% 97%;
+    --popover-foreground: 150 40% 18%;
 
-    --primary: 88 68% 66%; /* Bright Green #9BE15D */
-    --primary-foreground: 155 50% 12%;
+    --primary: 88 68% 66%; /* Lime Green #A4E868 */
+    --primary-foreground: 150 40% 18%;
 
-    --secondary: 43 74% 57%; /* Warm Yellow #E3B341 */
-    --secondary-foreground: 155 50% 12%;
+    --secondary: 43 90% 72%; /* Warm Yellow #FFD970 */
+    --secondary-foreground: 150 40% 18%;
 
-    --muted: 155 25% 40%;
-    --muted-foreground: 0 0% 95%; /* Light Gray */
+    --muted: 120 15% 85%; /* Light gray-green */
+    --muted-foreground: 150 30% 35%;
 
-    --accent: 43 74% 57%; /* Warm Yellow #E3B341 */
-    --accent-foreground: 155 50% 12%;
+    --accent: 88 68% 66%; /* Lime Green accent */
+    --accent-foreground: 150 40% 18%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 155 20% 45%;
-    --input: 155 20% 45%;
+    --border: 120 20% 85%;
+    --input: 120 20% 90%;
     --ring: 88 68% 66%;
 
     --radius: 0.75rem;
 
-    /* Cinematic Design Tokens */
-    --gradient-circular: radial-gradient(circle at center, hsl(88, 68%, 66%), hsl(43, 74%, 57%), transparent);
-    --gradient-flow: linear-gradient(90deg, hsl(88, 68%, 66%), hsl(43, 74%, 57%), hsl(0, 0%, 96%));
-    --glow-primary: 0 0 60px hsl(88 68% 66% / 0.5);
-    --glow-secondary: 0 0 40px hsl(43 74% 57% / 0.4);
-    --shadow-soft: 0 10px 40px hsl(0 0% 0% / 0.3);
+    /* Light Theme Design Tokens */
+    --gradient-circular: radial-gradient(circle at center, hsl(88, 68%, 66%, 0.3), hsl(43, 90%, 72%, 0.2), transparent);
+    --gradient-flow: linear-gradient(90deg, hsl(88, 68%, 66%), hsl(43, 90%, 72%));
+    --glow-primary: 0 0 30px hsl(88 68% 66% / 0.6);
+    --glow-secondary: 0 0 20px hsl(43 90% 72% / 0.5);
+    --shadow-soft: 0 4px 20px hsl(88 68% 66% / 0.15);
     --transition-cinematic: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 155 40% 28%;
-    --foreground: 0 0% 98%;
+    --background: 120 30% 97%;
+    --foreground: 150 40% 18%;
 
-    --card: 155 35% 35%;
-    --card-foreground: 0 0% 98%;
+    --card: 120 25% 95%;
+    --card-foreground: 150 40% 18%;
 
-    --popover: 155 35% 35%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 120 30% 97%;
+    --popover-foreground: 150 40% 18%;
 
     --primary: 88 68% 66%;
-    --primary-foreground: 155 50% 12%;
+    --primary-foreground: 150 40% 18%;
 
-    --secondary: 43 74% 57%;
-    --secondary-foreground: 155 50% 12%;
+    --secondary: 43 90% 72%;
+    --secondary-foreground: 150 40% 18%;
 
-    --muted: 155 25% 40%;
-    --muted-foreground: 0 0% 95%;
+    --muted: 120 15% 85%;
+    --muted-foreground: 150 30% 35%;
 
-    --accent: 43 74% 57%;
-    --accent-foreground: 155 50% 12%;
+    --accent: 88 68% 66%;
+    --accent-foreground: 150 40% 18%;
 
-    --destructive: 0 62% 30%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 155 20% 45%;
-    --input: 155 20% 45%;
+    --border: 120 20% 85%;
+    --input: 120 20% 90%;
     --ring: 88 68% 66%;
   }
 }

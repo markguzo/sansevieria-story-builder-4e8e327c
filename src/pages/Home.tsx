@@ -25,7 +25,7 @@ const Home = () => {
     offset: ["start start", "end end"]
   });
 
-  const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [30, 25, 28, 32, 35, 40]);
+  const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [97, 96, 95, 96, 97, 98]);
   
   const isProblemInView = useInView(problemRef, { amount: 0.5 });
   const isProcessInView = useInView(processRef, { amount: 0.3 });
@@ -35,81 +35,59 @@ const Home = () => {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground relative">
-      {/* Unified Continuous Background with Emotional Glow */}
+      {/* Unified Continuous Light Background */}
       <motion.div 
         className="fixed inset-0 -z-10"
         style={{
-          background: `
-            radial-gradient(circle at 50% 20%, hsl(88, 68%, 45%) 0%, transparent 40%),
-            radial-gradient(circle at 50% 20%, hsl(88, 68%, 35%) 0%, transparent 60%),
-            radial-gradient(circle at 50% 50%, hsl(155, 45%, ${backgroundLightness}%), hsl(155, 50%, 18%))
-          `
+          background: `linear-gradient(180deg, hsl(120, 30%, ${backgroundLightness}%), hsl(120, 25%, 92%))`
         }}
       />
       
-      {/* Pulsing Emotional Glow from Circle */}
-      <motion.div
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] -z-10 pointer-events-none"
-        animate={{
-          opacity: [0.4, 0.7, 0.4],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        style={{
-          background: 'radial-gradient(circle, hsl(88, 68%, 55%, 0.6) 0%, hsl(88, 68%, 45%, 0.3) 30%, transparent 70%)',
-          filter: 'blur(60px)'
-        }}
-      />
-
-      {/* Ambient Glow Effects - Enhanced */}
+      {/* Soft Ambient Glow Effects */}
       <motion.div
         className="fixed inset-0 -z-10 pointer-events-none"
         style={{
-          opacity: useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0.9, 0.6, 0.7, 0.6, 0.8, 0.5])
+          opacity: useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0.4, 0.3, 0.35, 0.3, 0.4, 0.25])
         }}
       >
         <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full blur-3xl"
+          className="absolute w-[800px] h-[800px] rounded-full blur-[100px]"
           style={{
-            background: 'radial-gradient(circle, hsl(88, 68%, 60%, 0.4), transparent)',
+            background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.25), transparent)',
             top: useTransform(scrollYProgress, [0, 1], ['10%', '80%']),
-            left: useTransform(scrollYProgress, [0, 1], ['20%', '60%'])
+            left: useTransform(scrollYProgress, [0, 1], ['15%', '55%'])
           }}
         />
         <motion.div
-          className="absolute w-[500px] h-[500px] rounded-full blur-3xl"
+          className="absolute w-[600px] h-[600px] rounded-full blur-[100px]"
           style={{
-            background: 'radial-gradient(circle, hsl(43, 74%, 57%, 0.3), transparent)',
-            top: useTransform(scrollYProgress, [0, 1], ['60%', '20%']),
-            right: useTransform(scrollYProgress, [0, 1], ['10%', '50%'])
+            background: 'radial-gradient(circle, hsl(43, 90%, 72%, 0.2), transparent)',
+            top: useTransform(scrollYProgress, [0, 1], ['50%', '15%']),
+            right: useTransform(scrollYProgress, [0, 1], ['10%', '45%'])
           }}
         />
       </motion.div>
 
       {/* HERO SECTION */}
       <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden pb-0">
-        {/* Hero Image - Spinning Circle Animation */}
+        {/* Hero Circle - Spinning Animation */}
         <motion.div 
           className="absolute inset-0 flex items-center justify-center"
           initial={{ scale: 2, opacity: 1 }}
-          animate={{ scale: 1, opacity: 0.5 }}
+          animate={{ scale: 1, opacity: 0.15 }}
           transition={{ duration: 2.5, ease: [0.34, 1.56, 0.64, 1] }}
         >
           <motion.img 
             src={heroCircularFlow} 
             alt="Circular energy flow" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover mix-blend-multiply"
             initial={{ rotate: 0 }}
             animate={{ rotate: 360 }}
             transition={{ duration: 2, ease: "easeInOut" }}
           />
         </motion.div>
         
-        {/* Intense Green Glow Behind Circle */}
+        {/* Soft Lime Green Glow */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -117,10 +95,10 @@ const Home = () => {
           transition={{ duration: 2, delay: 0.5 }}
         >
           <motion.div
-            className="w-[600px] h-[600px]"
+            className="w-[700px] h-[700px]"
             animate={{
-              opacity: [0.6, 1, 0.6],
-              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+              scale: [1, 1.15, 1],
             }}
             transition={{
               duration: 5,
@@ -128,7 +106,7 @@ const Home = () => {
               ease: "easeInOut"
             }}
             style={{
-              background: 'radial-gradient(circle, hsl(88, 68%, 55%, 0.8) 0%, hsl(88, 68%, 45%, 0.4) 40%, transparent 70%)',
+              background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.4) 0%, hsl(88, 68%, 66%, 0.2) 40%, transparent 70%)',
               filter: 'blur(80px)'
             }}
           />
@@ -163,7 +141,7 @@ const Home = () => {
             <Button 
               size="lg"
               onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-base px-8 py-5 rounded-full shadow-[var(--glow-primary)]"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-base px-8 py-5 rounded-full shadow-lg hover:shadow-[var(--glow-primary)] transition-all"
             >
               Discover the Journey <ArrowRight className="ml-2" size={18} />
             </Button>
@@ -176,13 +154,13 @@ const Home = () => {
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={isProblemInView ? { opacity: 0.3 } : { opacity: 0 }}
+          animate={isProblemInView ? { opacity: 0.08 } : { opacity: 0 }}
           transition={{ duration: 1.5 }}
         >
           <img 
             src={problemParticles} 
             alt="Plastic particles" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover mix-blend-multiply"
           />
         </motion.div>
 
@@ -207,7 +185,7 @@ const Home = () => {
                 animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ delay: stat.delay, duration: 0.6 }}
               >
-                <Card className="p-6 bg-card/20 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-all">
+                <Card className="p-6 bg-white/60 backdrop-blur-sm border-primary/30 hover:border-primary/60 transition-all shadow-sm hover:shadow-md">
                   <div className="text-4xl font-bold text-primary mb-2">{stat.value}</div>
                   <p className="text-xs text-muted-foreground">{stat.label}</p>
                 </Card>
@@ -222,13 +200,13 @@ const Home = () => {
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={isProcessInView ? { opacity: 0.25 } : { opacity: 0 }}
+          animate={isProcessInView ? { opacity: 0.06 } : { opacity: 0 }}
           transition={{ duration: 1.5 }}
         >
           <img 
             src={processAbstract} 
             alt="Energy flow transformation" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover mix-blend-multiply"
           />
         </motion.div>
 
@@ -304,13 +282,13 @@ const Home = () => {
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={isProductsInView ? { opacity: 0.2 } : { opacity: 0 }}
+          animate={isProductsInView ? { opacity: 0.05 } : { opacity: 0 }}
           transition={{ duration: 1.5 }}
         >
           <img 
             src={productsEnergy} 
             alt="Energy products" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover mix-blend-multiply"
           />
         </motion.div>
 
@@ -361,13 +339,13 @@ const Home = () => {
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={isRoadmapInView ? { opacity: 0.15 } : { opacity: 0 }}
+          animate={isRoadmapInView ? { opacity: 0.04 } : { opacity: 0 }}
           transition={{ duration: 1.5 }}
         >
           <img 
             src={roadmapTimeline} 
             alt="Technology roadmap" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover mix-blend-multiply"
           />
         </motion.div>
 
@@ -430,13 +408,13 @@ const Home = () => {
         <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={isVisionInView ? { opacity: 0.25 } : { opacity: 0 }}
+          animate={isVisionInView ? { opacity: 0.07 } : { opacity: 0 }}
           transition={{ duration: 2 }}
         >
           <img 
             src={visionLeaf} 
             alt="Sansevieria leaf" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover mix-blend-multiply"
           />
         </motion.div>
 
@@ -461,7 +439,7 @@ const Home = () => {
             <Button 
               asChild
               size="lg"
-              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 text-base px-8 py-5 rounded-full shadow-[var(--glow-primary)]"
+              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 text-base px-8 py-5 rounded-full shadow-lg hover:shadow-[var(--glow-primary)] transition-all"
             >
               <Link to="/contact">
                 Join the Movement <ArrowRight className="ml-2" size={18} />
@@ -484,15 +462,15 @@ const ProcessStep = ({ icon: Icon, title, description, isInView, delay, highligh
     <motion.div
       className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
         highlighted 
-          ? 'bg-gradient-to-br from-primary to-secondary' 
-          : 'bg-card/30 backdrop-blur-sm border-2 border-primary/30'
+          ? 'bg-gradient-to-br from-primary to-secondary shadow-lg' 
+          : 'bg-white/70 backdrop-blur-sm border-2 border-primary/40 shadow-sm'
       }`}
       whileHover={{ scale: 1.15, boxShadow: 'var(--glow-primary)' }}
       animate={highlighted ? {
         boxShadow: [
-          '0 0 20px hsl(88 68% 66% / 0.3)',
-          '0 0 40px hsl(43 74% 57% / 0.5)',
-          '0 0 20px hsl(88 68% 66% / 0.3)'
+          '0 0 20px hsl(88 68% 66% / 0.4)',
+          '0 0 30px hsl(43 90% 72% / 0.6)',
+          '0 0 20px hsl(88 68% 66% / 0.4)'
         ]
       } : {}}
       transition={highlighted ? { duration: 2, repeat: Infinity } : {}}
@@ -514,9 +492,9 @@ const ProductCard = ({ icon: Icon, title, description, color, isInView, delay }:
       transition={{ delay, duration: 0.6 }}
       whileHover={{ y: -8, transition: { duration: 0.3 } }}
     >
-      <Card className="p-6 h-full bg-card/20 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all group cursor-pointer">
+      <Card className="p-6 h-full bg-white/60 backdrop-blur-sm border-primary/30 hover:border-primary/60 transition-all group cursor-pointer shadow-sm hover:shadow-lg">
         <motion.div
-          className="w-16 h-16 mx-auto mb-4 rounded-full bg-card/40 flex items-center justify-center"
+          className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/80 flex items-center justify-center shadow-sm"
           whileHover={{ rotate: 360 }}
           transition={{ duration: 0.6 }}
         >
@@ -530,7 +508,7 @@ const ProductCard = ({ icon: Icon, title, description, color, isInView, delay }:
 };
 
 const RoadmapNode = ({ label, title, status, isInView, delay }: any) => {
-  const bgClass = status === 'complete' ? 'bg-primary' : status === 'current' ? 'bg-secondary' : 'bg-muted/40';
+  const bgClass = status === 'complete' ? 'bg-primary shadow-[var(--glow-primary)]' : status === 'current' ? 'bg-secondary shadow-[var(--glow-secondary)]' : 'bg-white/70 border-2 border-muted';
   const statusIcon = status === 'complete' ? '✓' : status === 'current' ? '▶' : '◻';
   
   return (
