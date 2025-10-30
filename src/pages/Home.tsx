@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
 import heroCircularFlow from "@/assets/hero-circular-flow.jpg";
+import heroBackgroundVideo from "@/assets/hero-background.mp4";
 import problemParticles from "@/assets/problem-particles.jpg";
 import processAbstract from "@/assets/process-abstract.jpg";
 import productsEnergy from "@/assets/products-energy.jpg";
@@ -67,90 +68,52 @@ const Home = () => {
         />
       </motion.div>
 
-      {/* HERO SECTION - Rhythmic Circle & Text Pop Animation */}
+      {/* HERO SECTION - Video Background with Text Animation */}
       <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden pb-0">
-        {/* Hero Circle - Pulse-Rotate with Rhythmic Energy */}
+        {/* Video Background */}
         <motion.div 
-          className="absolute inset-0 flex items-center justify-center"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.15 }}
-          transition={{ duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
         >
-          <motion.div 
-            className="relative w-full h-full"
-            animate={{
-              rotate: 360,
-              scale: [1, 1.08, 1, 1.08, 1]
-            }}
-            transition={{
-              rotate: { duration: 8, ease: "linear", repeat: Infinity },
-              scale: { duration: 4, ease: "easeInOut", repeat: Infinity }
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+            style={{ 
+              filter: 'brightness(0.7) contrast(1.1)',
+              mixBlendMode: 'normal'
             }}
           >
-            <img 
-              src={heroCircularFlow} 
-              alt="Circular energy flow" 
-              className="w-full h-full object-cover mix-blend-multiply"
-              style={{
-                filter: 'drop-shadow(0 0 80px hsl(88 68% 66% / 0.4))'
-              }}
-            />
-            {/* 3D Lighting Overlay that rotates with circle */}
-            <motion.div
-              className="absolute inset-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.5, delay: 0.5 }}
-              style={{
-                background: 'radial-gradient(circle at 30% 30%, hsl(88 68% 66% / 0.3), transparent 50%)',
-                mixBlendMode: 'overlay'
-              }}
-            />
-          </motion.div>
-        </motion.div>
-        
-        {/* Deeper Pulsing Glow Behind Circle */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-        >
-          <motion.div
-            className="w-[900px] h-[900px]"
-            animate={{
-              opacity: [0.3, 0.7, 0.3],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            style={{
-              background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.6) 0%, hsl(43, 90%, 72%, 0.4) 35%, transparent 65%)',
-              filter: 'blur(100px)'
-            }}
-          />
+            <source src={heroBackgroundVideo} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/50" />
         </motion.div>
 
         <motion.div 
           className="container mx-auto px-6 text-center relative z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
         >
-          {/* Rhythmic Word Pop Animation */}
+          {/* Text Animation synchronized with video emotion */}
           <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight" style={{ perspective: '1000px' }}>
             {["The", "Circle", "That"].map((word, i) => (
               <motion.span
                 key={i}
                 className="inline-block mr-4 text-foreground"
-                initial={{ opacity: 0, y: 50, rotateX: -90, scale: 0.5 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.3, y: 60 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1, 
+                  y: 0 
+                }}
                 transition={{
-                  duration: 0.7,
-                  delay: 1.2 + i * 0.25,
+                  duration: 0.6,
+                  delay: 0.8 + i * 0.15,
                   ease: [0.34, 1.56, 0.64, 1]
                 }}
               >
@@ -162,11 +125,15 @@ const Home = () => {
               <motion.span
                 key={i}
                 className="inline-block mr-4 text-primary"
-                initial={{ opacity: 0, y: 50, rotateX: -90, scale: 0.5 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.3, y: 60 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1, 
+                  y: 0 
+                }}
                 transition={{
-                  duration: 0.7,
-                  delay: 2.1 + i * 0.25,
+                  duration: 0.6,
+                  delay: 1.3 + i * 0.15,
                   ease: [0.34, 1.56, 0.64, 1]
                 }}
                 style={{
@@ -179,10 +146,10 @@ const Home = () => {
           </h1>
           
           <motion.p 
-            className="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-muted-foreground font-light"
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
+            className="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-foreground font-light"
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 2.8, duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
+            transition={{ delay: 1.8, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
           >
             Sansevieria transforms non-recyclable plastics into circular energy —<br />
             closing the loop between waste and power.
@@ -191,7 +158,7 @@ const Home = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.3 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 3.2, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
+            transition={{ delay: 2.2, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
             whileHover={{ scale: 1.08, y: -4 }}
             whileTap={{ scale: 0.95 }}
           >
