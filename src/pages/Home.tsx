@@ -3,7 +3,7 @@ import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play } from "l
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import heroCircularFlow from "@/assets/hero-circular-flow.jpg";
 import heroBackgroundVideo from "@/assets/hero-background.mp4";
 import problemParticles from "@/assets/problem-particles.jpg";
@@ -56,13 +56,15 @@ const Home = () => {
   );
 
   // Pause video when animation completes
-  const pauseVideoWhenComplete = (progress: number) => {
-    if (progress > 0.85 && circleVideoRef.current && !circleVideoRef.current.paused) {
-      circleVideoRef.current.pause();
-    }
-  };
-
-  heroProgress.on('change', pauseVideoWhenComplete);
+  useEffect(() => {
+    const unsubscribe = heroProgress.on('change', (progress) => {
+      if (progress > 0.85 && circleVideoRef.current && !circleVideoRef.current.paused) {
+        circleVideoRef.current.pause();
+      }
+    });
+    
+    return () => unsubscribe();
+  }, [heroProgress]);
   
   const isProblemInView = useInView(problemRef, { amount: 0.2, once: true });
   const isProcessInView = useInView(processRef, { amount: 0.2, once: true });
@@ -96,14 +98,14 @@ const Home = () => {
           y: '-50%',
           scale: circleScale,
           opacity: circleOpacity,
-          filter: circleBlur.get() ? `blur(${circleBlur.get()}px)` : 'blur(0px)',
           willChange: 'transform, opacity'
         }}
       >
-        <div 
+        <motion.div 
           className="w-[900px] h-[900px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.6) 0%, rgba(189, 249, 200, 0.4) 35%, transparent 65%)'
+            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.6) 0%, rgba(189, 249, 200, 0.4) 35%, transparent 65%)',
+            filter: circleBlur
           }}
         />
       </motion.div>
