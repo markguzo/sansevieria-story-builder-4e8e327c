@@ -103,11 +103,12 @@ const Home = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
         >
           {/* Text Animation synchronized with video emotion */}
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight" style={{ perspective: '1000px' }}>
-            {["The", "Circle", "That"].map((word, i) => (
+          <h1 className="text-6xl md:text-8xl font-bold mb-12 leading-tight" style={{ perspective: '1000px' }}>
+            {["The", "Circle", "That", "Powers", "Tomorrow"].map((word, i) => (
               <motion.span
                 key={i}
-                className="inline-block mr-4 text-foreground"
+                className="inline-block mr-4"
+                style={{ color: '#0E362C' }}
                 initial={{ opacity: 0, scale: 0.3, y: 60 }}
                 animate={{ 
                   opacity: 1, 
@@ -123,54 +124,42 @@ const Home = () => {
                 {word}
               </motion.span>
             ))}
-            <br />
-            {["Powers", "Tomorrow"].map((word, i) => (
-              <motion.span
-                key={i}
-                className="inline-block mr-4 text-primary"
-                initial={{ opacity: 0, scale: 0.3, y: 60 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1, 
-                  y: 0 
-                }}
-                transition={{
-                  duration: 0.6,
-                  delay: 1.3 + i * 0.15,
-                  ease: [0.34, 1.56, 0.64, 1]
-                }}
-                style={{
-                  filter: 'drop-shadow(0 0 20px hsl(88 68% 66% / 0.5))'
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}
           </h1>
           
           <motion.p 
-            className="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-foreground font-light"
+            className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto leading-relaxed font-light"
+            style={{ color: '#0E362C' }}
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 1.8, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
           >
-            Sansevieria transforms non-recyclable plastics into circular energy —<br />
-            closing the loop between waste and power.
+            Turning today's waste into tomorrow's energy.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.3 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 2.2, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-            whileHover={{ scale: 1.08, y: -4 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Button 
               size="lg"
               onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-base px-10 py-6 rounded-full shadow-lg hover:shadow-[var(--glow-primary)] transition-all"
+              className="text-lg px-12 py-7 rounded-full font-medium transition-all duration-300"
+              style={{ 
+                backgroundColor: '#0E362C',
+                color: '#C6FF5C',
+                border: '2px solid #C6FF5C'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 30px rgba(198, 255, 92, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = 'none';
+              }}
             >
-              Discover the Journey <ArrowRight className="ml-2" size={20} />
+              Learn how we do it ↓
             </Button>
           </motion.div>
         </motion.div>
