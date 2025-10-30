@@ -307,7 +307,7 @@ const Home = () => {
       </section>
 
       {/* THE SCALE OF THE CHALLENGE */}
-      <section ref={problemRef} className="min-h-screen flex items-center justify-center relative py-16 -mt-20">
+      <section ref={problemRef} className="min-h-screen flex items-center justify-center relative py-12 -mt-20">
         <div className="container mx-auto px-6 relative z-10">
           <motion.h2 
             className="text-5xl md:text-7xl font-bold mb-6 text-center"
@@ -348,14 +348,23 @@ const Home = () => {
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 1, y: 0 }}
-                whileTap={{ 
-                  scale: 1.12, 
-                  y: -16,
-                  rotateY: 8,
-                  rotateX: -5,
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1,
+                  transition: {
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  }
+                }}
+                viewport={{ once: true, amount: 0.4 }}
+                whileHover={{ 
+                  y: -12, 
+                  scale: 1.05,
                   transition: { 
-                    duration: 0.3,
+                    duration: 0.4,
                     ease: [0.25, 0.1, 0.25, 1]
                   }
                 }}
@@ -388,7 +397,7 @@ const Home = () => {
                   >
                     <CountUpMetric 
                       end={stat.value} 
-                      duration={4500} 
+                      duration={2800} 
                       suffix={stat.suffix}
                       showMillionsToBillions={stat.showMillionsToBillions}
                     />

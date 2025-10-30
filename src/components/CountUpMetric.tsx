@@ -10,7 +10,7 @@ interface CountUpMetricProps {
 
 const CountUpMetric = ({ 
   end, 
-  duration = 4000, 
+  duration = 2800, 
   suffix = "", 
   prefix = "",
   showMillionsToBillions = false 
@@ -19,6 +19,11 @@ const CountUpMetric = ({
   const [displaySuffix, setDisplaySuffix] = useState(suffix);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
+
+  // Easing function for smooth acceleration/deceleration
+  const easeOutQuart = (x: number): number => {
+    return 1 - Math.pow(1 - x, 4);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -50,23 +55,26 @@ const CountUpMetric = ({
     const animate = (currentTime: number) => {
       if (!startTime) startTime = currentTime;
       const progress = Math.min((currentTime - startTime) / duration, 1);
+      const easedProgress = easeOutQuart(progress);
 
       // For billions, show in millions first then transition
       if (showMillionsToBillions && suffix === "B") {
         const totalMillions = end * 1000;
-        const currentValue = progress * totalMillions;
         
-        // First 70% show in millions, last 30% show in billions
-        if (progress < 0.7) {
+        // First 60% show in millions, last 40% transition to billions
+        if (progress < 0.6) {
+          const currentValue = easedProgress * totalMillions * 0.6;
           setCount(Math.floor(currentValue));
           setDisplaySuffix("M+");
         } else {
-          const billionsValue = (currentValue / 1000);
+          // Smooth transition to billions with decimal precision
+          const transitionProgress = (progress - 0.6) / 0.4;
+          const billionsValue = end * easeOutQuart(transitionProgress);
           setCount(parseFloat(billionsValue.toFixed(1)));
           setDisplaySuffix("B");
         }
       } else {
-        setCount(Math.floor(progress * end));
+        setCount(Math.floor(easedProgress * end));
         setDisplaySuffix(suffix);
       }
 
