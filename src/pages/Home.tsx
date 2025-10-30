@@ -45,7 +45,7 @@ const Home = () => {
   const circleOpacity = useTransform(
     heroScrollProgress,
     [0, 0.4, 0.8, 1],
-    [0.9, 1.0, 0.35, 0]
+    [0.9, 1.0, 0.35, 0.15]
   );
   const circleBlur = useTransform(
     heroScrollProgress,
@@ -62,7 +62,7 @@ const Home = () => {
   const videoOpacity = useTransform(
     heroScrollProgress,
     [0, 0.4, 0.8, 1],
-    [0.75, 0.8, 0.3, 0]
+    [0.75, 0.8, 0.3, 0.1]
   );
   
   const videoBrightness = useTransform(
@@ -98,6 +98,18 @@ const Home = () => {
     heroScrollProgress,
     [0, 0.15],
     [0, 0]
+  );
+
+  // Scale section reveal - fades in and rises up while circle is still visible
+  const scaleOpacity = useTransform(
+    heroScrollProgress,
+    [0.6, 0.85],
+    [0, 1]
+  );
+  const scaleY = useTransform(
+    heroScrollProgress,
+    [0.6, 0.85],
+    [80, 0]
   );
 
   // Pause video when animation completes & mark as played
@@ -251,11 +263,18 @@ const Home = () => {
               </motion.div>
             </div>
           </div>
-        </div>
 
-        {/* The Scale of the Challenge - Continuous flow, no break */}
-        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 py-32">
-          <div className="container mx-auto px-6">
+          {/* The Scale of the Challenge - Emerges from the light, overlaid on top */}
+          <motion.div 
+            ref={problemRef}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{
+              opacity: scaleOpacity,
+              y: scaleY,
+              zIndex: 20
+            }}
+          >
+            <div className="container mx-auto px-6 pointer-events-auto">
             {/* Title with smooth gradient sweep */}
             <motion.h2 
               className="text-5xl md:text-7xl font-bold mb-6 text-center"
@@ -354,7 +373,8 @@ const Home = () => {
                 </motion.div>
               ))}
             </div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
