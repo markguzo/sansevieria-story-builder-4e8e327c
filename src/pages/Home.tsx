@@ -86,6 +86,10 @@ const Home = () => {
               filter: 'brightness(0.7) contrast(1.1)',
               mixBlendMode: 'normal'
             }}
+            onLoadedData={(e) => {
+              const video = e.currentTarget;
+              video.playbackRate = 1.5;
+            }}
             onEnded={(e) => {
               const video = e.currentTarget;
               video.pause();
@@ -108,8 +112,8 @@ const Home = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              duration: 1.2, 
-              delay: 0.3,
+              duration: 1.8, 
+              delay: 0.5,
               ease: [0.25, 0.1, 0.25, 1]
             }}
             style={{ 
@@ -125,8 +129,8 @@ const Home = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              duration: 1.2, 
-              delay: 0.55,
+              duration: 1.8, 
+              delay: 0.9,
               ease: [0.25, 0.1, 0.25, 1]
             }}
             style={{ 
@@ -141,8 +145,8 @@ const Home = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              duration: 1.2, 
-              delay: 0.85,
+              duration: 1.8, 
+              delay: 1.4,
               ease: [0.25, 0.1, 0.25, 1]
             }}
           >
