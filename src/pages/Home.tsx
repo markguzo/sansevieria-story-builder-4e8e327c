@@ -27,43 +27,66 @@ const Home = () => {
     offset: ["start start", "end end"]
   });
 
-  const backgroundLightness = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [82, 80, 78, 80, 82, 84]);
+  // Dynamic background that evolves from dark to light
+  const background = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.4, 0.6, 0.8, 1],
+    [
+      'linear-gradient(180deg, hsl(150, 30%, 15%), hsl(150, 25%, 22%))',
+      'linear-gradient(180deg, hsl(150, 28%, 25%), hsl(150, 23%, 35%))',
+      'linear-gradient(180deg, hsl(150, 25%, 40%), hsl(150, 20%, 50%))',
+      'linear-gradient(180deg, hsl(150, 22%, 55%), hsl(150, 18%, 65%))',
+      'linear-gradient(180deg, hsl(150, 20%, 70%), hsl(150, 15%, 80%))',
+      'linear-gradient(180deg, hsl(150, 15%, 85%), hsl(88, 30%, 90%))'
+    ]
+  );
   
-  const isProblemInView = useInView(problemRef, { amount: 0.3, once: true });
-  const isProcessInView = useInView(processRef, { amount: 0.2, once: true });
-  const isProductsInView = useInView(productsRef, { amount: 0.2, once: true });
-  const isRoadmapInView = useInView(roadmapRef, { amount: 0.2, once: true });
-  const isVideoInView = useInView(videoRef, { amount: 0.3, once: true });
-  const isVisionInView = useInView(visionRef, { amount: 0.3, once: true });
+  const isProblemInView = useInView(problemRef, { amount: 0.3, once: false });
+  const isProcessInView = useInView(processRef, { amount: 0.2, once: false });
+  const isProductsInView = useInView(productsRef, { amount: 0.2, once: false });
+  const isRoadmapInView = useInView(roadmapRef, { amount: 0.2, once: false });
+  const isVideoInView = useInView(videoRef, { amount: 0.3, once: false });
+  const isVisionInView = useInView(visionRef, { amount: 0.3, once: false });
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground relative">
-      {/* Unified Background with Depth */}
+      {/* Evolving Background - Emerges from darkness to light */}
       <motion.div 
         className="fixed inset-0 -z-20"
-        style={{
-          background: `linear-gradient(180deg, hsl(150, 25%, ${backgroundLightness}%), hsl(150, 20%, 75%))`
-        }}
+        style={{ background }}
       />
       
-      {/* Layered Glow from Behind - Deep Layer */}
+      {/* Atmospheric Light Layers - Brightens as story progresses */}
       <motion.div className="fixed inset-0 -z-10 pointer-events-none">
+        {/* Primary mint glow - strengthens through journey */}
         <motion.div
-          className="absolute w-[1200px] h-[1200px] rounded-full blur-[150px]"
+          className="absolute w-[1400px] h-[1400px] rounded-full blur-[180px]"
           style={{
-            background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.35), transparent 60%)',
-            top: useTransform(scrollYProgress, [0, 1], ['-10%', '70%']),
-            left: useTransform(scrollYProgress, [0, 1], ['10%', '50%']),
-            opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.4, 0.5])
+            background: 'radial-gradient(circle, hsl(88, 68%, 66%, 0.4), transparent 65%)',
+            top: useTransform(scrollYProgress, [0, 1], ['-15%', '60%']),
+            left: useTransform(scrollYProgress, [0, 1], ['5%', '45%']),
+            opacity: useTransform(scrollYProgress, [0, 0.3, 0.6, 1], [0.3, 0.6, 0.8, 0.9])
           }}
         />
+        {/* Secondary warm accent - gentle pulse */}
         <motion.div
-          className="absolute w-[900px] h-[900px] rounded-full blur-[120px]"
+          className="absolute w-[1000px] h-[1000px] rounded-full blur-[140px]"
           style={{
-            background: 'radial-gradient(circle, hsl(43, 90%, 72%, 0.3), transparent 60%)',
-            top: useTransform(scrollYProgress, [0, 1], ['40%', '10%']),
-            right: useTransform(scrollYProgress, [0, 1], ['5%', '40%']),
-            opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.5, 0.3, 0.4])
+            background: 'radial-gradient(circle, hsl(43, 85%, 70%, 0.35), transparent 60%)',
+            top: useTransform(scrollYProgress, [0, 1], ['50%', '15%']),
+            right: useTransform(scrollYProgress, [0, 1], ['0%', '35%']),
+            opacity: useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [0.4, 0.5, 0.7, 0.8])
+          }}
+        />
+        {/* Tertiary light veil - appears gradually */}
+        <motion.div
+          className="absolute w-[1600px] h-[1600px] rounded-full blur-[200px]"
+          style={{
+            background: 'radial-gradient(circle, hsl(88, 50%, 85%, 0.3), transparent 70%)',
+            bottom: useTransform(scrollYProgress, [0, 1], ['100%', '-10%']),
+            left: '50%',
+            transform: 'translateX(-50%)',
+            opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.4, 0.7])
           }}
         />
       </motion.div>
@@ -180,11 +203,20 @@ const Home = () => {
 
       {/* THE PROBLEM SECTION */}
       <section ref={problemRef} className="min-h-[90vh] flex items-center justify-center relative py-24 mt-12">
+        {/* Gradient bridge from hero to problem */}
+        <motion.div
+          className="absolute inset-x-0 -top-32 h-64 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, transparent, hsl(150, 25%, 30%, 0.6))',
+            opacity: useTransform(scrollYProgress, [0.05, 0.15], [0, 1])
+          }}
+        />
+
         <motion.div 
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={isProblemInView ? { opacity: 0.08 } : { opacity: 0 }}
-          transition={{ duration: 1.5 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={isProblemInView ? { opacity: 0.08, scale: 1 } : { opacity: 0, scale: 1.05 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <img 
             src={problemParticles} 
@@ -197,13 +229,13 @@ const Home = () => {
           className="container mx-auto px-6 relative z-10"
           initial={{ opacity: 0 }}
           animate={isProblemInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <motion.h2 
             className="text-5xl md:text-7xl font-bold mb-16 text-center text-foreground"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
           >
             The Scale of the Challenge
           </motion.h2>
@@ -246,11 +278,20 @@ const Home = () => {
 
       {/* PROCESS SECTION */}
       <section ref={processRef} className="min-h-screen flex items-center justify-center relative py-32 mt-16">
+        {/* Gradient bridge - softens into brighter tones */}
+        <motion.div
+          className="absolute inset-x-0 -top-40 h-80 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, hsl(150, 25%, 35%, 0.4), hsl(150, 22%, 45%, 0.7))',
+            opacity: useTransform(scrollYProgress, [0.2, 0.32], [0, 1])
+          }}
+        />
+
         <motion.div 
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={isProcessInView ? { opacity: 0.06 } : { opacity: 0 }}
-          transition={{ duration: 1.5 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={isProcessInView ? { opacity: 0.06, scale: 1 } : { opacity: 0, scale: 1.05 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <img 
             src={processAbstract} 
@@ -262,9 +303,9 @@ const Home = () => {
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             className="text-center mb-20"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isProcessInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={isProcessInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">
               The Transformation
@@ -328,11 +369,20 @@ const Home = () => {
 
       {/* PRODUCTS SECTION */}
       <section ref={productsRef} className="min-h-[95vh] flex items-center justify-center relative py-28 mt-12">
+        {/* Gradient bridge - brightening continues */}
+        <motion.div
+          className="absolute inset-x-0 -top-40 h-80 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, hsl(150, 20%, 50%, 0.5), hsl(150, 18%, 60%, 0.8))',
+            opacity: useTransform(scrollYProgress, [0.4, 0.5], [0, 1])
+          }}
+        />
+
         <motion.div 
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={isProductsInView ? { opacity: 0.05 } : { opacity: 0 }}
-          transition={{ duration: 1.5 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={isProductsInView ? { opacity: 0.05, scale: 1 } : { opacity: 0, scale: 1.05 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <img 
             src={productsEnergy} 
@@ -344,9 +394,9 @@ const Home = () => {
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isProductsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={isProductsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">Three Clean Solutions</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
@@ -385,11 +435,20 @@ const Home = () => {
 
       {/* VIDEO SECTION */}
       <section ref={videoRef} className="min-h-[85vh] flex items-center justify-center relative py-28 mt-12">
+        {/* Gradient bridge - lighter mint tones */}
+        <motion.div
+          className="absolute inset-x-0 -top-40 h-80 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, hsl(150, 18%, 65%, 0.6), hsl(88, 25%, 75%, 0.8))',
+            opacity: useTransform(scrollYProgress, [0.55, 0.65], [0, 1])
+          }}
+        />
+
         <motion.div 
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={isVideoInView ? { opacity: 0.03 } : { opacity: 0 }}
-          transition={{ duration: 1.5 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={isVideoInView ? { opacity: 0.03, scale: 1 } : { opacity: 0, scale: 1.05 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <img 
             src={processAbstract} 
@@ -401,9 +460,9 @@ const Home = () => {
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isVideoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={isVideoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">See It In Action</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
@@ -462,11 +521,20 @@ const Home = () => {
 
       {/* ROADMAP SECTION */}
       <section ref={roadmapRef} className="min-h-[85vh] flex items-center justify-center relative py-28 mt-12">
+        {/* Gradient bridge - approaching full light */}
+        <motion.div
+          className="absolute inset-x-0 -top-40 h-80 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, hsl(88, 22%, 75%, 0.7), hsl(88, 28%, 82%, 0.9))',
+            opacity: useTransform(scrollYProgress, [0.68, 0.78], [0, 1])
+          }}
+        />
+
         <motion.div 
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={isRoadmapInView ? { opacity: 0.04 } : { opacity: 0 }}
-          transition={{ duration: 1.5 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={isRoadmapInView ? { opacity: 0.04, scale: 1 } : { opacity: 0, scale: 1.05 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <img 
             src={roadmapTimeline} 
@@ -478,9 +546,9 @@ const Home = () => {
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             className="text-center mb-20"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isRoadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={isRoadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <h2 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">Our Journey</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
@@ -531,11 +599,20 @@ const Home = () => {
 
       {/* VISION SECTION */}
       <section ref={visionRef} className="min-h-screen flex items-center justify-center relative py-32 mt-16">
+        {/* Final gradient bridge - pure light emergence */}
+        <motion.div
+          className="absolute inset-x-0 -top-48 h-96 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, hsl(88, 25%, 82%, 0.8), hsl(88, 35%, 92%, 1))',
+            opacity: useTransform(scrollYProgress, [0.82, 0.92], [0, 1])
+          }}
+        />
+
         <motion.div 
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={isVisionInView ? { opacity: 0.07 } : { opacity: 0 }}
-          transition={{ duration: 2 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={isVisionInView ? { opacity: 0.07, scale: 1 } : { opacity: 0, scale: 1.05 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <img 
             src={visionLeaf} 
@@ -546,15 +623,15 @@ const Home = () => {
 
         <motion.div
           className="container mx-auto px-6 text-center relative z-10"
-          initial={{ opacity: 0, y: 40 }}
-          animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 1.2 }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          transition={{ duration: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <motion.h2 
             className="text-5xl md:text-8xl font-bold mb-16 text-foreground"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isVisionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
           >
             Our Vision
           </motion.h2>
