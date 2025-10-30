@@ -372,9 +372,10 @@ const Home = () => {
                   perspective: "1000px",
                   transformStyle: "preserve-3d"
                 }}
+                className="h-full"
               >
                 <motion.div 
-                  className="p-6 md:p-8 rounded-3xl backdrop-blur-[20px] relative overflow-hidden stat-card-hover"
+                  className="p-6 md:p-8 rounded-3xl backdrop-blur-[20px] relative overflow-hidden stat-card-hover h-full flex flex-col justify-center items-center min-h-[180px] md:min-h-[200px]"
                   style={{
                     background: 'rgba(255, 255, 255, 0.6)',
                     border: '2px solid rgba(184, 255, 114, 0.4)',
@@ -388,11 +389,12 @@ const Home = () => {
                   }}
                 >
                   <motion.div 
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-3"
+                    className="text-4xl md:text-5xl font-bold mb-3 md:mb-4 text-center w-full"
                     style={{ 
                       background: 'linear-gradient(135deg, #0E362C, #4A7B65)',
                       WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent'
+                      WebkitTextFillColor: 'transparent',
+                      minHeight: '3rem'
                     }}
                   >
                     <CountUpMetric 
@@ -403,7 +405,7 @@ const Home = () => {
                     />
                   </motion.div>
                   <p 
-                    className="text-xs md:text-sm font-medium leading-relaxed"
+                    className="text-xs md:text-sm font-medium leading-relaxed text-center"
                     style={{ color: '#0B281D', opacity: 0.95 }}
                   >
                     {stat.label}
