@@ -79,13 +79,16 @@ const Home = () => {
         >
           <video
             autoPlay
-            loop
             muted
             playsInline
             className="w-full h-full object-cover"
             style={{ 
               filter: 'brightness(0.7) contrast(1.1)',
               mixBlendMode: 'normal'
+            }}
+            onEnded={(e) => {
+              const video = e.currentTarget;
+              video.pause();
             }}
           >
             <source src={heroBackgroundVideo} type="video/mp4" />
