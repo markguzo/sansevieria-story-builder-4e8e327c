@@ -63,8 +63,8 @@ const Home = () => {
       ease: [0.16, 1, 0.3, 1]
     });
     
-    return controls.stop;
-  }, []);
+    return () => controls.stop();
+  }, [circleRotate]);
 
   // Video opacity and brightness - fades gradually with circle
   const videoOpacity = useTransform(
