@@ -24,7 +24,7 @@ const Home = () => {
   const circleVideoRef = useRef<HTMLVideoElement>(null);
   const [circlePlayed, setCirclePlayed] = useState(false);
 
-  // Hero sticky scroll progress (0 to 1 across 80% of hero height)
+  // Hero sticky scroll progress (0 to 1 across 80% of hero section)
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "80% start"]
@@ -35,10 +35,8 @@ const Home = () => {
     offset: ["start start", "end end"]
   });
 
-  // Circle animation timeline (plays once only)
-  // 0-40%: scale 1.00 → 1.12, opacity 0.95 → 1.0
-  // 40-80%: scale 1.12 → 1.55, blur 0 → 6px, opacity 1 → 0.35
-  // 80-100%: pause video, opacity 0.35 → 0
+  // Circle animation timeline (one-time only)
+  // 0-40%: circle comes alive
   const circleScale = useTransform(
     heroScrollProgress,
     [0, 0.4, 0.8, 1],
@@ -47,7 +45,7 @@ const Home = () => {
   const circleOpacity = useTransform(
     heroScrollProgress,
     [0, 0.4, 0.8, 1],
-    [0.95, 1.0, 0.35, 0]
+    [0.9, 1.0, 0.35, 0]
   );
   const circleBlur = useTransform(
     heroScrollProgress,
@@ -60,7 +58,14 @@ const Home = () => {
     [0, 180]
   );
 
-  // Light halo effect - grows as we scroll
+  // Video opacity - fades as we scroll
+  const videoOpacity = useTransform(
+    heroScrollProgress,
+    [0, 0.4, 0.8, 1],
+    [0.65, 0.7, 0.4, 0]
+  );
+
+  // Light halo - grows and dissolves edges
   const haloRadius = useTransform(
     heroScrollProgress,
     [0, 0.8, 1],
@@ -72,11 +77,16 @@ const Home = () => {
     [0.35, 0.35, 0.15, 0]
   );
 
-  // Continuous gradient background (seamless)
-  const backgroundColor = useTransform(
+  // Hero content appears during 0-30% timeline
+  const heroContentOpacity = useTransform(
     heroScrollProgress,
-    [0, 0.45, 1],
-    ['#0E362C', '#BDF9C8', '#F6FFF6']
+    [0, 0.3],
+    [0, 1]
+  );
+  const heroContentY = useTransform(
+    heroScrollProgress,
+    [0, 0.3],
+    [30, 0]
   );
 
   // Pause video when animation completes & mark as played
@@ -102,15 +112,15 @@ const Home = () => {
 
   return (
     <div ref={containerRef} className="min-h-screen text-foreground relative overflow-x-hidden">
-      {/* ONE SEAMLESS SURFACE - Continuous gradient */}
-      <motion.div 
+      {/* ONE SEAMLESS SURFACE - Continuous gradient background */}
+      <div 
         className="fixed inset-0 -z-30"
         style={{ 
-          background: 'linear-gradient(180deg, #0E362C 0%, #BDF9C8 45%, #F6FFF6 100%)'
+          background: 'linear-gradient(180deg, #0E362C 0%, #4C7D62 25%, #BDF9C8 55%, #F6FFF6 100%)'
         }}
       />
       
-      {/* Subtle grain for depth (1-2% opacity) */}
+      {/* Subtle grain for depth */}
       <div 
         className="fixed inset-0 -z-20 opacity-[0.015] pointer-events-none"
         style={{
@@ -119,7 +129,7 @@ const Home = () => {
         }}
       />
 
-      {/* Light Halo - grows as circle expands */}
+      {/* Light Halo - melts video edges into background */}
       <motion.div 
         className="fixed top-1/2 left-1/2 -z-10 pointer-events-none"
         style={{
@@ -129,12 +139,12 @@ const Home = () => {
           height: haloRadius,
           opacity: haloOpacity,
           background: 'radial-gradient(circle, rgba(198, 255, 92, 0.25) 0%, rgba(189, 249, 200, 0.15) 40%, transparent 70%)',
-          filter: 'blur(40px)',
+          filter: 'blur(50px)',
           willChange: 'transform, opacity'
         }}
       />
 
-      {/* The Circle - expands once, lights the scene, then fades */}
+      {/* The Circle glow - expands once, then fades */}
       <motion.div 
         className="fixed top-1/2 left-1/2 -z-10 pointer-events-none"
         style={{
@@ -147,85 +157,100 @@ const Home = () => {
         }}
       >
         <motion.div 
-          className="w-[800px] h-[800px] rounded-full"
+          className="w-[900px] h-[900px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.5) 0%, rgba(189, 249, 200, 0.3) 35%, transparent 65%)',
+            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.4) 0%, rgba(189, 249, 200, 0.25) 35%, transparent 65%)',
             filter: circleBlur
           }}
         />
       </motion.div>
 
-      {/* UNIFIED HERO + SCALE SECTION - One continuous scene */}
+      {/* FULL-SCREEN HERO + SCALE SECTION */}
       <section ref={heroRef} className="relative" style={{ height: '250vh' }}>
-        {/* Sticky Hero - holds until 80% of section height */}
-        <div className="sticky top-0 h-screen flex items-center justify-center">
-          {/* Circle Video - center stage */}
-          <div className="absolute inset-0 flex items-center justify-center">
+        {/* FULL-SCREEN HERO - 100vh always */}
+        <div 
+          className="sticky top-0 w-screen relative isolate overflow-clip"
+          style={{
+            height: '100vh',
+            paddingTop: 'env(safe-area-inset-top)',
+            paddingBottom: 'env(safe-area-inset-bottom)'
+          }}
+        >
+          {/* Full-bleed Circle Video - no letterboxing */}
+          <motion.div 
+            className="absolute inset-0"
+            style={{ opacity: videoOpacity }}
+          >
             <video
               ref={circleVideoRef}
               autoPlay
               muted
               loop={!circlePlayed}
               playsInline
-              className="w-auto h-auto max-w-[65%] max-h-[65%] object-contain"
+              className="absolute inset-0 w-full h-full"
               style={{ 
-                opacity: 0.65,
-                filter: 'brightness(0.95) contrast(1.15)'
+                objectFit: 'cover',
+                objectPosition: 'center',
+                filter: 'brightness(0.95) contrast(1.1)'
               }}
               onLoadedData={(e) => {
                 const video = e.currentTarget;
-                video.playbackRate = 1.2;
+                video.playbackRate = 1.15;
               }}
             >
               <source src={heroBackgroundVideo} type="video/mp4" />
             </video>
-          </div>
+          </motion.div>
 
-          {/* Hero Text */}
-          <div className="container mx-auto px-6 text-center relative z-10">
-            <motion.h1 
-              className="text-6xl md:text-8xl font-bold mb-12 leading-tight text-white"
-              style={{ textShadow: '0 0 60px rgba(198, 255, 92, 0.35)' }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              The Circle That Powers Tomorrow
-            </motion.h1>
-            
-            <motion.p 
-              className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto leading-relaxed font-light text-white/90"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              Turning today's waste into tomorrow's energy.
-            </motion.p>
+          {/* Radial gradient overlay - melts video into light */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle at center, transparent 20%, rgba(14, 54, 44, 0.15) 80%)'
+            }}
+          />
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-            >
+          {/* Hero Content - appears during 0-30% timeline */}
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center z-10"
+            style={{
+              opacity: heroContentOpacity,
+              y: heroContentY
+            }}
+          >
+            <div className="container mx-auto px-6 text-center max-w-5xl">
+              <h1 
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 md:mb-12 leading-tight text-white"
+                style={{ textShadow: '0 0 60px rgba(198, 255, 92, 0.4)' }}
+              >
+                The Circle That Powers Tomorrow
+              </h1>
+              
+              <p 
+                className="text-lg sm:text-xl md:text-2xl mb-12 md:mb-16 max-w-3xl mx-auto leading-relaxed font-light text-white/90"
+              >
+                Turning today's waste into tomorrow's energy.
+              </p>
+
               <Button 
                 size="lg"
                 onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-lg px-12 py-7 rounded-full font-medium"
+                className="text-base md:text-lg px-10 md:px-12 py-6 md:py-7 rounded-full font-medium"
                 style={{ 
                   backgroundColor: '#0E362C',
                   color: '#C6FF5C',
                   border: '2px solid #C6FF5C',
-                  boxShadow: '0 0 20px rgba(198, 255, 92, 0.35)'
+                  boxShadow: '0 0 20px rgba(198, 255, 92, 0.4)'
                 }}
               >
                 Learn how we do it ↓
               </Button>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
 
-        {/* The Scale of the Challenge - Continuous reveal (no seam) */}
-        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 pt-20">
+        {/* The Scale of the Challenge - Reveals seamlessly (no seam) */}
+        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 py-20">
           <div className="container mx-auto px-6">
             {/* Title with gradient color sweep */}
             <motion.h2 
@@ -260,7 +285,7 @@ const Home = () => {
             </motion.p>
             
             {/* Metric Cards - 2x2 grid with precise stagger (0.15s apart) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
               {[
                 { value: "1.8B", label: "tonnes of GHG from plastics", delay: 0 },
                 { value: "390M+", label: "tonnes produced yearly", delay: 0.15 },
@@ -276,10 +301,15 @@ const Home = () => {
                     duration: 0.8, 
                     ease: [0.25, 0.1, 0.25, 1]
                   }}
+                  // Reduce translateY on mobile
+                  style={{
+                    ['--mobile-y' as any]: '16px'
+                  }}
+                  className="motion-reduce:animate-none"
                 >
                   {/* Airy frosted card */}
                   <div 
-                    className="p-8 rounded-3xl backdrop-blur-[10px]"
+                    className="p-6 md:p-8 rounded-3xl backdrop-blur-[10px]"
                     style={{
                       background: 'rgba(255, 255, 255, 0.25)',
                       border: '1px solid rgba(255, 255, 255, 0.3)',
@@ -288,7 +318,7 @@ const Home = () => {
                   >
                     {/* Number with single soft glow pulse (150ms) */}
                     <motion.div 
-                      className="text-5xl md:text-6xl font-bold mb-3"
+                      className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-3"
                       style={{ 
                         background: 'linear-gradient(135deg, #B8FF72, #74D46E)',
                         WebkitBackgroundClip: 'text',
@@ -311,7 +341,7 @@ const Home = () => {
                       {stat.value}
                     </motion.div>
                     <p 
-                      className="text-sm font-medium leading-relaxed"
+                      className="text-xs md:text-sm font-medium leading-relaxed"
                       style={{ color: '#1D4B36', opacity: 0.8 }}
                     >
                       {stat.label}
