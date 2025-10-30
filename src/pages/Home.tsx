@@ -2,8 +2,42 @@ import { Link } from "react-router-dom";
 import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { motion, useScroll, useTransform, useInView, useMotionValue, animate } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, useMotionValue, animate, Variants } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+
+// Staggered container variants for smooth cascading animations
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.2
+    }
+  }
+};
+
+// Enhanced item reveal with blur, scale, and 3D rotation
+const itemVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 40, 
+    scale: 0.92,
+    rotateX: -8,
+    filter: "blur(8px)"
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    rotateX: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.7,
+      ease: [0.25, 0.1, 0.25, 1]
+    }
+  }
+};
 import CountUpMetric from "@/components/CountUpMetric";
 import heroCircularFlow from "@/assets/hero-circular-flow.jpg";
 import heroBackgroundVideo from "@/assets/hero-background.mp4";
@@ -42,6 +76,11 @@ const Home = () => {
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  // Parallax layers for depth
+  const parallaxSlow = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
+  const parallaxMedium = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+  const parallaxFast = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
 
   // Circle animation timeline - visible throughout, fades smoothly by transformation
   const circleScale = useTransform(
@@ -300,27 +339,34 @@ const Home = () => {
             As the world wakes up, the scale of the plastic problem becomes clear.
           </motion.p>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isProblemInView ? "visible" : "hidden"}
+          >
             {[
-              { value: 1.8, suffix: "B", label: "tonnes of GHG from plastics", delay: 0 },
-              { value: 390, suffix: "M+", label: "tonnes produced yearly", delay: 0.15 },
-              { value: 22, suffix: "M+", label: "tonnes leak into oceans", delay: 0.3 },
-              { value: 9, suffix: "%", label: "recycled globally", delay: 0.45 }
+              { value: 1.8, suffix: "B", label: "tonnes of GHG from plastics" },
+              { value: 390, suffix: "M+", label: "tonnes produced yearly" },
+              { value: 22, suffix: "M+", label: "tonnes leak into oceans" },
+              { value: 9, suffix: "%", label: "recycled globally" }
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 24 }}
-                animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-                transition={{ 
-                  delay: stat.delay, 
-                  duration: 0.8, 
-                  ease: [0.25, 0.1, 0.25, 1]
-                }}
+                variants={itemVariants}
                 whileHover={{ 
-                  scale: 1.08, 
-                  y: -8,
-                  rotate: [-1, 1, -1, 0],
-                  transition: { duration: 0.3 }
+                  scale: 1.1, 
+                  y: -12,
+                  rotateY: 5,
+                  rotateX: -3,
+                  transition: { 
+                    duration: 0.4,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  }
+                }}
+                style={{
+                  perspective: "1000px",
+                  transformStyle: "preserve-3d"
                 }}
               >
                 <motion.div 
@@ -360,7 +406,7 @@ const Home = () => {
                 </motion.div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -368,57 +414,66 @@ const Home = () => {
       <section className="relative py-32 overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="relative max-w-7xl mx-auto">
-            {/* Desktop: Asymmetric Grid Layout */}
+            {/* Desktop: Asymmetric Grid Layout with Parallax */}
             <div className="hidden md:grid md:grid-cols-[1.2fr,1fr] gap-8 items-center">
-              {/* Left: Large Plant 1 */}
+              {/* Left: Large Plant 1 - Slower parallax */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.1 }}
+                initial={{ opacity: 0, scale: 0.88, filter: "blur(12px)", rotateY: -10 }}
+                whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)", rotateY: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 1, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                style={{ y: parallaxSlow }}
                 className="relative group"
               >
                 <div className="relative h-[500px] rounded-3xl overflow-hidden">
-                  <img
+                  <motion.img
                     src={plant1}
                     alt="Nature's circular wisdom"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.15 }}
+                    transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
                 </div>
               </motion.div>
 
-              {/* Right: Stacked Plants 2 & 3 */}
+              {/* Right: Stacked Plants 2 & 3 - Faster parallax */}
               <div className="space-y-8">
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
+                  initial={{ opacity: 0, scale: 0.88, filter: "blur(12px)", rotateX: 10 }}
+                  whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)", rotateX: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                  style={{ y: parallaxMedium }}
                   className="relative group"
                 >
                   <div className="relative h-[300px] rounded-3xl overflow-hidden">
-                    <img
+                    <motion.img
                       src={plant2}
                       alt="Natural growth patterns"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.15 }}
+                      transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
                   </div>
                 </motion.div>
 
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
+                  initial={{ opacity: 0, scale: 0.88, filter: "blur(12px)", rotateX: -10 }}
+                  whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)", rotateX: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                  style={{ y: parallaxFast }}
                   className="relative group"
                 >
                   <div className="relative h-[300px] rounded-3xl overflow-hidden">
-                    <img
+                    <motion.img
                       src={plant3}
                       alt="Regenerative systems"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.15 }}
+                      transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-tl from-accent/20 via-transparent to-primary/10" />
                   </div>
@@ -480,12 +535,12 @@ const Home = () => {
               </motion.div>
             </div>
 
-            {/* Centered Quote Card - Absolute on Desktop, Inline on Mobile */}
+            {/* Centered Quote Card - Absolute on Desktop, Inline on Mobile with scale+blur */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              initial={{ opacity: 0, y: 50, scale: 0.85, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
               className="mt-12 md:mt-0 md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-10"
             >
               <div className="relative backdrop-blur-[24px] bg-background/70 border-2 border-primary/30 rounded-2xl p-8 md:p-12 shadow-[0_8px_32px_rgba(184,255,114,0.15)] max-w-2xl mx-auto">
@@ -527,9 +582,9 @@ const Home = () => {
 
           <motion.div 
             className="max-w-6xl mx-auto"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isProcessInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-            transition={{ delay: 0.3, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+            initial={{ opacity: 0, scale: 0.92, filter: "blur(10px)" }}
+            animate={isProcessInView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : { opacity: 0, scale: 0.92, filter: "blur(10px)" }}
+            transition={{ delay: 0.3, duration: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div 
               className="relative aspect-video rounded-3xl overflow-hidden backdrop-blur-sm"
@@ -578,32 +633,43 @@ const Home = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <ProductCard
-              icon={Beaker}
-              title="PlastiNaphtha"
-              description="Petrochemical feedstock for polymer production"
-              color="primary"
-              isInView={isProductsInView}
-              delay={0}
-            />
-            <ProductCard
-              icon={Plane}
-              title="PlastiSAF"
-              description="Sustainable Aviation Fuel meeting ASTM D7566"
-              color="secondary"
-              isInView={isProductsInView}
-              delay={0.15}
-            />
-            <ProductCard
-              icon={Truck}
-              title="PlastiDiesel"
-              description="Ultra-clean diesel for transport and industry"
-              color="accent"
-              isInView={isProductsInView}
-              delay={0.3}
-            />
-          </div>
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isProductsInView ? "visible" : "hidden"}
+          >
+            <motion.div variants={itemVariants}>
+              <ProductCard
+                icon={Beaker}
+                title="PlastiNaphtha"
+                description="Petrochemical feedstock for polymer production"
+                color="primary"
+                isInView={isProductsInView}
+                delay={0}
+              />
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <ProductCard
+                icon={Plane}
+                title="PlastiSAF"
+                description="Sustainable Aviation Fuel meeting ASTM D7566"
+                color="secondary"
+                isInView={isProductsInView}
+                delay={0.15}
+              />
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <ProductCard
+                icon={Truck}
+                title="PlastiDiesel"
+                description="Ultra-clean diesel for transport and industry"
+                color="accent"
+                isInView={isProductsInView}
+                delay={0.3}
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -626,9 +692,9 @@ const Home = () => {
 
           <motion.div
             className="max-w-5xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={isVideoInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: 0.2, duration: 1 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95, filter: "blur(8px)" }}
+            animate={isVideoInView ? { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" } : { opacity: 0, y: 30, scale: 0.95, filter: "blur(8px)" }}
+            transition={{ delay: 0.2, duration: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div 
               className="relative aspect-video backdrop-blur-sm rounded-3xl overflow-hidden"
@@ -691,27 +757,45 @@ const Home = () => {
               />
 
               <div className="grid grid-cols-3 gap-8 mt-10">
-                <RoadmapNode
-                  label="TRL 1-2"
-                  title="Lab Tests"
-                  status="complete"
-                  isInView={isRoadmapInView}
-                  delay={0.2}
-                />
-                <RoadmapNode
-                  label="TRL 3-5"
-                  title="Pilot Phase"
-                  status="current"
-                  isInView={isRoadmapInView}
-                  delay={0.4}
-                />
-                <RoadmapNode
-                  label="TRL 7-8"
-                  title="Industrial Scale"
-                  status="target"
-                  isInView={isRoadmapInView}
-                  delay={0.6}
-                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
+                  animate={isRoadmapInView ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
+                  transition={{ delay: 0.2, duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
+                >
+                  <RoadmapNode
+                    label="TRL 1-2"
+                    title="Lab Tests"
+                    status="complete"
+                    isInView={isRoadmapInView}
+                    delay={0}
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
+                  animate={isRoadmapInView ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
+                  transition={{ delay: 0.4, duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
+                >
+                  <RoadmapNode
+                    label="TRL 3-5"
+                    title="Pilot Phase"
+                    status="current"
+                    isInView={isRoadmapInView}
+                    delay={0}
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
+                  animate={isRoadmapInView ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
+                  transition={{ delay: 0.6, duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
+                >
+                  <RoadmapNode
+                    label="TRL 7-8"
+                    title="Industrial Scale"
+                    status="target"
+                    isInView={isRoadmapInView}
+                    delay={0}
+                  />
+                </motion.div>
               </div>
             </div>
           </div>
@@ -825,24 +909,27 @@ const ProductCard = ({ icon: Icon, title, description, color, isInView, delay }:
   
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0.9 }}
-      transition={{ delay, duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
       whileHover={{ 
-        y: -16, 
-        scale: 1.05,
-        transition: { duration: 0.4, ease: "easeOut" }
+        y: -20, 
+        scale: 1.06,
+        rotateY: 5,
+        rotateX: -3,
+        transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+      }}
+      style={{
+        perspective: "1000px",
+        transformStyle: "preserve-3d"
       }}
     >
-      <Card className="p-8 h-full bg-white/70 backdrop-blur-md border-primary/40 hover:border-primary/70 transition-all group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-primary/20">
+      <Card className="p-8 h-full bg-white/70 backdrop-blur-md border-primary/40 hover:border-primary/70 transition-all group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-primary/30">
         <motion.div
           className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/90 flex items-center justify-center shadow-md"
           whileHover={{ 
             rotate: 360,
-            scale: 1.1,
+            scale: 1.15,
             boxShadow: 'var(--glow-primary)'
           }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <Icon className={colorClass} size={32} />
         </motion.div>
@@ -860,26 +947,26 @@ const RoadmapNode = ({ label, title, status, isInView, delay }: any) => {
   return (
     <motion.div
       className="text-center"
-      initial={{ opacity: 0, scale: 0.7, y: 30 }}
-      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.7, y: 30 }}
-      transition={{ delay, duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
+      initial={{ opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
+      animate={isInView ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
+      transition={{ delay, duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
     >
       <motion.div
         className={`w-20 h-20 mx-auto mb-4 rounded-full ${bgClass} flex items-center justify-center border-4 border-background`}
         whileHover={{ 
-          scale: 1.15,
-          rotate: 360,
-          transition: { duration: 0.5 }
+          scale: 1.2,
+          rotate: [0, 10, -10, 0],
+          transition: { duration: 0.6 }
         }}
         animate={status === 'current' ? {
-          scale: [1, 1.05, 1],
+          scale: [1, 1.08, 1],
           boxShadow: [
             'var(--glow-secondary)',
-            '0 0 40px hsl(43 90% 72% / 0.8)',
+            '0 0 45px hsl(43 90% 72% / 0.9)',
             'var(--glow-secondary)'
           ]
         } : {}}
-        transition={status === 'current' ? { duration: 2, repeat: Infinity } : {}}
+        transition={status === 'current' ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" } : {}}
       >
         <span className="text-2xl font-bold text-foreground">{statusIcon}</span>
       </motion.div>

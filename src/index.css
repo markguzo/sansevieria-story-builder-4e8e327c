@@ -94,14 +94,30 @@ html {
   scroll-behavior: smooth;
   overflow-y: auto;
   overscroll-behavior-y: none;
+  scroll-padding-top: 0;
 }
 
 .scroll-snap-container {
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;
 }
 
 .scroll-snap-start {
   scroll-snap-align: start;
+}
+
+/* Parallax Layers */
+.parallax-bg {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.parallax-slow {
+  will-change: transform;
+}
+
+.parallax-fast {
+  will-change: transform;
 }
 
 /* Stat card hover shimmer effect */
@@ -150,6 +166,14 @@ html {
     animation: draw-circle 2s ease-out forwards;
   }
 
+  .animate-blur-in {
+    animation: blur-in 1s ease-out forwards;
+  }
+
+  .animate-scale-blur {
+    animation: scale-blur 0.9s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  }
+
   .hover-lift {
     transition: var(--transition-cinematic);
   }
@@ -165,6 +189,14 @@ html {
 
   .hover-glow:hover {
     box-shadow: var(--glow-primary);
+  }
+
+  .hover-tilt {
+    transition: var(--transition-cinematic);
+  }
+
+  .hover-tilt:hover {
+    transform: perspective(1000px) rotateY(5deg) translateY(-8px) scale(1.03);
   }
 
   .section-spacing {
@@ -294,5 +326,31 @@ html {
   100% {
     opacity: 1;
     transform: translateY(0) rotateX(0) scale(1);
+  }
+}
+
+@keyframes blur-in {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-blur {
+  0% {
+    opacity: 0;
+    filter: blur(15px);
+    transform: scale(0.85) translateY(30px) rotateX(-10deg);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1) translateY(0) rotateX(0);
   }
 }
