@@ -58,23 +58,34 @@ const Home = () => {
     [0, 180]
   );
 
-  // Video opacity - fades as we scroll
+  // Video opacity and brightness - fades and dims as we scroll
   const videoOpacity = useTransform(
     heroScrollProgress,
     [0, 0.4, 0.8, 1],
-    [0.65, 0.7, 0.4, 0]
+    [0.75, 0.8, 0.3, 0]
+  );
+  
+  const videoBrightness = useTransform(
+    heroScrollProgress,
+    [0, 0.4, 0.8, 1],
+    [0.95, 1.0, 0.7, 0.5]
+  );
+  
+  const videoFilter = useTransform(
+    videoBrightness,
+    (b) => `brightness(${b}) contrast(1.05)`
   );
 
-  // Light halo - grows and dissolves edges
+  // Light halo - grows and dissolves edges into background
   const haloRadius = useTransform(
     heroScrollProgress,
     [0, 0.8, 1],
-    ['35vw', '85vw', '85vw']
+    ['40vw', '100vw', '100vw']
   );
   const haloOpacity = useTransform(
     heroScrollProgress,
     [0, 0.4, 0.8, 1],
-    [0.35, 0.35, 0.15, 0]
+    [0.3, 0.3, 0.1, 0]
   );
 
   // Hero content appears during 0-30% timeline
@@ -112,24 +123,15 @@ const Home = () => {
 
   return (
     <div ref={containerRef} className="min-h-screen text-foreground relative overflow-x-hidden">
-      {/* ONE SEAMLESS SURFACE - Continuous gradient background */}
+      {/* ONE SEAMLESS BACKGROUND - No breaks, no color jumps */}
       <div 
         className="fixed inset-0 -z-30"
         style={{ 
-          background: 'linear-gradient(180deg, #0E362C 0%, #4C7D62 25%, #BDF9C8 55%, #F6FFF6 100%)'
-        }}
-      />
-      
-      {/* Subtle grain for depth */}
-      <div 
-        className="fixed inset-0 -z-20 opacity-[0.015] pointer-events-none"
-        style={{
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
-          backgroundSize: '200px 200px'
+          background: 'linear-gradient(180deg, #0E362C 0%, #3D6B54 20%, #7BAC8E 40%, #BDF9C8 60%, #F6FFF6 100%)'
         }}
       />
 
-      {/* Light Halo - melts video edges into background */}
+      {/* Light Halo - grows and dissolves video into background */}
       <motion.div 
         className="fixed top-1/2 left-1/2 -z-10 pointer-events-none"
         style={{
@@ -138,13 +140,13 @@ const Home = () => {
           width: haloRadius,
           height: haloRadius,
           opacity: haloOpacity,
-          background: 'radial-gradient(circle, rgba(198, 255, 92, 0.25) 0%, rgba(189, 249, 200, 0.15) 40%, transparent 70%)',
-          filter: 'blur(50px)',
+          background: 'radial-gradient(circle, rgba(246, 255, 246, 0.4) 0%, rgba(189, 249, 200, 0.2) 35%, transparent 65%)',
+          filter: 'blur(60px)',
           willChange: 'transform, opacity'
         }}
       />
 
-      {/* The Circle glow - expands once, then fades */}
+      {/* The Circle glow - expands once, then fades completely */}
       <motion.div 
         className="fixed top-1/2 left-1/2 -z-10 pointer-events-none"
         style={{
@@ -157,9 +159,9 @@ const Home = () => {
         }}
       >
         <motion.div 
-          className="w-[900px] h-[900px] rounded-full"
+          className="w-[1000px] h-[1000px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.4) 0%, rgba(189, 249, 200, 0.25) 35%, transparent 65%)',
+            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.35) 0%, rgba(189, 249, 200, 0.2) 30%, transparent 60%)',
             filter: circleBlur
           }}
         />
@@ -176,37 +178,33 @@ const Home = () => {
             paddingBottom: 'env(safe-area-inset-bottom)'
           }}
         >
-          {/* Full-bleed Circle Video - no letterboxing */}
-          <motion.div 
-            className="absolute inset-0"
-            style={{ opacity: videoOpacity }}
+          {/* Full-bleed Circle Video - covers entire viewport */}
+          <motion.video
+            ref={circleVideoRef}
+            autoPlay
+            muted
+            loop={!circlePlayed}
+            playsInline
+            className="absolute inset-0 w-full h-full"
+            style={{ 
+              objectFit: 'cover',
+              objectPosition: 'center',
+              opacity: videoOpacity,
+              filter: videoFilter
+            }}
+            onLoadedData={(e) => {
+              const video = e.currentTarget;
+              video.playbackRate = 1.1;
+            }}
           >
-            <video
-              ref={circleVideoRef}
-              autoPlay
-              muted
-              loop={!circlePlayed}
-              playsInline
-              className="absolute inset-0 w-full h-full"
-              style={{ 
-                objectFit: 'cover',
-                objectPosition: 'center',
-                filter: 'brightness(0.95) contrast(1.1)'
-              }}
-              onLoadedData={(e) => {
-                const video = e.currentTarget;
-                video.playbackRate = 1.15;
-              }}
-            >
-              <source src={heroBackgroundVideo} type="video/mp4" />
-            </video>
-          </motion.div>
+            <source src={heroBackgroundVideo} type="video/mp4" />
+          </motion.video>
 
-          {/* Radial gradient overlay - melts video into light */}
+          {/* Soft vignette - helps blend edges */}
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle at center, transparent 20%, rgba(14, 54, 44, 0.15) 80%)'
+              background: 'radial-gradient(circle at center, transparent 30%, rgba(246, 255, 246, 0.1) 85%)'
             }}
           />
 
@@ -249,10 +247,10 @@ const Home = () => {
           </motion.div>
         </div>
 
-        {/* The Scale of the Challenge - Reveals seamlessly (no seam) */}
-        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 py-20">
+        {/* The Scale of the Challenge - Soft upward fade (no break) */}
+        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 py-24">
           <div className="container mx-auto px-6">
-            {/* Title with gradient color sweep */}
+            {/* Title with smooth gradient sweep */}
             <motion.h2 
               className="text-5xl md:text-7xl font-bold mb-6 text-center"
               initial={{ opacity: 0, y: 20 }}
@@ -261,24 +259,24 @@ const Home = () => {
             >
               <motion.span
                 style={{ 
-                  background: 'linear-gradient(135deg, #0F3E2E, #A9F46C)',
+                  background: 'linear-gradient(135deg, #0F3E2E, #74D46E)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundSize: '200% 100%',
                   backgroundPosition: isProblemInView ? '0% 0%' : '100% 0%'
                 }}
-                transition={{ duration: 0.3, delay: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.4, delay: 0.6, ease: "easeOut" }}
               >
                 The Scale of the Challenge
               </motion.span>
             </motion.h2>
 
-            {/* Subline */}
+            {/* Subline - appears gently */}
             <motion.p
               className="text-xl text-center mb-20 max-w-2xl mx-auto font-light"
-              style={{ color: '#1D4B36', opacity: 0.8 }}
+              style={{ color: '#1D4B36', opacity: 0.75 }}
               initial={{ opacity: 0, y: 12 }}
-              animate={isProblemInView ? { opacity: 0.8, y: 0 } : { opacity: 0, y: 12 }}
+              animate={isProblemInView ? { opacity: 0.75, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             >
               As the world wakes up, the scale of the plastic problem becomes clear.
