@@ -28,22 +28,22 @@ const Home = () => {
   });
 
   // Smooth color progression: Dark emerald → Mint glow → Pale seafoam
+  const sectionProgress = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+  
   const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.35, 0.55, 0.75, 1],
+    sectionProgress,
+    [0, 0.3, 0.6, 1],
     [
       '#0E362C', // Dark emerald
-      '#1A4D3E',
-      '#3D7A60',
-      '#7DB89A',
-      '#B8E5D0',
-      '#E8FBE7'  // Pale seafoam
+      '#3D7A60', // Mid green
+      '#BDF9C8', // Mint glow
+      '#F6FFF6'  // Pale green-white
     ]
   );
 
   // Circle scale - expands as user scrolls
-  const circleScale = useTransform(scrollYProgress, [0, 0.12], [1, 15]);
-  const circleOpacity = useTransform(scrollYProgress, [0, 0.08, 0.14], [1, 0.6, 0]);
+  const circleScale = useTransform(sectionProgress, [0, 0.5, 1], [1, 8, 15]);
+  const circleOpacity = useTransform(sectionProgress, [0, 0.4, 0.8], [0.7, 0.5, 0]);
   const circleRotation = useTransform(scrollYProgress, [0, 1], [0, 360]);
   
   // Parallax for background layers
@@ -91,7 +91,7 @@ const Home = () => {
         />
       </motion.div>
 
-      {/* The Circle - Visual thread that expands and dissolves */}
+      {/* The Circle - Visual thread that expands and dissolves into light */}
       <motion.div 
         className="fixed top-1/2 left-1/2 -z-10 pointer-events-none"
         style={{
@@ -103,18 +103,18 @@ const Home = () => {
         }}
       >
         <div 
-          className="w-[600px] h-[600px] rounded-full"
+          className="w-[800px] h-[800px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.4) 0%, rgba(198, 255, 92, 0.1) 50%, transparent 70%)',
-            filter: 'blur(2px)'
+            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.5) 0%, rgba(189, 249, 200, 0.3) 40%, transparent 70%)',
+            filter: 'blur(3px)'
           }}
         />
       </motion.div>
 
-      {/* HERO SECTION */}
-      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        {/* Video Background - Darkened for contrast */}
-        <div className="absolute inset-0 opacity-60">
+      {/* UNIFIED HERO + PROBLEM SECTION - One continuous scene */}
+      <section className="min-h-[200vh] relative">
+        {/* Video Background - stays fixed during scroll */}
+        <div className="fixed top-0 left-0 w-full h-screen opacity-60">
           <video
             autoPlay
             muted
@@ -132,112 +132,110 @@ const Home = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h1 
-            className="text-6xl md:text-8xl font-bold mb-12 leading-tight text-white"
-            style={{ 
-              textShadow: '0 0 60px rgba(198, 255, 92, 0.3)'
-            }}
-          >
-            The Circle That Powers Tomorrow
-          </h1>
-          
-          <p 
-            className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto leading-relaxed font-light text-white/90"
-          >
-            Turning today's waste into tomorrow's energy.
-          </p>
+        <div className="h-screen flex items-center justify-center relative z-10">
+          <div className="container mx-auto px-6 text-center">
+            <h1 
+              className="text-6xl md:text-8xl font-bold mb-12 leading-tight text-white"
+              style={{ textShadow: '0 0 60px rgba(198, 255, 92, 0.3)' }}
+            >
+              The Circle That Powers Tomorrow
+            </h1>
+            
+            <p className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto leading-relaxed font-light text-white/90">
+              Turning today's waste into tomorrow's energy.
+            </p>
 
-          <Button 
-            size="lg"
-            onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-lg px-12 py-7 rounded-full font-medium"
-            style={{ 
-              backgroundColor: '#0E362C',
-              color: '#C6FF5C',
-              border: '2px solid #C6FF5C',
-              boxShadow: '0 0 20px rgba(198, 255, 92, 0.3)'
-            }}
-          >
-            Learn how we do it ↓
-          </Button>
+            <Button 
+              size="lg"
+              onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-lg px-12 py-7 rounded-full font-medium"
+              style={{ 
+                backgroundColor: '#0E362C',
+                color: '#C6FF5C',
+                border: '2px solid #C6FF5C',
+                boxShadow: '0 0 20px rgba(198, 255, 92, 0.3)'
+              }}
+            >
+              Learn how we do it ↓
+            </Button>
+          </div>
         </div>
-      </section>
 
-      {/* THE PROBLEM SECTION - Cinematic entrance */}
-      <section ref={problemRef} className="min-h-[90vh] flex items-center justify-center relative py-32">
-        <div className="container mx-auto px-6 relative z-10">
-          {/* Section Title - Fade up smoothly */}
-          <motion.h2 
-            className="text-5xl md:text-7xl font-bold mb-24 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-            style={{ 
-              color: '#0B281D',
-              textShadow: '0 2px 10px rgba(198, 255, 92, 0.1)'
-            }}
-          >
-            The Scale of the Challenge
-          </motion.h2>
-          
-          {/* Metric Cards - Staggered soft entrance with glow pulse */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {[
-              { value: "1.8B", label: "tonnes of GHG from plastics", delay: 0 },
-              { value: "390M+", label: "tonnes produced yearly", delay: 0.15 },
-              { value: "22M+", label: "tonnes leak into oceans", delay: 0.3 },
-              { value: "9%", label: "recycled globally", delay: 0.45 }
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ 
-                  delay: stat.delay, 
-                  duration: 0.9, 
-                  ease: [0.25, 0.1, 0.25, 1]
-                }}
-              >
-                {/* Frosted glass card - airy and clean */}
-                <div 
-                  className="p-8 rounded-2xl backdrop-blur-sm relative overflow-hidden"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.4)',
-                    border: '1px solid rgba(255, 255, 255, 0.6)',
-                    boxShadow: '0 8px 32px rgba(14, 54, 44, 0.1)'
-                  }}
+        {/* The Scale of the Challenge - Continuous reveal */}
+        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 pt-20">
+          <div className="container mx-auto px-6">
+            <motion.h2 
+              className="text-5xl md:text-7xl font-bold mb-8 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+              style={{ 
+                background: 'linear-gradient(135deg, #0F3E2E, #A9F46C)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: 'none'
+              }}
+            >
+              The Scale of the Challenge
+            </motion.h2>
+
+            <motion.p
+              className="text-xl text-center mb-20 max-w-2xl mx-auto font-light"
+              style={{ color: '#1D4B36' }}
+              initial={{ opacity: 0 }}
+              animate={isProblemInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+            >
+              As the world wakes up, the scale of the plastic problem becomes clear.
+            </motion.p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              {[
+                { value: "1.8B", label: "tonnes of GHG from plastics", delay: 0 },
+                { value: "390M+", label: "tonnes produced yearly", delay: 0.15 },
+                { value: "22M+", label: "tonnes leak into oceans", delay: 0.3 },
+                { value: "9%", label: "recycled globally", delay: 0.45 }
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  transition={{ delay: stat.delay, duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
                 >
-                  {/* Number with soft glow pulse - appears once */}
-                  <motion.div 
-                    className="text-5xl md:text-6xl font-bold mb-3"
-                    style={{ color: '#B8FF72' }}
-                    initial={{ filter: 'drop-shadow(0 0 0px rgba(184, 255, 114, 0))' }}
-                    animate={isProblemInView ? {
-                      filter: [
-                        'drop-shadow(0 0 0px rgba(184, 255, 114, 0))',
-                        'drop-shadow(0 0 20px rgba(184, 255, 114, 0.8))',
-                        'drop-shadow(0 0 8px rgba(184, 255, 114, 0.3))'
-                      ]
-                    } : {}}
-                    transition={{ 
-                      delay: stat.delay + 0.3,
-                      duration: 1.2,
-                      times: [0, 0.5, 1],
-                      ease: "easeInOut"
+                  <div 
+                    className="p-8 rounded-2xl backdrop-blur-sm"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.25)',
+                      border: '1px solid rgba(255, 255, 255, 0.4)',
+                      boxShadow: '0 8px 32px rgba(14, 54, 44, 0.1)'
                     }}
                   >
-                    {stat.value}
-                  </motion.div>
-                  <p 
-                    className="text-sm font-medium leading-relaxed"
-                    style={{ color: '#0B281D' }}
-                  >
-                    {stat.label}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+                    <motion.div 
+                      className="text-5xl md:text-6xl font-bold mb-3"
+                      style={{ 
+                        background: 'linear-gradient(135deg, #B8FF72, #74D46E)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent'
+                      }}
+                      initial={{ filter: 'drop-shadow(0 0 0px rgba(184, 255, 114, 0))' }}
+                      animate={isProblemInView ? {
+                        filter: [
+                          'drop-shadow(0 0 0px rgba(184, 255, 114, 0))',
+                          'drop-shadow(0 0 20px rgba(184, 255, 114, 0.8))',
+                          'drop-shadow(0 0 8px rgba(184, 255, 114, 0.3))'
+                        ]
+                      } : {}}
+                      transition={{ delay: stat.delay + 0.3, duration: 1.2, times: [0, 0.5, 1] }}
+                    >
+                      {stat.value}
+                    </motion.div>
+                    <p className="text-sm font-medium leading-relaxed" style={{ color: '#1D4B36' }}>
+                      {stat.label}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
