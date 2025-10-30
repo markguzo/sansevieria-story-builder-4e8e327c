@@ -99,13 +99,14 @@ const Home = () => {
     [0, 0, 4, 10]
   );
   
-  // Infinite circle rotation - never stops
+  // Single rotation animation - spins once and stops
   useEffect(() => {
-    const controls = animate(circleRotate, [0, 360], {
-      duration: 20, // Smooth continuous rotation
-      ease: "linear", // Constant speed
-      repeat: Infinity, // Never stops
-      repeatType: "loop"
+    const controls = animate(circleRotate, 360, {
+      duration: 2.5, // Smooth visible rotation
+      ease: "easeInOut", // Smooth acceleration and deceleration
+      onComplete: () => {
+        circleRotate.set(360); // Stay at final position
+      }
     });
     
     return () => controls.stop();
