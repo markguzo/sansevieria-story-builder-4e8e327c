@@ -3,7 +3,7 @@ import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play } from "l
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import heroCircularFlow from "@/assets/hero-circular-flow.jpg";
 import heroBackgroundVideo from "@/assets/hero-background.mp4";
 import problemParticles from "@/assets/problem-particles.jpg";
@@ -14,7 +14,7 @@ import visionLeaf from "@/assets/vision-leaf.jpg";
 
 const Home = () => {
   const containerRef = useRef(null);
-  const heroRef = useRef(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const problemRef = useRef(null);
   const processRef = useRef(null);
   const productsRef = useRef(null);
@@ -22,49 +22,76 @@ const Home = () => {
   const videoRef = useRef(null);
   const visionRef = useRef(null);
   const circleVideoRef = useRef<HTMLVideoElement>(null);
+  const [circlePlayed, setCirclePlayed] = useState(false);
+
+  // Hero sticky scroll progress (0 to 1 across 80% of hero height)
+  const { scrollYProgress: heroScrollProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "80% start"]
+  });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // Hero section scroll progress (0 to 1 for the first ~150vh)
-  const heroProgress = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
-  
-  // Circle animation lifecycle (one-time only)
+  // Circle animation timeline (plays once only)
+  // 0-40%: scale 1.00 → 1.12, opacity 0.95 → 1.0
+  // 40-80%: scale 1.12 → 1.55, blur 0 → 6px, opacity 1 → 0.35
+  // 80-100%: pause video, opacity 0.35 → 0
   const circleScale = useTransform(
-    heroProgress, 
-    [0, 0.4, 0.8, 1], 
-    [1.0, 1.2, 1.6, 1.6]
+    heroScrollProgress,
+    [0, 0.4, 0.8, 1],
+    [1.0, 1.12, 1.55, 1.55]
   );
   const circleOpacity = useTransform(
-    heroProgress,
+    heroScrollProgress,
     [0, 0.4, 0.8, 1],
-    [0.95, 1.0, 0.4, 0]
+    [0.95, 1.0, 0.35, 0]
   );
   const circleBlur = useTransform(
-    heroProgress,
+    heroScrollProgress,
     [0, 0.4, 0.8, 1],
     [0, 0, 6, 6]
   );
+  const circleRotate = useTransform(
+    heroScrollProgress,
+    [0, 1],
+    [0, 180]
+  );
 
-  // Continuous gradient background (no seams)
+  // Light halo effect - grows as we scroll
+  const haloRadius = useTransform(
+    heroScrollProgress,
+    [0, 0.8, 1],
+    ['35vw', '85vw', '85vw']
+  );
+  const haloOpacity = useTransform(
+    heroScrollProgress,
+    [0, 0.4, 0.8, 1],
+    [0.35, 0.35, 0.15, 0]
+  );
+
+  // Continuous gradient background (seamless)
   const backgroundColor = useTransform(
-    heroProgress,
+    heroScrollProgress,
     [0, 0.45, 1],
     ['#0E362C', '#BDF9C8', '#F6FFF6']
   );
 
-  // Pause video when animation completes
+  // Pause video when animation completes & mark as played
   useEffect(() => {
-    const unsubscribe = heroProgress.on('change', (progress) => {
-      if (progress > 0.85 && circleVideoRef.current && !circleVideoRef.current.paused) {
+    const unsubscribe = heroScrollProgress.on('change', (progress) => {
+      if (progress > 0.8 && circleVideoRef.current && !circleVideoRef.current.paused) {
         circleVideoRef.current.pause();
+        if (!circlePlayed) {
+          setCirclePlayed(true);
+        }
       }
     });
     
     return () => unsubscribe();
-  }, [heroProgress]);
+  }, [heroScrollProgress, circlePlayed]);
   
   const isProblemInView = useInView(problemRef, { amount: 0.2, once: true });
   const isProcessInView = useInView(processRef, { amount: 0.2, once: true });
@@ -75,18 +102,35 @@ const Home = () => {
 
   return (
     <div ref={containerRef} className="min-h-screen text-foreground relative overflow-x-hidden">
-      {/* Continuous gradient background - no seams */}
+      {/* ONE SEAMLESS SURFACE - Continuous gradient */}
       <motion.div 
         className="fixed inset-0 -z-30"
-        style={{ backgroundColor }}
+        style={{ 
+          background: 'linear-gradient(180deg, #0E362C 0%, #BDF9C8 45%, #F6FFF6 100%)'
+        }}
       />
       
-      {/* Subtle moving grain for depth */}
+      {/* Subtle grain for depth (1-2% opacity) */}
       <div 
-        className="fixed inset-0 -z-20 opacity-[0.02] pointer-events-none"
+        className="fixed inset-0 -z-20 opacity-[0.015] pointer-events-none"
         style={{
           backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
           backgroundSize: '200px 200px'
+        }}
+      />
+
+      {/* Light Halo - grows as circle expands */}
+      <motion.div 
+        className="fixed top-1/2 left-1/2 -z-10 pointer-events-none"
+        style={{
+          x: '-50%',
+          y: '-50%',
+          width: haloRadius,
+          height: haloRadius,
+          opacity: haloOpacity,
+          background: 'radial-gradient(circle, rgba(198, 255, 92, 0.25) 0%, rgba(189, 249, 200, 0.15) 40%, transparent 70%)',
+          filter: 'blur(40px)',
+          willChange: 'transform, opacity'
         }}
       />
 
@@ -98,51 +142,53 @@ const Home = () => {
           y: '-50%',
           scale: circleScale,
           opacity: circleOpacity,
+          rotate: circleRotate,
           willChange: 'transform, opacity'
         }}
       >
         <motion.div 
-          className="w-[900px] h-[900px] rounded-full"
+          className="w-[800px] h-[800px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.6) 0%, rgba(189, 249, 200, 0.4) 35%, transparent 65%)',
+            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.5) 0%, rgba(189, 249, 200, 0.3) 35%, transparent 65%)',
             filter: circleBlur
           }}
         />
       </motion.div>
 
-      {/* UNIFIED HERO + PROBLEM SECTION - One continuous scene */}
-      <section className="min-h-[200vh] relative">
-        {/* Sticky Hero with Circle Video */}
+      {/* UNIFIED HERO + SCALE SECTION - One continuous scene */}
+      <section ref={heroRef} className="relative" style={{ height: '250vh' }}>
+        {/* Sticky Hero - holds until 80% of section height */}
         <div className="sticky top-0 h-screen flex items-center justify-center">
-          {/* Video Background - Circle animation */}
+          {/* Circle Video - center stage */}
           <div className="absolute inset-0 flex items-center justify-center">
             <video
               ref={circleVideoRef}
               autoPlay
               muted
+              loop={!circlePlayed}
               playsInline
-              className="w-auto h-auto max-w-[70%] max-h-[70%] object-contain"
+              className="w-auto h-auto max-w-[65%] max-h-[65%] object-contain"
               style={{ 
-                opacity: 0.6,
-                filter: 'brightness(0.9) contrast(1.1)'
+                opacity: 0.65,
+                filter: 'brightness(0.95) contrast(1.15)'
               }}
               onLoadedData={(e) => {
                 const video = e.currentTarget;
-                video.playbackRate = 1.5;
+                video.playbackRate = 1.2;
               }}
             >
               <source src={heroBackgroundVideo} type="video/mp4" />
             </video>
           </div>
 
-          {/* Hero Text Content */}
+          {/* Hero Text */}
           <div className="container mx-auto px-6 text-center relative z-10">
             <motion.h1 
               className="text-6xl md:text-8xl font-bold mb-12 leading-tight text-white"
-              style={{ textShadow: '0 0 60px rgba(198, 255, 92, 0.3)' }}
+              style={{ textShadow: '0 0 60px rgba(198, 255, 92, 0.35)' }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
+              transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             >
               The Circle That Powers Tomorrow
             </motion.h1>
@@ -151,7 +197,7 @@ const Home = () => {
               className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto leading-relaxed font-light text-white/90"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.6 }}
+              transition={{ duration: 1, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             >
               Turning today's waste into tomorrow's energy.
             </motion.p>
@@ -159,7 +205,7 @@ const Home = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.9 }}
+              transition={{ duration: 1, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <Button 
                 size="lg"
@@ -169,7 +215,7 @@ const Home = () => {
                   backgroundColor: '#0E362C',
                   color: '#C6FF5C',
                   border: '2px solid #C6FF5C',
-                  boxShadow: '0 0 20px rgba(198, 255, 92, 0.3)'
+                  boxShadow: '0 0 20px rgba(198, 255, 92, 0.35)'
                 }}
               >
                 Learn how we do it ↓
@@ -178,25 +224,28 @@ const Home = () => {
           </div>
         </div>
 
-        {/* The Scale of the Challenge - Reveals as circle fades */}
-        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10">
+        {/* The Scale of the Challenge - Continuous reveal (no seam) */}
+        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 pt-20">
           <div className="container mx-auto px-6">
-            {/* Title with gradient sweep */}
+            {/* Title with gradient color sweep */}
             <motion.h2 
               className="text-5xl md:text-7xl font-bold mb-6 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-              style={{ 
-                background: isProblemInView 
-                  ? 'linear-gradient(135deg, #0F3E2E 0%, #A9F46C 100%)'
-                  : 'linear-gradient(135deg, #0F3E2E 0%, #0F3E2E 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                transition: 'background 0.3s ease-out 0.6s'
-              }}
             >
-              The Scale of the Challenge
+              <motion.span
+                style={{ 
+                  background: 'linear-gradient(135deg, #0F3E2E, #A9F46C)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundSize: '200% 100%',
+                  backgroundPosition: isProblemInView ? '0% 0%' : '100% 0%'
+                }}
+                transition={{ duration: 0.3, delay: 0.6, ease: "easeOut" }}
+              >
+                The Scale of the Challenge
+              </motion.span>
             </motion.h2>
 
             {/* Subline */}
@@ -210,7 +259,7 @@ const Home = () => {
               As the world wakes up, the scale of the plastic problem becomes clear.
             </motion.p>
             
-            {/* Metric Cards - 2x2 grid with stagger */}
+            {/* Metric Cards - 2x2 grid with precise stagger (0.15s apart) */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
               {[
                 { value: "1.8B", label: "tonnes of GHG from plastics", delay: 0 },
@@ -228,16 +277,16 @@ const Home = () => {
                     ease: [0.25, 0.1, 0.25, 1]
                   }}
                 >
-                  {/* Clean frosted card */}
+                  {/* Airy frosted card */}
                   <div 
                     className="p-8 rounded-3xl backdrop-blur-[10px]"
                     style={{
                       background: 'rgba(255, 255, 255, 0.25)',
                       border: '1px solid rgba(255, 255, 255, 0.3)',
-                      boxShadow: '0 8px 32px rgba(14, 54, 44, 0.08)'
+                      boxShadow: '0 12px 30px rgba(0, 0, 0, 0.06)'
                     }}
                   >
-                    {/* Number with single glow pulse */}
+                    {/* Number with single soft glow pulse (150ms) */}
                     <motion.div 
                       className="text-5xl md:text-6xl font-bold mb-3"
                       style={{ 
@@ -248,14 +297,14 @@ const Home = () => {
                       animate={isProblemInView ? {
                         filter: [
                           'drop-shadow(0 0 0px rgba(184, 255, 114, 0))',
-                          'drop-shadow(0 0 16px rgba(184, 255, 114, 0.8))',
-                          'drop-shadow(0 0 6px rgba(184, 255, 114, 0.3))'
+                          'drop-shadow(0 0 12px rgba(184, 255, 114, 0.6))',
+                          'drop-shadow(0 0 4px rgba(184, 255, 114, 0.2))'
                         ]
                       } : {}}
                       transition={{ 
-                        delay: stat.delay + 0.5,
-                        duration: 0.8,
-                        times: [0, 0.6, 1],
+                        delay: stat.delay + 0.8,
+                        duration: 0.15,
+                        times: [0, 0.5, 1],
                         ease: "easeInOut"
                       }}
                     >
