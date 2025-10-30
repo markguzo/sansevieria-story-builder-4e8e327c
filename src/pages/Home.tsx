@@ -102,65 +102,74 @@ const Home = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          {/* Text Animation synchronized with video emotion */}
-          <h1 className="text-6xl md:text-8xl font-bold mb-12 leading-tight" style={{ perspective: '1000px' }}>
-            {["The", "Circle", "That", "Powers", "Tomorrow"].map((word, i) => (
-              <motion.span
-                key={i}
-                className="inline-block mr-4"
-                style={{ color: '#0E362C' }}
-                initial={{ opacity: 0, scale: 0.3, y: 60 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1, 
-                  y: 0 
-                }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.8 + i * 0.15,
-                  ease: [0.34, 1.56, 0.64, 1]
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </h1>
+          {/* Cinematic Text Animation - Light through mist */}
+          <motion.h1 
+            className="text-6xl md:text-8xl font-bold mb-12 leading-tight"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 1.2, 
+              delay: 0.3,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
+            style={{ 
+              color: '#0E362C',
+              textShadow: '0 0 40px rgba(198, 255, 92, 0.15)'
+            }}
+          >
+            The Circle That Powers Tomorrow
+          </motion.h1>
           
           <motion.p 
             className="text-xl md:text-2xl mb-16 max-w-3xl mx-auto leading-relaxed font-light"
-            style={{ color: '#0E362C' }}
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 1.2, 
+              delay: 0.55,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
+            style={{ 
+              color: '#0E362C',
+              textShadow: '0 0 30px rgba(198, 255, 92, 0.1)'
+            }}
           >
             Turning today's waste into tomorrow's energy.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.3 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 2.2, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 1.2, 
+              delay: 0.85,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
           >
-            <Button 
-              size="lg"
-              onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-lg px-12 py-7 rounded-full font-medium transition-all duration-300"
-              style={{ 
-                backgroundColor: '#0E362C',
-                color: '#C6FF5C',
-                border: '2px solid #C6FF5C'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 0 30px rgba(198, 255, 92, 0.6)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = 'none';
-              }}
+            <motion.div
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              Learn how we do it ↓
-            </Button>
+              <Button 
+                size="lg"
+                onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-lg px-12 py-7 rounded-full font-medium transition-all duration-300"
+                style={{ 
+                  backgroundColor: '#0E362C',
+                  color: '#C6FF5C',
+                  border: '2px solid #C6FF5C',
+                  boxShadow: '0 0 20px rgba(198, 255, 92, 0.2)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 35px rgba(198, 255, 92, 0.5)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 20px rgba(198, 255, 92, 0.2)';
+                }}
+              >
+                Learn how we do it ↓
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
       </section>
