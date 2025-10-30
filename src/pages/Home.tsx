@@ -361,6 +361,73 @@ const Home = () => {
         </div>
       </section>
 
+      {/* NATURE BREAK - VISUAL ELEMENT */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <motion.div
+              className="relative aspect-square rounded-2xl overflow-hidden"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <img 
+                src="/src/assets/plant-1.png" 
+                alt="Nature element"
+                className="w-full h-full object-cover"
+              />
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(14, 54, 44, 0.2), transparent)'
+                }}
+              />
+            </motion.div>
+
+            <motion.div
+              className="relative aspect-square rounded-2xl overflow-hidden"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <img 
+                src="/src/assets/plant-2.png" 
+                alt="Nature element"
+                className="w-full h-full object-cover"
+              />
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(135deg, transparent, rgba(116, 212, 110, 0.15))'
+                }}
+              />
+            </motion.div>
+
+            <motion.div
+              className="relative aspect-square rounded-2xl overflow-hidden md:col-span-1 col-span-2"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <img 
+                src="/src/assets/plant-3.png" 
+                alt="Nature element"
+                className="w-full h-full object-cover"
+              />
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(184, 255, 114, 0.1), transparent)'
+                }}
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* THE TRANSFORMATION - VIDEO SECTION */}
       <section ref={processRef} className="min-h-screen flex items-center justify-center relative py-32">
         <div className="container mx-auto px-6 relative z-10">
@@ -411,184 +478,6 @@ const Home = () => {
               </div>
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* FROM WASTE TO WONDER - PLANT IMAGERY SECTION */}
-      <section className="min-h-screen flex items-center justify-center relative py-32">
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.div
-            className="text-center mb-20"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ color: '#0B281D' }}>
-              From Waste to Wonder
-            </h2>
-            <p className="text-xl max-w-3xl mx-auto font-light" style={{ color: '#0E362C', opacity: 0.75 }}>
-              Just as a plant transforms CO₂ into oxygen, we transform plastic waste into clean energy
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-7xl mx-auto">
-            {/* BEFORE - The Problem */}
-            <motion.div
-              className="relative"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <div 
-                className="relative rounded-full aspect-square overflow-hidden backdrop-blur-sm mb-6"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  border: '3px solid rgba(184, 255, 114, 0.3)',
-                  boxShadow: '0 12px 40px rgba(14, 54, 44, 0.2)'
-                }}
-              >
-                <img 
-                  src="/src/assets/plant-1.png" 
-                  alt="Plastic waste representing the environmental problem"
-                  className="w-full h-full object-cover opacity-60 grayscale-[30%]"
-                />
-                <div 
-                  className="absolute inset-0"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(14, 54, 44, 0.4), rgba(116, 212, 110, 0.2))'
-                  }}
-                />
-              </div>
-              <div className="text-center">
-                <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: '#0B281D' }}>
-                  The Problem
-                </h3>
-                <p className="text-base font-light leading-relaxed" style={{ color: '#0E362C', opacity: 0.8 }}>
-                  390M+ tonnes of plastic waste annually, polluting our oceans and atmosphere
-                </p>
-              </div>
-            </motion.div>
-
-            {/* TRANSFORMATION - The Process */}
-            <motion.div
-              className="relative"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <div 
-                className="relative rounded-full aspect-square overflow-hidden backdrop-blur-sm mb-6"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.5)',
-                  border: '3px solid rgba(184, 255, 114, 0.5)',
-                  boxShadow: '0 12px 40px rgba(116, 212, 110, 0.3)'
-                }}
-              >
-                <motion.img 
-                  src="/src/assets/hero-circular-flow.jpg" 
-                  alt="Circular transformation process"
-                  className="w-full h-full object-cover"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                />
-                <div 
-                  className="absolute inset-0 flex items-center justify-center"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(184, 255, 114, 0.3), transparent 70%)'
-                  }}
-                >
-                  <motion.div
-                    className="w-24 h-24 rounded-full flex items-center justify-center backdrop-blur-md"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.9)',
-                      border: '2px solid rgba(116, 212, 110, 0.6)'
-                    }}
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <ArrowRight size={40} style={{ color: '#74D46E' }} />
-                  </motion.div>
-                </div>
-              </div>
-              <div className="text-center">
-                <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: '#0B281D' }}>
-                  The Process
-                </h3>
-                <p className="text-base font-light leading-relaxed" style={{ color: '#0E362C', opacity: 0.8 }}>
-                  Advanced pyrolysis technology transforms waste into valuable energy products
-                </p>
-              </div>
-            </motion.div>
-
-            {/* AFTER - The Products */}
-            <motion.div
-              className="relative"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <div 
-                className="relative rounded-full aspect-square overflow-hidden backdrop-blur-sm mb-6"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.6)',
-                  border: '3px solid rgba(184, 255, 114, 0.6)',
-                  boxShadow: '0 12px 40px rgba(116, 212, 110, 0.4), 0 0 60px rgba(184, 255, 114, 0.2)'
-                }}
-              >
-                <img 
-                  src="/src/assets/plant-3.png" 
-                  alt="Thriving plant representing clean energy output"
-                  className="w-full h-full object-cover"
-                />
-                <motion.div 
-                  className="absolute inset-0"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(184, 255, 114, 0.15), rgba(116, 212, 110, 0.2))'
-                  }}
-                  animate={{ opacity: [0.3, 0.5, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </div>
-              <div className="text-center">
-                <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: '#0B281D' }}>
-                  The Products
-                </h3>
-                <p className="text-base font-light leading-relaxed" style={{ color: '#0E362C', opacity: 0.8 }}>
-                  Clean naphtha, sustainable aviation fuel, and renewable diesel
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Connecting arrows for desktop */}
-          <div className="hidden md:block absolute top-1/2 left-0 right-0 -translate-y-1/2 pointer-events-none">
-            <div className="container mx-auto px-6 relative">
-              <div className="flex justify-between items-center max-w-7xl mx-auto">
-                <motion.div
-                  className="absolute left-[28%] top-1/2 -translate-y-1/2"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 0.6, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.8 }}
-                >
-                  <ArrowRight size={48} style={{ color: '#74D46E' }} strokeWidth={2.5} />
-                </motion.div>
-                <motion.div
-                  className="absolute right-[28%] top-1/2 -translate-y-1/2"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 0.6, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 1 }}
-                >
-                  <ArrowRight size={48} style={{ color: '#74D46E' }} strokeWidth={2.5} />
-                </motion.div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
