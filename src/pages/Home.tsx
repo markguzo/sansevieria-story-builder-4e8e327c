@@ -53,11 +53,11 @@ const Home = () => {
     [0, 0, 4, 10]
   );
   
-  // Rotation with smooth deceleration
+  // Rotation - one complete 360° rotation then stops
   const circleRotate = useTransform(
     heroScrollProgress,
-    [0, 0.5, 0.8, 1],
-    [0, 360, 480, 500]
+    [0, 0.5, 1],
+    [0, 360, 360]
   );
 
   // Video opacity and brightness - fades gradually with circle
