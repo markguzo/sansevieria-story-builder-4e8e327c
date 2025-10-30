@@ -61,7 +61,7 @@ const Home = () => {
   const visionRef = useRef(null);
   const circleVideoRef = useRef<HTMLVideoElement>(null);
   const [circlePlayed, setCirclePlayed] = useState(false);
-  const hasRotatedRef = useRef(false);
+  
   
   // One-time rotation animation
   const circleRotate = useMotionValue(0);
@@ -99,20 +99,13 @@ const Home = () => {
     [0, 0, 4, 10]
   );
   
-  // Animate circle rotation once on mount - only runs one time ever
+  // Infinite circle rotation - never stops
   useEffect(() => {
-    if (hasRotatedRef.current) return;
-    
-    hasRotatedRef.current = true; // Set immediately to prevent re-runs
-    
-    const controls = animate(circleRotate, 360, {
-      duration: 1.5, // Much faster
-      ease: [0.16, 1, 0.3, 1], // Fast start, slow end
-      repeat: 0, // Explicit single run
-      onComplete: () => {
-        // Animation stays at 360° permanently
-        circleRotate.set(360);
-      }
+    const controls = animate(circleRotate, [0, 360], {
+      duration: 20, // Smooth continuous rotation
+      ease: "linear", // Constant speed
+      repeat: Infinity, // Never stops
+      repeatType: "loop"
     });
     
     return () => controls.stop();
