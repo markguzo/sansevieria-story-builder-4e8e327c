@@ -24,6 +24,7 @@ const Home = () => {
   const visionRef = useRef(null);
   const circleVideoRef = useRef<HTMLVideoElement>(null);
   const [circlePlayed, setCirclePlayed] = useState(false);
+  const [hasRotated, setHasRotated] = useState(false);
   
   // One-time rotation animation
   const circleRotate = useMotionValue(0);
@@ -56,15 +57,20 @@ const Home = () => {
     [0, 0, 4, 10]
   );
   
-  // Animate circle rotation once on mount
+  // Animate circle rotation once on mount - only runs one time ever
   useEffect(() => {
+    if (hasRotated) return;
+    
     const controls = animate(circleRotate, 360, {
       duration: 5,
-      ease: [0.16, 1, 0.3, 1]
+      ease: [0.16, 1, 0.3, 1],
+      onComplete: () => {
+        setHasRotated(true);
+      }
     });
     
     return () => controls.stop();
-  }, [circleRotate]);
+  }, []);
 
   // Video opacity and brightness - fades gradually with circle
   const videoOpacity = useTransform(
