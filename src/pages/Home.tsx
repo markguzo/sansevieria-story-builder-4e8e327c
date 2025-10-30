@@ -12,6 +12,9 @@ import processAbstract from "@/assets/process-abstract.jpg";
 import productsEnergy from "@/assets/products-energy.jpg";
 import roadmapTimeline from "@/assets/roadmap-timeline.jpg";
 import visionLeaf from "@/assets/vision-leaf.jpg";
+import plant1 from "@/assets/plant-1.png";
+import plant2 from "@/assets/plant-2.png";
+import plant3 from "@/assets/plant-3.png";
 
 const Home = () => {
   const containerRef = useRef(null);
@@ -361,68 +364,145 @@ const Home = () => {
         </div>
       </section>
 
-      {/* NATURE BREAK - VISUAL ELEMENT */}
-      <section className="relative py-20 overflow-hidden">
+      {/* NATURE'S BLUEPRINT - INSPIRATIONAL QUOTE SECTION */}
+      <section className="relative py-32 overflow-hidden">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <motion.div
-              className="relative aspect-square rounded-2xl overflow-hidden"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <img 
-                src="/src/assets/plant-1.png" 
-                alt="Nature element"
-                className="w-full h-full object-cover"
-              />
-              <div 
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(14, 54, 44, 0.2), transparent)'
-                }}
-              />
-            </motion.div>
+          <div className="relative max-w-7xl mx-auto">
+            {/* Desktop: Asymmetric Grid Layout */}
+            <div className="hidden md:grid md:grid-cols-[1.2fr,1fr] gap-8 items-center">
+              {/* Left: Large Plant 1 */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="relative group"
+              >
+                <div className="relative h-[500px] rounded-3xl overflow-hidden">
+                  <img
+                    src={plant1}
+                    alt="Nature's circular wisdom"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+                </div>
+              </motion.div>
 
-            <motion.div
-              className="relative aspect-square rounded-2xl overflow-hidden"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <img 
-                src="/src/assets/plant-2.png" 
-                alt="Nature element"
-                className="w-full h-full object-cover"
-              />
-              <div 
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(135deg, transparent, rgba(116, 212, 110, 0.15))'
-                }}
-              />
-            </motion.div>
+              {/* Right: Stacked Plants 2 & 3 */}
+              <div className="space-y-8">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="relative group"
+                >
+                  <div className="relative h-[300px] rounded-3xl overflow-hidden">
+                    <img
+                      src={plant2}
+                      alt="Natural growth patterns"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+                  </div>
+                </motion.div>
 
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="relative group"
+                >
+                  <div className="relative h-[300px] rounded-3xl overflow-hidden">
+                    <img
+                      src={plant3}
+                      alt="Regenerative systems"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tl from-accent/20 via-transparent to-primary/10" />
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Mobile: Stacked Layout */}
+            <div className="md:hidden space-y-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="relative"
+              >
+                <div className="relative h-[400px] rounded-3xl overflow-hidden">
+                  <img
+                    src={plant1}
+                    alt="Nature's circular wisdom"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="relative"
+              >
+                <div className="relative h-[300px] rounded-3xl overflow-hidden">
+                  <img
+                    src={plant2}
+                    alt="Natural growth patterns"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative"
+              >
+                <div className="relative h-[300px] rounded-3xl overflow-hidden">
+                  <img
+                    src={plant3}
+                    alt="Regenerative systems"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tl from-accent/20 via-transparent to-primary/10" />
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Centered Quote Card - Absolute on Desktop, Inline on Mobile */}
             <motion.div
-              className="relative aspect-square rounded-2xl overflow-hidden md:col-span-1 col-span-2"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-12 md:mt-0 md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-10"
             >
-              <img 
-                src="/src/assets/plant-3.png" 
-                alt="Nature element"
-                className="w-full h-full object-cover"
-              />
-              <div 
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(184, 255, 114, 0.1), transparent)'
-                }}
-              />
+              <div className="relative backdrop-blur-[24px] bg-background/70 border-2 border-primary/30 rounded-2xl p-8 md:p-12 shadow-[0_8px_32px_rgba(184,255,114,0.15)] max-w-2xl mx-auto">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl" />
+                <div className="relative">
+                  <div className="text-4xl md:text-6xl mb-4 text-primary/40">❝</div>
+                  <blockquote className="text-xl md:text-3xl font-light leading-relaxed">
+                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-medium">
+                      Nature has been perfecting circular systems for billions of years.
+                    </span>{" "}
+                    <span className="text-foreground">
+                      We're simply learning from the best teacher.
+                    </span>
+                  </blockquote>
+                  <div className="text-4xl md:text-6xl mt-4 text-right text-primary/40">❞</div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
