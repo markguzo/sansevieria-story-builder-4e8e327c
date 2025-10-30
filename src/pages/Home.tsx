@@ -179,31 +179,30 @@ const Home = () => {
         />
       </motion.div>
 
-      {/* FULL-SCREEN HERO + SCALE SECTION */}
-      <section ref={heroRef} className="relative" style={{ height: '250vh' }}>
-        {/* FULL-SCREEN HERO - 100vh always */}
-        <div 
-          className="sticky top-0 w-screen relative isolate overflow-clip"
-          style={{
-            height: '100vh',
-            paddingTop: 'env(safe-area-inset-top)',
-            paddingBottom: 'env(safe-area-inset-bottom)'
+      {/* FULL-SCREEN HERO */}
+      <section 
+        ref={heroRef} 
+        className="relative w-screen isolate overflow-clip"
+        style={{ 
+          minHeight: '200vh',
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingBottom: 'env(safe-area-inset-bottom)'
+        }}
+      >
+        {/* Full-bleed Circle Video - fixed to viewport */}
+        <motion.video
+          ref={circleVideoRef}
+          autoPlay
+          muted
+          loop={!circlePlayed}
+          playsInline
+          className="fixed inset-0 w-full h-full -z-10"
+          style={{ 
+            objectFit: 'cover',
+            objectPosition: 'center',
+            opacity: videoOpacity,
+            filter: videoFilter
           }}
-        >
-          {/* Full-bleed Circle Video - covers entire viewport */}
-          <motion.video
-            ref={circleVideoRef}
-            autoPlay
-            muted
-            loop={!circlePlayed}
-            playsInline
-            className="absolute inset-0 w-full h-full"
-            style={{ 
-              objectFit: 'cover',
-              objectPosition: 'center',
-              opacity: videoOpacity,
-              filter: videoFilter
-            }}
             onLoadedData={(e) => {
               const video = e.currentTarget;
               video.playbackRate = 1.1;
@@ -212,16 +211,16 @@ const Home = () => {
             <source src={heroBackgroundVideo} type="video/mp4" />
           </motion.video>
 
-          {/* Soft vignette - helps blend edges */}
-          <div 
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'radial-gradient(circle at center, transparent 30%, rgba(246, 255, 246, 0.1) 85%)'
-            }}
-          />
+        {/* Soft vignette - helps blend edges */}
+        <div 
+          className="fixed inset-0 pointer-events-none -z-10"
+          style={{
+            background: 'radial-gradient(circle at center, transparent 30%, rgba(246, 255, 246, 0.1) 85%)'
+          }}
+        />
 
-          {/* Hero Content - Always visible, stable position */}
-          <div className="absolute inset-0 flex items-center justify-center z-10">
+        {/* Hero Content - Top section */}
+        <div className="min-h-screen flex items-center justify-center relative z-10">
             <div className="container mx-auto px-6 text-center max-w-5xl">
               <motion.h1 
                 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 md:mb-12 leading-tight text-white"
