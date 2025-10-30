@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, useMotionValue, animate } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
 import heroCircularFlow from "@/assets/hero-circular-flow.jpg";
@@ -24,6 +24,9 @@ const Home = () => {
   const visionRef = useRef(null);
   const circleVideoRef = useRef<HTMLVideoElement>(null);
   const [circlePlayed, setCirclePlayed] = useState(false);
+  
+  // One-time rotation animation
+  const circleRotate = useMotionValue(0);
 
   // Extended scroll progress from hero to transformation section
   const { scrollYProgress: heroScrollProgress } = useScroll({
@@ -53,12 +56,15 @@ const Home = () => {
     [0, 0, 4, 10]
   );
   
-  // Rotation - one complete 360° rotation then stops
-  const circleRotate = useTransform(
-    heroScrollProgress,
-    [0, 0.5, 1],
-    [0, 360, 360]
-  );
+  // Animate circle rotation once on mount
+  useEffect(() => {
+    const controls = animate(circleRotate, 360, {
+      duration: 3,
+      ease: [0.25, 0.1, 0.25, 1.0]
+    });
+    
+    return controls.stop;
+  }, []);
 
   // Video opacity and brightness - fades gradually with circle
   const videoOpacity = useTransform(
