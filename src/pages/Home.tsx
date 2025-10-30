@@ -264,7 +264,7 @@ const Home = () => {
           }}
         >
           <motion.h1 
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 md:mb-12 leading-tight text-white"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 leading-tight text-white"
             style={{ textShadow: '0 0 60px rgba(198, 255, 92, 0.4)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -274,7 +274,7 @@ const Home = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-lg sm:text-xl md:text-2xl mb-12 md:mb-16 max-w-3xl mx-auto leading-relaxed font-light text-white/90"
+            className="text-base sm:text-lg md:text-xl mb-8 md:mb-10 max-w-3xl mx-auto leading-relaxed font-light text-white/90"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
@@ -290,7 +290,7 @@ const Home = () => {
             <Button 
               size="lg"
               onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-base md:text-lg px-10 md:px-12 py-6 md:py-7 rounded-full font-medium"
+              className="text-sm md:text-base px-6 md:px-8 py-4 md:py-5 rounded-full font-medium"
               style={{ 
                 backgroundColor: '#0E362C',
                 color: '#C6FF5C',
@@ -308,7 +308,7 @@ const Home = () => {
       <section ref={problemRef} className="min-h-screen flex items-center justify-center relative py-12 -mt-20">
         <div className="container mx-auto px-6 relative z-10">
           <motion.h2 
-            className="text-5xl md:text-7xl font-bold mb-6 text-center"
+            className="text-3xl md:text-5xl font-bold mb-4 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
@@ -328,7 +328,7 @@ const Home = () => {
           </motion.h2>
 
           <motion.p
-            className="text-xl text-center mb-20 max-w-2xl mx-auto font-light"
+            className="text-base text-center mb-12 max-w-2xl mx-auto font-light"
             style={{ color: '#1D4B36', opacity: 0.75 }}
             initial={{ opacity: 0, y: 12 }}
             animate={isProblemInView ? { opacity: 0.75, y: 0 } : { opacity: 0, y: 12 }}
@@ -387,7 +387,7 @@ const Home = () => {
                   }}
                 >
                   <motion.div 
-                    className="text-4xl md:text-5xl font-bold mb-3 md:mb-4 text-center w-full"
+                    className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-center w-full"
                     style={{ 
                       background: 'linear-gradient(135deg, #0E362C, #4A7B65)',
                       WebkitBackgroundClip: 'text',
@@ -551,8 +551,8 @@ const Home = () => {
               <div className="relative backdrop-blur-[24px] bg-background/70 border-2 border-primary/30 rounded-2xl p-8 md:p-12 shadow-[0_8px_32px_rgba(184,255,114,0.15)] max-w-2xl mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl" />
                 <div className="relative">
-                  <div className="text-4xl md:text-6xl mb-4 text-primary/40">❝</div>
-                  <blockquote className="text-xl md:text-3xl font-light leading-relaxed">
+                  <div className="text-2xl md:text-4xl mb-4 text-primary/40">❝</div>
+                  <blockquote className="text-lg md:text-2xl font-light leading-relaxed">
                     <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-medium">
                       Nature has been perfecting circular systems for billions of years.
                     </span>{" "}
@@ -560,7 +560,7 @@ const Home = () => {
                       We're simply learning from the best teacher.
                     </span>
                   </blockquote>
-                  <div className="text-4xl md:text-6xl mt-4 text-right text-primary/40">❞</div>
+                  <div className="text-2xl md:text-4xl mt-4 text-right text-primary/40">❞</div>
                 </div>
               </div>
             </motion.div>
@@ -577,10 +577,10 @@ const Home = () => {
             animate={isProcessInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ color: '#0B281D' }}>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#0B281D' }}>
               The Transformation
             </h2>
-            <p className="text-xl max-w-2xl mx-auto font-light" style={{ color: '#0E362C', opacity: 0.7 }}>
+            <p className="text-base max-w-2xl mx-auto font-light" style={{ color: '#0E362C', opacity: 0.7 }}>
               Watch how waste becomes energy through our revolutionary process
             </p>
           </motion.div>
@@ -608,10 +608,10 @@ const Home = () => {
                   >
                     <Play size={48} className="ml-2" style={{ color: '#74D46E' }} />
                   </motion.div>
-                  <h3 className="text-3xl font-bold mb-4" style={{ color: '#0B281D' }}>
+                  <h3 className="text-2xl font-bold mb-3" style={{ color: '#0B281D' }}>
                     VIDEO
                   </h3>
-                  <p className="text-lg max-w-md mx-auto px-4" style={{ color: '#0E362C', opacity: 0.7 }}>
+                  <p className="text-base max-w-md mx-auto px-4" style={{ color: '#0E362C', opacity: 0.7 }}>
                     Transformation process video will be added here
                   </p>
                 </div>
@@ -630,10 +630,10 @@ const Home = () => {
             animate={isProductsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ color: '#0B281D' }}>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#0B281D' }}>
               Three Clean Solutions
             </h2>
-            <p className="text-xl max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
+            <p className="text-base max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
               From waste to specialized fuel fractions
             </p>
           </motion.div>
@@ -687,10 +687,10 @@ const Home = () => {
             animate={isVideoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ color: '#0B281D' }}>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#0B281D' }}>
               See It In Action
             </h2>
-            <p className="text-xl max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
+            <p className="text-base max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
               Watch how we transform waste into energy
             </p>
           </motion.div>
@@ -720,7 +720,7 @@ const Home = () => {
                   >
                     <Play className="ml-1" size={40} fill="#B8FF72" style={{ color: '#B8FF72' }} />
                   </div>
-                  <p className="text-lg font-semibold" style={{ color: '#0B281D' }}>Coming Soon</p>
+                  <p className="text-base font-semibold" style={{ color: '#0B281D' }}>Coming Soon</p>
                   <p className="text-sm max-w-md text-center px-4" style={{ color: '#0E362C' }}>
                     Video content will be added here showcasing our transformation process
                   </p>
@@ -740,10 +740,10 @@ const Home = () => {
             animate={isRoadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ color: '#0B281D' }}>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#0B281D' }}>
               Our Journey
             </h2>
-            <p className="text-xl max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
+            <p className="text-base max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
               From laboratory to industrial impact
             </p>
           </motion.div>
@@ -811,7 +811,7 @@ const Home = () => {
       <section ref={visionRef} className="min-h-screen flex items-center justify-center relative py-32">
         <div className="container mx-auto px-6 text-center relative z-10">
           <motion.h2 
-            className="text-5xl md:text-8xl font-bold mb-16"
+            className="text-3xl md:text-6xl font-bold mb-12"
             style={{ color: '#0B281D' }}
             initial={{ opacity: 0, y: 20 }}
             animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -820,7 +820,7 @@ const Home = () => {
             Our Vision
           </motion.h2>
           
-          <div className="text-2xl md:text-4xl leading-relaxed font-light max-w-5xl mx-auto mb-16 space-y-4">
+          <div className="text-lg md:text-2xl leading-relaxed font-light max-w-5xl mx-auto mb-12 space-y-4">
             <motion.p
               initial={{ opacity: 0, x: -40 }}
               animate={isVisionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
@@ -860,7 +860,7 @@ const Home = () => {
             <Button 
               asChild
               size="lg"
-              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 text-lg px-12 py-7 rounded-full shadow-xl hover:shadow-[var(--glow-primary)] transition-all"
+              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 text-base px-8 py-5 rounded-full shadow-xl hover:shadow-[var(--glow-primary)] transition-all"
             >
               <Link to="/contact">
                 Join the Movement <ArrowRight className="ml-2" size={22} />
@@ -904,7 +904,7 @@ const ProcessStep = ({ icon: Icon, title, description, isInView, delay, highligh
     >
       <Icon className={highlighted ? "text-background" : "text-primary"} size={28} />
     </motion.div>
-    <h3 className="text-lg font-bold mb-2 text-foreground">{title}</h3>
+    <h3 className="text-base font-bold mb-2 text-foreground">{title}</h3>
     <p className="text-sm text-muted-foreground">{description}</p>
   </motion.div>
 );
@@ -938,7 +938,7 @@ const ProductCard = ({ icon: Icon, title, description, color, isInView, delay }:
         >
           <Icon className={colorClass} size={32} />
         </motion.div>
-        <h3 className="text-2xl font-bold mb-3 text-foreground">{title}</h3>
+        <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
         <p className="text-base text-muted-foreground leading-relaxed">{description}</p>
       </Card>
     </motion.div>
@@ -973,10 +973,10 @@ const RoadmapNode = ({ label, title, status, isInView, delay }: any) => {
         } : {}}
         transition={status === 'current' ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" } : {}}
       >
-        <span className="text-2xl font-bold text-foreground">{statusIcon}</span>
+        <span className="text-lg font-bold text-foreground">{statusIcon}</span>
       </motion.div>
       <div className="text-base font-bold text-primary mb-2">{label}</div>
-      <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+      <h3 className="text-base font-semibold text-foreground">{title}</h3>
     </motion.div>
   );
 };

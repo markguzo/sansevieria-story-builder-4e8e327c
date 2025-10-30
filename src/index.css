@@ -87,6 +87,7 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
     overflow-x: hidden;
   }
 
@@ -200,11 +201,11 @@ html {
   }
 
   .section-spacing {
-    padding: 8rem 0;
+    padding: 4rem 0;
   }
 
   .content-spacing {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
 }
 
