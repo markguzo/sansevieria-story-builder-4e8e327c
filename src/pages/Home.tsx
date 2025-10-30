@@ -28,7 +28,7 @@ const Home = () => {
   // Extended scroll progress from hero to transformation section
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "60vh start"]
+    offset: ["start start", "200vh start"]
   });
 
   const { scrollYProgress } = useScroll({
@@ -36,47 +36,41 @@ const Home = () => {
     offset: ["start start", "end end"]
   });
 
-  // Circle animation timeline - fades and stops completely by transformation section
+  // Circle animation timeline - visible throughout, fades smoothly by transformation
   const circleScale = useTransform(
     heroScrollProgress,
-    [0, 0.3, 0.6, 0.85],
-    [1.0, 1.12, 1.45, 1.6]
+    [0, 0.25, 0.5, 0.75, 1],
+    [1.0, 1.08, 1.25, 1.5, 1.65]
   );
   const circleOpacity = useTransform(
     heroScrollProgress,
-    [0, 0.3, 0.6, 0.85],
-    [0.9, 1.0, 0.3, 0]
+    [0, 0.2, 0.5, 0.8, 1],
+    [0.9, 1.0, 0.8, 0.3, 0]
   );
   const circleBlur = useTransform(
     heroScrollProgress,
-    [0, 0.4, 0.7, 0.85],
-    [0, 0, 8, 12]
+    [0, 0.5, 0.8, 1],
+    [0, 0, 4, 10]
   );
   
-  // Rotation with deceleration - slows to complete stop
+  // Rotation with smooth deceleration
   const circleRotate = useTransform(
     heroScrollProgress,
-    [0, 0.4, 0.7, 0.85],
-    [0, 360, 540, 540]
-  );
-  
-  const circleRotationSpeed = useTransform(
-    heroScrollProgress,
-    [0, 0.4, 0.7, 0.85],
-    [1, 0.5, 0.1, 0]
+    [0, 0.5, 0.8, 1],
+    [0, 360, 480, 500]
   );
 
-  // Video opacity and brightness - fades with circle
+  // Video opacity and brightness - fades gradually with circle
   const videoOpacity = useTransform(
     heroScrollProgress,
-    [0, 0.3, 0.6, 0.85],
-    [0.75, 0.8, 0.2, 0]
+    [0, 0.2, 0.5, 0.8, 1],
+    [0.75, 0.8, 0.6, 0.25, 0]
   );
   
   const videoBrightness = useTransform(
     heroScrollProgress,
-    [0, 0.3, 0.6, 0.85],
-    [0.95, 1.0, 0.6, 0.3]
+    [0, 0.2, 0.5, 0.8, 1],
+    [0.95, 1.0, 0.9, 0.6, 0.4]
   );
   
   const videoFilter = useTransform(
@@ -84,34 +78,34 @@ const Home = () => {
     (b) => `brightness(${b}) contrast(1.05)`
   );
 
-  // Light halo - fades with circle
+  // Light halo - fades gradually with circle
   const haloRadius = useTransform(
     heroScrollProgress,
-    [0, 0.6, 0.85],
-    ['40vw', '100vw', '100vw']
+    [0, 0.5, 1],
+    ['40vw', '90vw', '110vw']
   );
   const haloOpacity = useTransform(
     heroScrollProgress,
-    [0, 0.3, 0.6, 0.85],
-    [0.3, 0.3, 0.08, 0]
+    [0, 0.2, 0.5, 0.8, 1],
+    [0.3, 0.35, 0.25, 0.1, 0]
   );
   
-  // Hero text animations
+  // Hero text animations - fades as you scroll
   const heroTextOpacity = useTransform(
     heroScrollProgress,
-    [0, 0.2],
-    [1, 0]
+    [0, 0.15, 0.3],
+    [1, 0.5, 0]
   );
   const heroTextY = useTransform(
     heroScrollProgress,
-    [0, 0.2],
-    [0, -30]
+    [0, 0.15, 0.3],
+    [0, -20, -50]
   );
 
   // Stop video when circle stops spinning
   useEffect(() => {
     const unsubscribe = heroScrollProgress.on('change', (progress) => {
-      if (progress > 0.7 && circleVideoRef.current && !circleVideoRef.current.paused) {
+      if (progress > 0.85 && circleVideoRef.current && !circleVideoRef.current.paused) {
         circleVideoRef.current.pause();
         if (!circlePlayed) {
           setCirclePlayed(true);
@@ -208,7 +202,7 @@ const Home = () => {
       {/* HERO SECTION */}
       <section 
         ref={heroRef} 
-        className="min-h-[200vh] flex items-start justify-center relative scroll-snap-start pt-24"
+        className="min-h-screen flex items-center justify-center relative scroll-snap-start"
       >
         <motion.div 
           className="container mx-auto px-6 text-center max-w-5xl relative z-10"
