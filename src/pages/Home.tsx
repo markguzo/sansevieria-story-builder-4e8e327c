@@ -307,7 +307,7 @@ const Home = () => {
       </section>
 
       {/* THE SCALE OF THE CHALLENGE */}
-      <section ref={problemRef} className="min-h-screen flex items-center justify-center relative py-32">
+      <section ref={problemRef} className="min-h-screen flex items-center justify-center relative py-16 -mt-20">
         <div className="container mx-auto px-6 relative z-10">
           <motion.h2 
             className="text-5xl md:text-7xl font-bold mb-6 text-center"
@@ -339,28 +339,23 @@ const Home = () => {
             As the world wakes up, the scale of the plastic problem becomes clear.
           </motion.p>
           
-          <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto"
-            variants={containerVariants}
-            initial="hidden"
-            animate={isProblemInView ? "visible" : "hidden"}
-          >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
             {[
-              { value: 1.8, suffix: "B", label: "tonnes of GHG from plastics" },
-              { value: 390, suffix: "M+", label: "tonnes produced yearly" },
-              { value: 22, suffix: "M+", label: "tonnes leak into oceans" },
-              { value: 9, suffix: "%", label: "recycled globally" }
+              { value: 1.8, suffix: "B", label: "tonnes of GHG from plastics", showMillionsToBillions: true },
+              { value: 390, suffix: "M+", label: "tonnes produced yearly", showMillionsToBillions: false },
+              { value: 22, suffix: "M+", label: "tonnes leak into oceans", showMillionsToBillions: false },
+              { value: 9, suffix: "%", label: "recycled globally", showMillionsToBillions: false }
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.1, 
-                  y: -12,
-                  rotateY: 5,
-                  rotateX: -3,
+                initial={{ opacity: 1, y: 0 }}
+                whileTap={{ 
+                  scale: 1.12, 
+                  y: -16,
+                  rotateY: 8,
+                  rotateX: -5,
                   transition: { 
-                    duration: 0.4,
+                    duration: 0.3,
                     ease: [0.25, 0.1, 0.25, 1]
                   }
                 }}
@@ -393,8 +388,9 @@ const Home = () => {
                   >
                     <CountUpMetric 
                       end={stat.value} 
-                      duration={2000} 
+                      duration={4500} 
                       suffix={stat.suffix}
+                      showMillionsToBillions={stat.showMillionsToBillions}
                     />
                   </motion.div>
                   <p 
@@ -406,7 +402,7 @@ const Home = () => {
                 </motion.div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
