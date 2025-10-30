@@ -88,16 +88,16 @@ const Home = () => {
     [0.3, 0.3, 0.1, 0]
   );
 
-  // Hero content appears during 0-30% timeline
+  // Hero content stays visible - fades in once at the start
   const heroContentOpacity = useTransform(
     heroScrollProgress,
-    [0, 0.3],
-    [0, 1]
+    [0, 0.15],
+    [1, 1]
   );
   const heroContentY = useTransform(
     heroScrollProgress,
-    [0, 0.3],
-    [30, 0]
+    [0, 0.15],
+    [0, 0]
   );
 
   // Pause video when animation completes & mark as played
@@ -123,11 +123,11 @@ const Home = () => {
 
   return (
     <div ref={containerRef} className="min-h-screen text-foreground relative overflow-x-hidden">
-      {/* ONE SEAMLESS BACKGROUND - No breaks, no color jumps */}
+      {/* ONE SEAMLESS BACKGROUND - Continuous gradient from deep green to soft mint */}
       <div 
         className="fixed inset-0 -z-30"
         style={{ 
-          background: 'linear-gradient(180deg, #0E362C 0%, #3D6B54 20%, #7BAC8E 40%, #BDF9C8 60%, #F6FFF6 100%)'
+          background: 'linear-gradient(180deg, #0E362C 0%, #2A5540 15%, #4A7B65 30%, #6B9A7F 45%, #9DC5A6 60%, #BDF9C8 75%, #E5FCE8 90%, #F6FFF6 100%)'
         }}
       />
 
@@ -140,13 +140,13 @@ const Home = () => {
           width: haloRadius,
           height: haloRadius,
           opacity: haloOpacity,
-          background: 'radial-gradient(circle, rgba(246, 255, 246, 0.4) 0%, rgba(189, 249, 200, 0.2) 35%, transparent 65%)',
-          filter: 'blur(60px)',
+          background: 'radial-gradient(circle, rgba(246, 255, 246, 0.5) 0%, rgba(189, 249, 200, 0.3) 30%, rgba(155, 218, 169, 0.15) 50%, transparent 70%)',
+          filter: 'blur(80px)',
           willChange: 'transform, opacity'
         }}
       />
 
-      {/* The Circle glow - expands once, then fades completely */}
+      {/* The Circle glow - expands once, slows down, then fades into background */}
       <motion.div 
         className="fixed top-1/2 left-1/2 -z-10 pointer-events-none"
         style={{
@@ -159,9 +159,9 @@ const Home = () => {
         }}
       >
         <motion.div 
-          className="w-[1000px] h-[1000px] rounded-full"
+          className="w-[1200px] h-[1200px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.35) 0%, rgba(189, 249, 200, 0.2) 30%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.3) 0%, rgba(189, 249, 200, 0.18) 25%, rgba(155, 218, 169, 0.08) 45%, transparent 65%)',
             filter: circleBlur
           }}
         />
@@ -208,47 +208,53 @@ const Home = () => {
             }}
           />
 
-          {/* Hero Content - appears during 0-30% timeline */}
-          <motion.div 
-            className="absolute inset-0 flex items-center justify-center z-10"
-            style={{
-              opacity: heroContentOpacity,
-              y: heroContentY
-            }}
-          >
+          {/* Hero Content - Always visible, stable position */}
+          <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="container mx-auto px-6 text-center max-w-5xl">
-              <h1 
+              <motion.h1 
                 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 md:mb-12 leading-tight text-white"
                 style={{ textShadow: '0 0 60px rgba(198, 255, 92, 0.4)' }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
               >
                 The Circle That Powers Tomorrow
-              </h1>
+              </motion.h1>
               
-              <p 
+              <motion.p 
                 className="text-lg sm:text-xl md:text-2xl mb-12 md:mb-16 max-w-3xl mx-auto leading-relaxed font-light text-white/90"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
               >
                 Turning today's waste into tomorrow's energy.
-              </p>
+              </motion.p>
 
-              <Button 
-                size="lg"
-                onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-base md:text-lg px-10 md:px-12 py-6 md:py-7 rounded-full font-medium"
-                style={{ 
-                  backgroundColor: '#0E362C',
-                  color: '#C6FF5C',
-                  border: '2px solid #C6FF5C',
-                  boxShadow: '0 0 20px rgba(198, 255, 92, 0.4)'
-                }}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
               >
-                Learn how we do it ↓
-              </Button>
+                <Button 
+                  size="lg"
+                  onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                  className="text-base md:text-lg px-10 md:px-12 py-6 md:py-7 rounded-full font-medium"
+                  style={{ 
+                    backgroundColor: '#0E362C',
+                    color: '#C6FF5C',
+                    border: '2px solid #C6FF5C',
+                    boxShadow: '0 0 20px rgba(198, 255, 92, 0.4)'
+                  }}
+                >
+                  Learn how we do it ↓
+                </Button>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* The Scale of the Challenge - Soft upward fade (no break) */}
-        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 py-24">
+        {/* The Scale of the Challenge - Continuous flow, no break */}
+        <div ref={problemRef} className="min-h-screen flex items-center justify-center relative z-10 py-32">
           <div className="container mx-auto px-6">
             {/* Title with smooth gradient sweep */}
             <motion.h2 
