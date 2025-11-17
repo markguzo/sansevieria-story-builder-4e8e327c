@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play, Sparkles, TrendingUp, DollarSign, Factory, Award, Mountain, Flag, CheckCircle2, Flame, Recycle, Package } from "lucide-react";
+import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play, Sparkles, TrendingUp, DollarSign, Factory, Award, Mountain, Flag, CheckCircle2, Flame, Recycle, Package, Check, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, useScroll, useInView, Variants } from "framer-motion";
 import { useRef } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
+import mountainImage from "@/assets/journey-mountain.png";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -186,7 +187,7 @@ const Home = () => {
                   style={{ background: 'rgba(30, 36, 51, 0.5)', border: '1px solid rgba(0, 255, 136, 0.2)', borderRadius: '12px', boxShadow: 'var(--shadow-card)' }}>
                   <stat.icon className="w-10 h-10 mb-4 text-primary" style={{ opacity: 0.8 }} />
                   <div className="text-4xl font-bold mb-2 text-primary">
-                    <CountUpMetric value={stat.value} suffix={stat.suffix} showMillionsToBillions={stat.showMillionsToBillions} />
+                    <CountUpMetric end={stat.value} suffix={stat.suffix} showMillionsToBillions={stat.showMillionsToBillions} />
                   </div>
                   <p className="text-sm text-muted-foreground text-center font-medium">{stat.label}</p>
                 </Card>
@@ -301,75 +302,198 @@ const Home = () => {
       </section>
 
       {/* OUR JOURNEY - MOUNTAIN METAPHOR */}
-      <section ref={journeyRef} className="min-h-screen flex items-center justify-center relative bg-gradient-to-b from-muted to-background" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
+      <section ref={journeyRef} className="min-h-screen flex items-center justify-center relative overflow-hidden" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
+        {/* Mountain Background Image */}
+        <div className="absolute inset-0">
+          <img 
+            src={mountainImage} 
+            alt="Mountain climbing journey" 
+            className="w-full h-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
+        </div>
+
         <div className="container mx-auto px-6 relative z-10" style={{ maxWidth: '1200px' }}>
           <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 20 }} animate={isJourneyInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }}>
-            <h2 className="font-bold mb-6 text-foreground" style={{ fontSize: '42px', fontWeight: 700 }}>
-              Our Journey
+            <h2 className="font-bold mb-6" style={{ fontSize: '42px', fontWeight: 700 }}>
+              Our <span style={{ background: 'linear-gradient(90deg, #00FF88, #00C4E4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Journey</span>
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto" style={{ fontSize: '18px', lineHeight: '1.7' }}>
               Climbing the mountain of innovation, one milestone at a time
             </p>
           </motion.div>
 
-          <div className="relative max-w-4xl mx-auto">
-            {[
-              { trl: 4, title: "Lab Validation", desc: "Proof of concept established", completed: true, align: "left" },
-              { trl: 5, title: "Pilot Scale", desc: "Technology validated in relevant environment", completed: true, align: "right" },
-              { trl: 6, title: "Industrial Demo", desc: "Full-scale prototype in operational environment", completed: false, current: true, align: "left" },
-              { trl: 7, title: "Pre-Commercial", desc: "System prototype demonstration", completed: false, align: "right" },
-              { trl: 8, title: "First Commercial", desc: "Actual system completed and qualified", completed: false, align: "left" },
-              { trl: 9, title: "Full Deployment", desc: "Actual system proven in operational environment", completed: false, align: "right" }
-            ].map((item, i) => (
+          {/* TRL Timeline with Zigzag Layout */}
+          <div className="max-w-5xl mx-auto relative">
+            {/* Dotted Connection Line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 border-l-2 border-dashed border-primary/30 transform -translate-x-1/2" />
+
+            {/* TRL Cards */}
+            <div className="space-y-16">
+              {/* TRL 4 - Left */}
               <motion.div 
-                key={i} 
-                className={`mb-12 flex ${item.align === 'right' ? 'justify-end' : 'justify-start'}`}
-                initial={{ opacity: 0, x: item.align === 'right' ? 60 : -60 }}
+                className="flex items-center justify-start"
+                initial={{ opacity: 0, x: -60 }}
                 animate={isJourneyInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: i * 0.15, duration: 0.6 }}
+                transition={{ delay: 0, duration: 0.6 }}
               >
-                <Card 
-                  className={`p-6 border transition-all duration-200 ${item.current ? 'scale-110' : ''}`}
-                  style={{
-                    background: item.current ? 'rgba(0, 255, 136, 0.1)' : 'rgba(30, 36, 51, 0.6)',
-                    border: item.current ? '2px solid #00FF88' : item.completed ? '1px solid rgba(0, 255, 136, 0.3)' : '1px solid rgba(155, 102, 255, 0.3)',
-                    borderRadius: '12px',
-                    boxShadow: 'var(--shadow-card)',
-                    maxWidth: '400px',
-                    width: '100%',
-                    animation: item.current ? 'trl-pulse 2s infinite' : 'none'
-                  }}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-bold ${item.completed ? 'bg-primary/20 text-primary' : item.current ? 'bg-primary/30 text-primary' : 'bg-accent/20 text-accent'}`}>
-                      {item.completed ? <CheckCircle2 className="w-6 h-6" /> : item.trl}
+                <div className="w-5/12 text-right pr-8">
+                  <div className="inline-block bg-card/80 backdrop-blur-sm border border-primary/20 rounded-xl p-6">
+                    <div className="flex items-center justify-end gap-3 mb-2">
+                      <h3 className="text-xl font-semibold">TRL 4: Lab Validation</h3>
+                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                        <Check className="w-5 h-5 text-primary" />
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold mb-1 text-foreground" style={{ fontSize: '18px', fontWeight: 600 }}>
-                        TRL {item.trl}: {item.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground" style={{ fontSize: '14px' }}>{item.desc}</p>
-                      {item.current && (
-                        <div className="mt-3 inline-block px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full uppercase tracking-wider">
-                          You Are Here
-                        </div>
-                      )}
-                    </div>
+                    <p className="text-sm text-muted-foreground">Proof of concept established</p>
                   </div>
-                </Card>
+                </div>
+                <div className="w-2/12 flex justify-center">
+                  <div className="w-4 h-4 rounded-full bg-primary/40 border-2 border-primary" />
+                </div>
+                <div className="w-5/12" />
               </motion.div>
-            ))}
+
+              {/* TRL 5 - Right */}
+              <motion.div 
+                className="flex items-center justify-end"
+                initial={{ opacity: 0, x: 60 }}
+                animate={isJourneyInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.15, duration: 0.6 }}
+              >
+                <div className="w-5/12" />
+                <div className="w-2/12 flex justify-center">
+                  <div className="w-4 h-4 rounded-full bg-primary/40 border-2 border-primary" />
+                </div>
+                <div className="w-5/12 text-left pl-8">
+                  <div className="inline-block bg-card/80 backdrop-blur-sm border border-primary/20 rounded-xl p-6">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                        <Check className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="text-xl font-semibold">TRL 5: Pilot Scale</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Technology validated in relevant environment</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* TRL 6 - CURRENT - Left (Highlighted) */}
+              <motion.div 
+                className="flex items-center justify-start"
+                initial={{ opacity: 0, x: -60 }}
+                animate={isJourneyInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
+                <div className="w-5/12 text-right pr-8">
+                  <div className="inline-block bg-primary/10 backdrop-blur-sm border-2 border-primary rounded-xl p-8 relative" style={{ animation: 'trl-pulse 2s infinite' }}>
+                    <div className="absolute -top-3 right-4 bg-primary text-black text-xs font-bold px-3 py-1 rounded-full">
+                      YOU ARE HERE
+                    </div>
+                    <div className="flex items-center justify-end gap-3 mb-2">
+                      <h3 className="text-2xl font-bold text-primary">TRL 6: Industrial Demo</h3>
+                      <div className="w-10 h-10 rounded-full bg-primary/30 flex items-center justify-center">
+                        <Target className="w-6 h-6 text-primary" />
+                      </div>
+                    </div>
+                    <p className="text-base text-foreground">Full-scale prototype in operational environment</p>
+                  </div>
+                </div>
+                <div className="w-2/12 flex justify-center">
+                  <div className="w-6 h-6 rounded-full bg-primary border-4 border-primary/50 shadow-lg" style={{ boxShadow: '0 0 20px rgba(0, 255, 136, 0.5)' }} />
+                </div>
+                <div className="w-5/12" />
+              </motion.div>
+
+              {/* TRL 7 - Right */}
+              <motion.div 
+                className="flex items-center justify-end"
+                initial={{ opacity: 0, x: 60 }}
+                animate={isJourneyInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.45, duration: 0.6 }}
+              >
+                <div className="w-5/12" />
+                <div className="w-2/12 flex justify-center">
+                  <div className="w-4 h-4 rounded-full bg-accent/40 border-2 border-accent/60" />
+                </div>
+                <div className="w-5/12 text-left pl-8">
+                  <div className="inline-block bg-card/60 backdrop-blur-sm border border-white/10 rounded-xl p-6 opacity-70">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                        <ArrowRight className="w-5 h-5 text-accent" />
+                      </div>
+                      <h3 className="text-xl font-semibold">TRL 7: Pre-Commercial</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground">System prototype demonstration</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* TRL 8 - Left */}
+              <motion.div 
+                className="flex items-center justify-start"
+                initial={{ opacity: 0, x: -60 }}
+                animate={isJourneyInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.6, duration: 0.6 }}
+              >
+                <div className="w-5/12 text-right pr-8">
+                  <div className="inline-block bg-card/60 backdrop-blur-sm border border-white/10 rounded-xl p-6 opacity-70">
+                    <div className="flex items-center justify-end gap-3 mb-2">
+                      <h3 className="text-xl font-semibold">TRL 8: First Commercial</h3>
+                      <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                        <ArrowRight className="w-5 h-5 text-accent" />
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Actual system completed and qualified</p>
+                  </div>
+                </div>
+                <div className="w-2/12 flex justify-center">
+                  <div className="w-4 h-4 rounded-full bg-accent/40 border-2 border-accent/60" />
+                </div>
+                <div className="w-5/12" />
+              </motion.div>
+
+              {/* TRL 9 - Right */}
+              <motion.div 
+                className="flex items-center justify-end"
+                initial={{ opacity: 0, x: 60 }}
+                animate={isJourneyInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.75, duration: 0.6 }}
+              >
+                <div className="w-5/12" />
+                <div className="w-2/12 flex justify-center">
+                  <div className="w-4 h-4 rounded-full bg-accent/40 border-2 border-accent/60" />
+                </div>
+                <div className="w-5/12 text-left pl-8">
+                  <div className="inline-block bg-card/60 backdrop-blur-sm border border-white/10 rounded-xl p-6 opacity-70">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                        <Flag className="w-5 h-5 text-accent" />
+                      </div>
+                      <h3 className="text-xl font-semibold">TRL 9: Full Deployment</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Actual system proven in operational environment</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
 
-          <motion.p 
-            className="text-center text-primary font-semibold max-w-3xl mx-auto mt-16" 
-            style={{ fontSize: '24px', fontWeight: 600, background: 'linear-gradient(90deg, #00FF88, #00C4E4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
-            initial={{ opacity: 0 }} 
-            animate={isJourneyInView ? { opacity: 1 } : {}} 
+          {/* Bottom Banner */}
+          <motion.div 
+            className="mt-20 text-center"
+            initial={{ opacity: 0 }}
+            animate={isJourneyInView ? { opacity: 1 } : {}}
             transition={{ delay: 1, duration: 0.6 }}
           >
-            Proven at Industrial Scale — Ready to Deploy
-          </motion.p>
+            <div className="inline-block bg-gradient-to-r from-primary/20 to-accent-blue/20 backdrop-blur-sm border border-primary/30 rounded-2xl px-8 py-4">
+              <p className="text-2xl font-bold">
+                <span style={{ background: 'linear-gradient(90deg, #00FF88, #00C4E4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Proven at Industrial Scale</span>
+                <span className="text-muted-foreground mx-3">—</span>
+                <span style={{ background: 'linear-gradient(90deg, #00FF88, #00C4E4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Ready to Deploy</span>
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
