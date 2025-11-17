@@ -8,74 +8,78 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Sansevieria Subtle Glow Theme */
-    --background: 150 25% 82%; /* Softer light green-gray */
-    --foreground: 150 45% 12%; /* Deep forest green */
+    /* Dark Industrial Theme */
+    --background: 0 0% 6%; /* Deep black #0F0F0F */
+    --foreground: 0 0% 100%; /* Pure white */
 
-    --card: 150 20% 88%;
-    --card-foreground: 150 45% 12%;
+    --card: 0 0% 10%; /* Dark charcoal #1A1A1A */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 150 20% 88%;
-    --popover-foreground: 150 45% 12%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 88 68% 66%; /* Lime Green #A4E868 */
-    --primary-foreground: 150 45% 12%;
+    --primary: 160 100% 50%; /* Electric blue #00D9FF */
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 43 90% 72%; /* Warm Yellow #FFD970 */
-    --secondary-foreground: 150 45% 12%;
+    --secondary: 150 100% 50%; /* Neon green #00FF88 */
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 150 15% 70%;
-    --muted-foreground: 150 35% 25%;
+    --muted: 0 0% 16%; /* #292929 */
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 88 68% 66%;
-    --accent-foreground: 150 45% 12%;
+    --accent: 270 80% 70%; /* Energy purple #B066FF */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 150 20% 75%;
-    --input: 150 20% 85%;
-    --ring: 88 68% 66%;
+    --border: 0 0% 20%; /* #333333 */
+    --input: 0 0% 16%;
+    --ring: 160 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Subtle Glow Design Tokens */
-    --gradient-circular: radial-gradient(circle at center, hsl(88, 68%, 66%, 0.25), hsl(43, 90%, 72%, 0.15), transparent);
-    --gradient-flow: linear-gradient(90deg, hsl(88, 68%, 66%), hsl(43, 90%, 72%));
-    --glow-primary: 0 0 40px hsl(88 68% 66% / 0.5);
-    --glow-secondary: 0 0 30px hsl(43 90% 72% / 0.4);
-    --shadow-soft: 0 4px 20px hsl(88 68% 66% / 0.2);
-    --transition-cinematic: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Industrial Energy Design Tokens */
+    --gradient-hero: linear-gradient(180deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 10%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 12%) 0%, hsl(0, 0%, 8%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(160, 100%, 50%) 0%, hsl(150, 100%, 50%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(270, 80%, 70%) 0%, hsl(160, 100%, 50%) 100%);
+    --glow-electric: 0 0 40px hsl(160 100% 50% / 0.6), 0 0 80px hsl(160 100% 50% / 0.3);
+    --glow-neon: 0 0 30px hsl(150 100% 50% / 0.6), 0 0 60px hsl(150 100% 50% / 0.3);
+    --glow-purple: 0 0 35px hsl(270 80% 70% / 0.5), 0 0 70px hsl(270 80% 70% / 0.25);
+    --shadow-elevated: 0 8px 32px hsl(0 0% 0% / 0.6);
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: box-shadow 0.3s ease, border-color 0.3s ease;
   }
 
   .dark {
-    --background: 150 25% 82%;
-    --foreground: 150 45% 12%;
+    --background: 0 0% 6%;
+    --foreground: 0 0% 100%;
 
-    --card: 150 20% 88%;
-    --card-foreground: 150 45% 12%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 150 20% 88%;
-    --popover-foreground: 150 45% 12%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 88 68% 66%;
-    --primary-foreground: 150 45% 12%;
+    --primary: 160 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 43 90% 72%;
-    --secondary-foreground: 150 45% 12%;
+    --secondary: 150 100% 50%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 150 15% 70%;
-    --muted-foreground: 150 35% 25%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 88 68% 66%;
-    --accent-foreground: 150 45% 12%;
+    --accent: 270 80% 70%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 150 20% 75%;
-    --input: 150 20% 85%;
-    --ring: 88 68% 66%;
+    --border: 0 0% 20%;
+    --input: 0 0% 16%;
+    --ring: 160 100% 50%;
   }
 }
 
@@ -86,9 +90,10 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 14px;
+    font-family: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
     overflow-x: hidden;
+    letter-spacing: -0.01em;
   }
 
 html {
@@ -121,20 +126,27 @@ html {
   will-change: transform;
 }
 
-/* Stat card hover shimmer effect */
-.stat-card-hover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(184, 255, 114, 0.4), transparent);
-  transition: left 0.5s ease;
+/* Stat card hover glow effect */
+.stat-card-hover {
+  position: relative;
+  transition: var(--transition-glow);
 }
 
-.stat-card-hover:hover::before {
-  left: 100%;
+.stat-card-hover:hover {
+  box-shadow: var(--glow-electric);
+  border-color: hsl(160 100% 50% / 0.8) !important;
+}
+
+/* Energy particles animation */
+@keyframes particle-float {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(20px, -20px);
+    opacity: 0.8;
+  }
 }
 }
 

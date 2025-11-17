@@ -1,983 +1,683 @@
 import { Link } from "react-router-dom";
-import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play } from "lucide-react";
+import { Beaker, Plane, Truck, Droplets, Filter, Zap, ArrowRight, Play, Sparkles, TrendingUp, DollarSign, Factory, Award, Mountain, Flag, CheckCircle2, Flame, Recycle, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { motion, useScroll, useTransform, useInView, useMotionValue, animate, Variants } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform, useInView, Variants } from "framer-motion";
+import { useRef } from "react";
+import CountUpMetric from "@/components/CountUpMetric";
 
-// Staggered container variants for smooth cascading animations
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
+      staggerChildren: 0.15,
       delayChildren: 0.2
     }
   }
 };
 
-// Enhanced item reveal with blur, scale, and 3D rotation
 const itemVariants: Variants = {
-  hidden: { 
-    opacity: 0, 
-    y: 40, 
-    scale: 0.92,
-    rotateX: -8,
-    filter: "blur(8px)"
-  },
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
   visible: { 
     opacity: 1, 
     y: 0, 
     scale: 1,
-    rotateX: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.7,
-      ease: [0.25, 0.1, 0.25, 1]
-    }
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
   }
 };
-import CountUpMetric from "@/components/CountUpMetric";
-import heroCircularFlow from "@/assets/hero-circular-flow.jpg";
-import heroBackgroundVideo from "@/assets/hero-background.mp4";
-import problemParticles from "@/assets/problem-particles.jpg";
-import processAbstract from "@/assets/process-abstract.jpg";
-import productsEnergy from "@/assets/products-energy.jpg";
-import roadmapTimeline from "@/assets/roadmap-timeline.jpg";
-import visionLeaf from "@/assets/vision-leaf.jpg";
-import plant1 from "@/assets/plant-1.png";
-import plant2 from "@/assets/plant-2.png";
-import plant3 from "@/assets/plant-3.png";
+
+const EnergyParticles = () => {
+  const particles = Array.from({ length: 30 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 4 + 2,
+    duration: Math.random() * 20 + 10,
+    delay: Math.random() * 5
+  }));
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((particle) => (
+        <motion.div
+          key={particle.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: particle.size,
+            height: particle.size,
+            background: `radial-gradient(circle, hsl(160 100% 50% / 0.8), transparent)`,
+            boxShadow: `0 0 ${particle.size * 2}px hsl(160 100% 50% / 0.5)`
+          }}
+          animate={{
+            y: [0, -100, 0],
+            x: [0, 50, 0],
+            opacity: [0.3, 0.8, 0.3]
+          }}
+          transition={{
+            duration: particle.duration,
+            repeat: Infinity,
+            delay: particle.delay,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 const Home = () => {
   const containerRef = useRef(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const problemRef = useRef(null);
-  const processRef = useRef(null);
-  const productsRef = useRef(null);
-  const roadmapRef = useRef(null);
+  const opportunityRef = useRef(null);
+  const energyRef = useRef(null);
+  const solutionsRef = useRef(null);
+  const economicsRef = useRef(null);
+  const journeyRef = useRef(null);
   const videoRef = useRef(null);
+  const actionRef = useRef(null);
   const visionRef = useRef(null);
-  const circleVideoRef = useRef<HTMLVideoElement>(null);
-  const [circlePlayed, setCirclePlayed] = useState(false);
-  
-  
-  // One-time rotation animation
-  const circleRotate = useMotionValue(0);
-
-  // Extended scroll progress from hero to transformation section
-  const { scrollYProgress: heroScrollProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "200vh start"]
-  });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // Parallax layers for depth
-  const parallaxSlow = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
-  const parallaxMedium = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
-  const parallaxFast = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
-
-  // Circle animation timeline - visible throughout, fades smoothly by transformation
-  const circleScale = useTransform(
-    heroScrollProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    [1.0, 1.08, 1.25, 1.5, 1.65]
-  );
-  const circleOpacity = useTransform(
-    heroScrollProgress,
-    [0, 0.2, 0.5, 0.8, 1],
-    [0.9, 1.0, 0.8, 0.3, 0]
-  );
-  const circleBlur = useTransform(
-    heroScrollProgress,
-    [0, 0.5, 0.8, 1],
-    [0, 0, 4, 10]
-  );
-  
-  // Single rotation animation - spins once and stops
-  useEffect(() => {
-    const controls = animate(circleRotate, 360, {
-      duration: 2.5, // Smooth visible rotation
-      ease: "easeInOut", // Smooth acceleration and deceleration
-      onComplete: () => {
-        circleRotate.set(360); // Stay at final position
-      }
-    });
-    
-    return () => controls.stop();
-  }, [circleRotate]);
-
-  // Video opacity and brightness - fades gradually with circle
-  const videoOpacity = useTransform(
-    heroScrollProgress,
-    [0, 0.2, 0.5, 0.8, 1],
-    [0.75, 0.8, 0.6, 0.25, 0]
-  );
-  
-  const videoBrightness = useTransform(
-    heroScrollProgress,
-    [0, 0.2, 0.5, 0.8, 1],
-    [0.95, 1.0, 0.9, 0.6, 0.4]
-  );
-  
-  const videoFilter = useTransform(
-    videoBrightness,
-    (b) => `brightness(${b}) contrast(1.05)`
-  );
-
-  // Light halo - fades gradually with circle
-  const haloRadius = useTransform(
-    heroScrollProgress,
-    [0, 0.5, 1],
-    ['40vw', '90vw', '110vw']
-  );
-  const haloOpacity = useTransform(
-    heroScrollProgress,
-    [0, 0.2, 0.5, 0.8, 1],
-    [0.3, 0.35, 0.25, 0.1, 0]
-  );
-  
-  // Hero text animations - fades as you scroll
-  const heroTextOpacity = useTransform(
-    heroScrollProgress,
-    [0, 0.15, 0.3],
-    [1, 0.5, 0]
-  );
-  const heroTextY = useTransform(
-    heroScrollProgress,
-    [0, 0.15, 0.3],
-    [0, -20, -50]
-  );
-
-  // Stop video when circle stops spinning
-  useEffect(() => {
-    const unsubscribe = heroScrollProgress.on('change', (progress) => {
-      if (progress > 0.85 && circleVideoRef.current && !circleVideoRef.current.paused) {
-        circleVideoRef.current.pause();
-        if (!circlePlayed) {
-          setCirclePlayed(true);
-        }
-      }
-    });
-    
-    return () => unsubscribe();
-  }, [heroScrollProgress, circlePlayed]);
-  
-  const isProblemInView = useInView(problemRef, { amount: 0.2, once: true });
-  const isProcessInView = useInView(processRef, { amount: 0.2, once: true });
-  const isProductsInView = useInView(productsRef, { amount: 0.2, once: true });
-  const isRoadmapInView = useInView(roadmapRef, { amount: 0.2, once: true });
+  const isOpportunityInView = useInView(opportunityRef, { amount: 0.2, once: true });
+  const isEnergyInView = useInView(energyRef, { amount: 0.2, once: true });
+  const isSolutionsInView = useInView(solutionsRef, { amount: 0.2, once: true });
+  const isEconomicsInView = useInView(economicsRef, { amount: 0.2, once: true });
+  const isJourneyInView = useInView(journeyRef, { amount: 0.2, once: true });
   const isVideoInView = useInView(videoRef, { amount: 0.3, once: true });
+  const isActionInView = useInView(actionRef, { amount: 0.2, once: true });
   const isVisionInView = useInView(visionRef, { amount: 0.3, once: true });
 
   return (
-    <div ref={containerRef} className="min-h-screen text-foreground relative overflow-x-hidden scroll-snap-container">
-      {/* ONE SEAMLESS BACKGROUND - Continuous gradient */}
-      <div 
-        className="fixed inset-0 -z-30"
-        style={{ 
-          background: 'linear-gradient(180deg, #0E362C 0%, #2A5540 15%, #4A7B65 30%, #6B9A7F 45%, #9DC5A6 60%, #BDF9C8 75%, #E5FCE8 90%, #F6FFF6 100%)'
-        }}
-      />
-
-      {/* Light Halo - fixed, glows behind everything */}
-      <motion.div 
-        className="fixed top-1/2 left-1/2 -z-20 pointer-events-none"
-        style={{
-          x: '-50%',
-          y: '-50%',
-          width: haloRadius,
-          height: haloRadius,
-          opacity: haloOpacity,
-          background: 'radial-gradient(circle, rgba(246, 255, 246, 0.5) 0%, rgba(189, 249, 200, 0.3) 30%, rgba(155, 218, 169, 0.15) 50%, transparent 70%)',
-          filter: 'blur(80px)',
-          willChange: 'transform, opacity'
-        }}
-      />
-
-      {/* The Circle glow - fixed, always in background */}
-      <motion.div 
-        className="fixed top-1/2 left-1/2 -z-15 pointer-events-none"
-        style={{
-          x: '-50%',
-          y: '-50%',
-          scale: circleScale,
-          opacity: circleOpacity,
-          rotate: circleRotate,
-          willChange: 'transform, opacity'
-        }}
-      >
-        <motion.div 
-          className="w-[1200px] h-[1200px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(198, 255, 92, 0.3) 0%, rgba(189, 249, 200, 0.18) 25%, rgba(155, 218, 169, 0.08) 45%, transparent 65%)',
-            filter: circleBlur
-          }}
-        />
-      </motion.div>
-
-      {/* Circle Video - fixed to viewport */}
-      <motion.video
-        ref={circleVideoRef}
-        autoPlay
-        muted
-        loop={!circlePlayed}
-        playsInline
-        className="fixed inset-0 w-full h-full -z-10"
-        style={{ 
-          objectFit: 'cover',
-          objectPosition: 'center',
-          opacity: videoOpacity,
-          filter: videoFilter
-        }}
-        onLoadedData={(e) => {
-          const video = e.currentTarget;
-          video.playbackRate = 1.1;
-        }}
-      >
-        <source src={heroBackgroundVideo} type="video/mp4" />
-      </motion.video>
-
-      {/* Soft vignette - fixed */}
-      <div 
-        className="fixed inset-0 pointer-events-none -z-10"
-        style={{
-          background: 'radial-gradient(circle at center, transparent 30%, rgba(246, 255, 246, 0.1) 85%)'
-        }}
-      />
-
+    <div ref={containerRef} className="min-h-screen text-foreground relative overflow-x-hidden bg-background">
+      
       {/* HERO SECTION */}
-      <section 
-        ref={heroRef} 
-        className="min-h-screen flex items-center justify-center relative scroll-snap-start"
-      >
-        <motion.div 
-          className="container mx-auto px-6 text-center max-w-5xl relative z-10"
-          style={{
-            opacity: heroTextOpacity,
-            y: heroTextY
-          }}
-        >
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 -z-10"
+          style={{ background: 'linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%)' }}
+        />
+        
+        <EnergyParticles />
+        
+        <div className="absolute inset-0 -z-5 opacity-30">
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+            style={{
+              background: 'radial-gradient(circle, hsl(160 100% 50% / 0.2), transparent 70%)',
+              filter: 'blur(60px)'
+            }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full"
+            style={{
+              background: 'radial-gradient(circle, hsl(150 100% 50% / 0.2), transparent 70%)',
+              filter: 'blur(60px)'
+            }}
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          />
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10 text-center">
           <motion.h1 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 leading-tight text-white"
-            style={{ textShadow: '0 0 60px rgba(198, 255, 92, 0.4)' }}
-            initial={{ opacity: 0, y: 20 }}
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.9]"
+            style={{
+              background: 'linear-gradient(135deg, #FFFFFF 0%, hsl(160 100% 50%) 50%, hsl(150 100% 50%) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              letterSpacing: '-0.03em'
+            }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            The Circle That Powers Tomorrow
+            Transforming Plastic Waste<br />Into Premium Fuel
           </motion.h1>
           
-          <motion.p 
-            className="text-base sm:text-lg md:text-xl mb-8 md:mb-10 max-w-3xl mx-auto leading-relaxed font-light text-white/90"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            Turning today's waste into tomorrow's energy.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <Button 
-              size="lg"
-              onClick={() => problemRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-sm md:text-base px-6 md:px-8 py-4 md:py-5 rounded-full font-medium"
-              style={{ 
-                backgroundColor: '#0E362C',
-                color: '#C6FF5C',
-                border: '2px solid #C6FF5C',
-                boxShadow: '0 0 20px rgba(198, 255, 92, 0.4)'
-              }}
-            >
-              Learn how we do it ↓
-            </Button>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* THE SCALE OF THE CHALLENGE */}
-      <section ref={problemRef} className="min-h-screen flex items-center justify-center relative py-12 -mt-20">
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.h2 
-            className="text-3xl md:text-5xl font-bold mb-4 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isProblemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <motion.span
-              style={{ 
-                background: 'linear-gradient(135deg, #0F3E2E, #74D46E)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundSize: '200% 100%',
-                backgroundPosition: isProblemInView ? '0% 0%' : '100% 0%'
-              }}
-              transition={{ duration: 0.4, delay: 0.6, ease: "easeOut" }}
-            >
-              The Scale of the Challenge
-            </motion.span>
-          </motion.h2>
-
           <motion.p
-            className="text-base text-center mb-12 max-w-2xl mx-auto font-light"
-            style={{ color: '#1D4B36', opacity: 0.75 }}
-            initial={{ opacity: 0, y: 12 }}
-            animate={isProblemInView ? { opacity: 0.75, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="text-xl sm:text-2xl md:text-3xl mb-12 text-gray-300 max-w-4xl mx-auto font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
-            As the world wakes up, the scale of the plastic problem becomes clear.
+            Industrial-scale breakthrough technology that converts any plastic waste stream into high-value petrochemical feedstock
           </motion.p>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
+          <motion.div
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <Button 
+              size="lg" 
+              className="text-lg px-10 py-7 font-bold group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90"
+              style={{ boxShadow: 'var(--glow-electric)' }}
+              asChild
+            >
+              <Link to="/about">
+                <span className="relative z-10 flex items-center gap-2">
+                  Learn More <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="text-lg px-10 py-7 font-bold border-2 border-primary/50 text-foreground hover:bg-primary/10 hover:border-primary"
+              asChild
+            >
+              <Link to="/contact">Get in Touch</Link>
+            </Button>
+          </motion.div>
+
+          <motion.div
+            className="mt-20 grid grid-cols-3 gap-8 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
             {[
-              { value: 1.8, suffix: "B", label: "tonnes of GHG from plastics", showMillionsToBillions: true },
-              { value: 390, suffix: "M+", label: "tonnes produced yearly", showMillionsToBillions: false },
-              { value: 22, suffix: "M+", label: "tonnes leak into oceans", showMillionsToBillions: false },
-              { value: 9, suffix: "%", label: "recycled globally", showMillionsToBillions: false }
+              { label: "Industrial Scale", value: "TRL 6", icon: Factory },
+              { label: "Premium Quality", value: "100%", icon: Award },
+              { label: "Any Plastic", value: "Multi-Stream", icon: Recycle }
+            ].map((metric, i) => (
+              <div key={i} className="text-center">
+                <metric.icon className="w-10 h-10 mx-auto mb-3 text-primary" />
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-1">{metric.value}</div>
+                <div className="text-sm text-gray-400">{metric.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* THE OPPORTUNITY SECTION */}
+      <section ref={opportunityRef} className="min-h-screen flex items-center justify-center relative py-24 bg-gradient-to-b from-background to-muted/30">
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isOpportunityInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <h2 className="text-5xl md:text-7xl font-black mb-6">
+              <span style={{ 
+                  background: 'linear-gradient(135deg, hsl(160 100% 50%), hsl(150 100% 50%))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
+                THE OPPORTUNITY
+              </span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+              Plastic waste represents untapped energy and massive economic value waiting to be unlocked
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              { value: 1.8, suffix: "B", label: "tonnes GHG potential reduction", icon: TrendingUp, showMillionsToBillions: true },
+              { value: 390, suffix: "M+", label: "tonnes available yearly", icon: Package, showMillionsToBillions: false },
+              { value: 22, suffix: "M+", label: "tonnes untapped ocean resource", icon: Droplets, showMillionsToBillions: false },
+              { value: 91, suffix: "%", label: "opportunity yet to capture", icon: Sparkles, showMillionsToBillions: false }
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                whileInView={{ 
-                  opacity: 1, 
-                  y: 0, 
-                  scale: 1,
-                  transition: {
-                    duration: 0.6,
-                    delay: i * 0.1,
-                    ease: [0.25, 0.1, 0.25, 1]
-                  }
-                }}
+                className="stat-card-hover"
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] } }}
                 viewport={{ once: true, amount: 0.4 }}
-                whileHover={{ 
-                  y: -12, 
-                  scale: 1.05,
-                  transition: { 
-                    duration: 0.4,
-                    ease: [0.25, 0.1, 0.25, 1]
-                  }
-                }}
-                style={{
-                  perspective: "1000px",
-                  transformStyle: "preserve-3d"
-                }}
-                className="h-full"
+                whileHover={{ y: -10, scale: 1.05, transition: { duration: 0.3 } }}
               >
-                <motion.div 
-                  className="p-6 md:p-8 rounded-3xl backdrop-blur-[20px] relative overflow-hidden stat-card-hover h-full flex flex-col justify-center items-center min-h-[180px] md:min-h-[200px]"
+                <Card 
+                  className="p-8 rounded-2xl backdrop-blur-xl relative overflow-hidden min-h-[220px] flex flex-col justify-center items-center border-2"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    border: '2px solid rgba(184, 255, 114, 0.4)',
-                    boxShadow: '0 12px 40px rgba(14, 54, 44, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5)'
-                  }}
-                  whileHover={{
-                    boxShadow: '0 20px 50px rgba(184, 255, 114, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.7)',
-                    borderColor: 'rgba(184, 255, 114, 0.6)',
-                    background: 'rgba(255, 255, 255, 0.7)',
-                    transition: { duration: 0.3 }
+                    background: 'linear-gradient(135deg, hsl(0 0% 12% / 0.8), hsl(0 0% 8% / 0.8))',
+                    borderColor: 'hsl(160 100% 50% / 0.3)'
                   }}
                 >
-                  <motion.div 
-                    className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-center w-full"
-                    style={{ 
-                      background: 'linear-gradient(135deg, #0E362C, #4A7B65)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      minHeight: '3rem'
-                    }}
-                  >
-                    <CountUpMetric 
-                      end={stat.value} 
-                      duration={2800} 
-                      suffix={stat.suffix}
-                      showMillionsToBillions={stat.showMillionsToBillions}
-                    />
-                  </motion.div>
-                  <p 
-                    className="text-xs md:text-sm font-medium leading-relaxed text-center"
-                    style={{ color: '#0B281D', opacity: 0.95 }}
-                  >
-                    {stat.label}
-                  </p>
-                </motion.div>
+                  <stat.icon className="w-12 h-12 mb-4 text-primary" />
+                  <div className="text-4xl md:text-5xl font-black mb-2 text-primary">
+                    <CountUpMetric end={stat.value} duration={2800} suffix={stat.suffix} showMillionsToBillions={stat.showMillionsToBillions} />
+                  </div>
+                  <p className="text-sm text-gray-400 text-center font-medium">{stat.label}</p>
+                </Card>
               </motion.div>
             ))}
           </div>
+
+          <motion.p
+            className="text-center mt-12 text-xl text-gray-300 max-w-3xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={isOpportunityInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            We don't just deal with waste — <span className="text-primary font-bold">we transform it into high-value products</span>
+          </motion.p>
         </div>
       </section>
 
-      {/* NATURE'S BLUEPRINT - INSPIRATIONAL QUOTE SECTION */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="container mx-auto px-6">
-          <div className="relative max-w-7xl mx-auto">
-            {/* Desktop: Asymmetric Grid Layout with Parallax */}
-            <div className="hidden md:grid md:grid-cols-[1.2fr,1fr] gap-8 items-center">
-              {/* Left: Large Plant 1 - Slower parallax */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.88, filter: "blur(12px)", rotateY: -10 }}
-                whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)", rotateY: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 1, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-                style={{ y: parallaxSlow }}
-                className="relative group"
-              >
-                <div className="relative h-[500px] rounded-3xl overflow-hidden">
-                  <motion.img
-                    src={plant1}
-                    alt="Nature's circular wisdom"
-                    className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.15 }}
-                    transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
-                </div>
-              </motion.div>
+      {/* NO ENERGY PROBLEM SECTION */}
+      <section ref={energyRef} className="min-h-screen flex items-center justify-center relative py-24 bg-gradient-to-b from-muted/30 to-background">
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isEnergyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.9 }}
+          >
+            <h2 className="text-5xl md:text-7xl font-black mb-6">
+              <span style={{ 
+                  background: 'linear-gradient(135deg, hsl(270 80% 70%), hsl(160 100% 50%))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
+                NO ENERGY PROBLEM<br />ONLY SOLUTIONS
+              </span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+              The fuel isn't good enough? Not with us.
+            </p>
+          </motion.div>
 
-              {/* Right: Stacked Plants 2 & 3 - Faster parallax */}
-              <div className="space-y-8">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.88, filter: "blur(12px)", rotateX: 10 }}
-                  whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)", rotateX: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-                  style={{ y: parallaxMedium }}
-                  className="relative group"
-                >
-                  <div className="relative h-[300px] rounded-3xl overflow-hidden">
-                    <motion.img
-                      src={plant2}
-                      alt="Natural growth patterns"
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.15 }}
-                      transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.88, filter: "blur(12px)", rotateX: -10 }}
-                  whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)", rotateX: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                  style={{ y: parallaxFast }}
-                  className="relative group"
-                >
-                  <div className="relative h-[300px] rounded-3xl overflow-hidden">
-                    <motion.img
-                      src={plant3}
-                      alt="Regenerative systems"
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.15 }}
-                      transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-tl from-accent/20 via-transparent to-primary/10" />
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Mobile: Stacked Layout */}
-            <div className="md:hidden space-y-8">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="relative"
-              >
-                <div className="relative h-[400px] rounded-3xl overflow-hidden">
-                  <img
-                    src={plant1}
-                    alt="Nature's circular wisdom"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                className="relative"
-              >
-                <div className="relative h-[300px] rounded-3xl overflow-hidden">
-                  <img
-                    src={plant2}
-                    alt="Natural growth patterns"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative"
-              >
-                <div className="relative h-[300px] rounded-3xl overflow-hidden">
-                  <img
-                    src={plant3}
-                    alt="Regenerative systems"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tl from-accent/20 via-transparent to-primary/10" />
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Centered Quote Card - Absolute on Desktop, Inline on Mobile with scale+blur */}
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.85, filter: "blur(10px)" }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-              className="mt-12 md:mt-0 md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-10"
+              initial={{ opacity: 0, x: -40 }}
+              animate={isEnergyInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="relative backdrop-blur-[24px] bg-background/70 border-2 border-primary/30 rounded-2xl p-8 md:p-12 shadow-[0_8px_32px_rgba(184,255,114,0.15)] max-w-2xl mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl" />
-                <div className="relative">
-                  <div className="text-2xl md:text-4xl mb-4 text-primary/40">❝</div>
-                  <blockquote className="text-lg md:text-2xl font-light leading-relaxed">
-                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-medium">
-                      Nature has been perfecting circular systems for billions of years.
-                    </span>{" "}
-                    <span className="text-foreground">
-                      We're simply learning from the best teacher.
-                    </span>
-                  </blockquote>
-                  <div className="text-2xl md:text-4xl mt-4 text-right text-primary/40">❞</div>
-                </div>
-              </div>
+              <Card className="p-8 rounded-2xl backdrop-blur-xl border-2 h-full" style={{
+                background: 'linear-gradient(135deg, hsl(270 80% 70% / 0.1), hsl(0 0% 8% / 0.8))',
+                borderColor: 'hsl(270 80% 70% / 0.4)'
+              }}>
+                <Flame className="w-16 h-16 mb-6 text-accent" />
+                <h3 className="text-2xl font-bold mb-4 text-accent">High-Quality Output</h3>
+                <p className="text-gray-300 mb-4">
+                  Premium petrochemical feedstock and sustainable green fuel
+                </p>
+                <p className="text-primary font-bold text-xl">From Waste to Prime</p>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={isEnergyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <Card className="p-8 rounded-2xl backdrop-blur-xl border-2 h-full" style={{
+                background: 'linear-gradient(135deg, hsl(160 100% 50% / 0.1), hsl(0 0% 8% / 0.8))',
+                borderColor: 'hsl(160 100% 50% / 0.4)'
+              }}>
+                <Filter className="w-16 h-16 mb-6 text-primary" />
+                <h3 className="text-2xl font-bold mb-4 text-primary">WE KNOW HOW TO CLEAN</h3>
+                <p className="text-gray-300 mb-4">
+                  We handle different types of plastic streams:
+                </p>
+                <ul className="space-y-2 text-gray-300">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    Mixed plastics
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    Multiple polymer types
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    Contaminated streams
+                  </li>
+                </ul>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={isEnergyInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <Card className="p-8 rounded-2xl backdrop-blur-xl border-2 h-full" style={{
+                background: 'linear-gradient(135deg, hsl(150 100% 50% / 0.1), hsl(0 0% 8% / 0.8))',
+                borderColor: 'hsl(150 100% 50% / 0.4)'
+              }}>
+                <Recycle className="w-16 h-16 mb-6 text-secondary" />
+                <h3 className="text-2xl font-bold mb-4 text-secondary">Handle ANY Type</h3>
+                <p className="text-gray-300 mb-4">
+                  Our advanced process handles what others can't
+                </p>
+                <p className="text-xl font-bold text-secondary">Multi-Stream Capability</p>
+              </Card>
             </motion.div>
           </div>
-        </div>
-      </section>
 
-      {/* THE TRANSFORMATION - VIDEO SECTION */}
-      <section ref={processRef} className="min-h-screen flex items-center justify-center relative py-32">
-        <div className="container mx-auto px-6 relative z-10">
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isProcessInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="mt-16 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isEnergyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#0B281D' }}>
-              The Transformation
-            </h2>
-            <p className="text-base max-w-2xl mx-auto font-light" style={{ color: '#0E362C', opacity: 0.7 }}>
-              Watch how waste becomes energy through our revolutionary process
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="max-w-6xl mx-auto"
-            initial={{ opacity: 0, scale: 0.92, filter: "blur(10px)" }}
-            animate={isProcessInView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : { opacity: 0, scale: 0.92, filter: "blur(10px)" }}
-            transition={{ delay: 0.3, duration: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <div 
-              className="relative aspect-video rounded-3xl overflow-hidden backdrop-blur-sm"
-              style={{
-                background: 'rgba(255, 255, 255, 0.25)',
-                border: '2px solid rgba(184, 255, 114, 0.3)',
-                boxShadow: '0 12px 40px rgba(14, 54, 44, 0.2)'
-              }}
-            >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <motion.div 
-                    className="w-32 h-32 mx-auto mb-6 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-xl"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Play size={48} className="ml-2" style={{ color: '#74D46E' }} />
-                  </motion.div>
-                  <h3 className="text-2xl font-bold mb-3" style={{ color: '#0B281D' }}>
-                    VIDEO
-                  </h3>
-                  <p className="text-base max-w-md mx-auto px-4" style={{ color: '#0E362C', opacity: 0.7 }}>
-                    Transformation process video will be added here
-                  </p>
+            <Card className="p-8 rounded-2xl backdrop-blur-xl border-2" style={{
+              background: 'linear-gradient(135deg, hsl(0 0% 12% / 0.9), hsl(0 0% 8% / 0.9))',
+              borderColor: 'hsl(160 100% 50% / 0.3)'
+            }}>
+              <div className="flex items-center justify-between gap-8">
+                <div className="flex-1 text-center">
+                  <Package className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+                  <p className="text-sm text-gray-400 mb-2">INPUT</p>
+                  <p className="text-xl font-bold text-foreground">Mixed Plastic Streams</p>
+                </div>
+                <ArrowRight className="w-8 h-8 text-primary" />
+                <div className="flex-1 text-center">
+                  <Zap className="w-12 h-12 mx-auto mb-3 text-primary" />
+                  <p className="text-sm text-gray-400 mb-2">OUR PROCESS</p>
+                  <p className="text-xl font-bold text-primary">Advanced Cleaning & Conversion</p>
+                </div>
+                <ArrowRight className="w-8 h-8 text-primary" />
+                <div className="flex-1 text-center">
+                  <Flame className="w-12 h-12 mx-auto mb-3 text-accent" />
+                  <p className="text-sm text-gray-400 mb-2">OUTPUT</p>
+                  <p className="text-xl font-bold text-accent">Premium Petrochemical Feed</p>
                 </div>
               </div>
-            </div>
+            </Card>
           </motion.div>
         </div>
       </section>
 
-      {/* PRODUCTS SECTION */}
-      <section ref={productsRef} className="min-h-[95vh] flex items-center justify-center relative py-28">
+      {/* ECONOMIC MODEL SECTION */}
+      <section ref={economicsRef} className="min-h-screen flex items-center justify-center relative py-24 bg-gradient-to-b from-background to-muted/30">
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
-            animate={isProductsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+            animate={isEconomicsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.9 }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#0B281D' }}>
-              Three Clean Solutions
+            <h2 className="text-5xl md:text-7xl font-black mb-6">
+              <span style={{ 
+                  background: 'linear-gradient(135deg, hsl(150 100% 50%), hsl(160 100% 50%))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
+                THE ECONOMICS
+              </span>
             </h2>
-            <p className="text-base max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
-              From waste to specialized fuel fractions
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+              How You Can Make Money
             </p>
           </motion.div>
 
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"
-            variants={containerVariants}
-            initial="hidden"
-            animate={isProductsInView ? "visible" : "hidden"}
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            {[
+              { label: "INPUT COST", value: "$XXX", unit: "/ton", sublabel: "(waste plastic)", icon: DollarSign, color: "text-gray-400" },
+              { label: "PROCESSING COST", value: "$XXX", unit: "/ton", sublabel: "(our process)", icon: Factory, color: "text-primary" },
+              { label: "OUTPUT VALUE", value: "$XXX", unit: "/ton", sublabel: "(premium fuel)", icon: TrendingUp, color: "text-secondary" }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isEconomicsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: i * 0.15 }}
+              >
+                <Card className="p-8 rounded-2xl backdrop-blur-xl border-2 text-center" style={{
+                  background: 'linear-gradient(135deg, hsl(0 0% 12% / 0.8), hsl(0 0% 8% / 0.8))',
+                  borderColor: 'hsl(160 100% 50% / 0.3)'
+                }}>
+                  <item.icon className={`w-12 h-12 mx-auto mb-4 ${item.color}`} />
+                  <p className="text-sm text-gray-400 mb-2">{item.label}</p>
+                  <p className={`text-5xl font-black mb-1 ${item.color}`}>{item.value}</p>
+                  <p className="text-xl text-gray-400 mb-2">{item.unit}</p>
+                  <p className="text-sm text-gray-500">{item.sublabel}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            className="max-w-3xl mx-auto space-y-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isEconomicsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <motion.div variants={itemVariants}>
-              <ProductCard
-                icon={Beaker}
-                title="PlastiNaphtha"
-                description="Petrochemical feedstock for polymer production"
-                color="primary"
-                isInView={isProductsInView}
-                delay={0}
-              />
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <ProductCard
-                icon={Plane}
-                title="PlastiSAF"
-                description="Sustainable Aviation Fuel meeting ASTM D7566"
-                color="secondary"
-                isInView={isProductsInView}
-                delay={0.15}
-              />
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <ProductCard
-                icon={Truck}
-                title="PlastiDiesel"
-                description="Ultra-clean diesel for transport and industry"
-                color="accent"
-                isInView={isProductsInView}
-                delay={0.3}
-              />
-            </motion.div>
+            <Card className="p-8 rounded-2xl backdrop-blur-xl border-2" style={{
+              background: 'linear-gradient(135deg, hsl(150 100% 50% / 0.1), hsl(0 0% 8% / 0.9))',
+              borderColor: 'hsl(150 100% 50% / 0.5)',
+              boxShadow: 'var(--glow-neon)'
+            }}>
+              <div className="text-center">
+                <p className="text-lg text-gray-300 mb-2">NET MARGIN</p>
+                <p className="text-6xl font-black text-secondary mb-4">$XXX<span className="text-3xl">/ton</span></p>
+                <div className="grid grid-cols-2 gap-6 mt-8">
+                  <div>
+                    <p className="text-sm text-gray-400 mb-1">ANNUAL ROI</p>
+                    <p className="text-3xl font-bold text-primary">XX%</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 mb-1">PAYBACK PERIOD</p>
+                    <p className="text-3xl font-bold text-primary">X years</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
           </motion.div>
         </div>
       </section>
 
-      {/* VIDEO SECTION */}
-      <section ref={videoRef} className="min-h-[85vh] flex items-center justify-center relative py-28">
+      {/* OUR JOURNEY - EVEREST SECTION */}
+      <section ref={journeyRef} className="min-h-screen flex items-center justify-center relative py-24 bg-gradient-to-b from-muted/30 to-background overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <Mountain className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] text-primary" />
+        </div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isJourneyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.9 }}
+          >
+            <h2 className="text-5xl md:text-7xl font-black mb-6">
+              <span style={{ 
+                  background: 'linear-gradient(135deg, hsl(270 80% 70%), hsl(160 100% 50%))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
+                OUR JOURNEY
+              </span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+              Climbing the Everest of Industrial Innovation
+            </p>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto relative">
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/50 via-primary to-primary/50 -translate-x-1/2" />
+            
+            {[
+              { level: "TRL 9", label: "Full Commercial Deployment", status: "future", icon: Flag },
+              { level: "TRL 8", label: "System Complete", status: "future", icon: CheckCircle2 },
+              { level: "TRL 7", label: "Pilot Scale", status: "past", icon: CheckCircle2 },
+              { level: "TRL 6", label: "INDUSTRIAL SCALE", status: "current", icon: Factory },
+              { level: "TRL 5", label: "Technology Validation", status: "past", icon: CheckCircle2 },
+              { level: "TRL 4", label: "Laboratory Testing", status: "past", icon: Beaker }
+            ].map((milestone, i) => (
+              <motion.div
+                key={i}
+                className={`relative flex items-center gap-8 mb-12 ${i % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
+                animate={isJourneyInView ? { opacity: 1, x: 0 } : { opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+              >
+                <div className={`flex-1 ${i % 2 === 0 ? 'text-right' : 'text-left'}`}>
+                  <Card 
+                    className={`inline-block p-6 rounded-2xl backdrop-blur-xl border-2 ${
+                      milestone.status === 'current' 
+                        ? 'border-primary shadow-[0_0_30px_hsl(160_100%_50%/0.5)]' 
+                        : milestone.status === 'past'
+                        ? 'border-secondary/50'
+                        : 'border-gray-600'
+                    }`}
+                    style={{
+                      background: milestone.status === 'current'
+                        ? 'linear-gradient(135deg, hsl(160 100% 50% / 0.2), hsl(0 0% 8% / 0.9))'
+                        : 'linear-gradient(135deg, hsl(0 0% 12% / 0.8), hsl(0 0% 8% / 0.8))'
+                    }}
+                  >
+                    <p className={`text-3xl font-black mb-2 ${
+                      milestone.status === 'current' ? 'text-primary' : 
+                      milestone.status === 'past' ? 'text-secondary' : 'text-gray-400'
+                    }`}>
+                      {milestone.level}
+                    </p>
+                    <p className="text-lg text-foreground font-semibold">{milestone.label}</p>
+                    {milestone.status === 'current' && (
+                      <p className="text-sm text-primary font-bold mt-2">← YOU ARE HERE</p>
+                    )}
+                  </Card>
+                </div>
+                
+                <div className={`relative z-10 ${
+                  milestone.status === 'current' 
+                    ? 'w-20 h-20' 
+                    : 'w-16 h-16'
+                }`}>
+                  <div className={`w-full h-full rounded-full flex items-center justify-center ${
+                    milestone.status === 'current'
+                      ? 'bg-primary shadow-[0_0_40px_hsl(160_100%_50%/0.6)] animate-pulse'
+                      : milestone.status === 'past'
+                      ? 'bg-secondary'
+                      : 'bg-gray-600'
+                  }`}>
+                    <milestone.icon className={`${
+                      milestone.status === 'current' ? 'w-10 h-10' : 'w-8 h-8'
+                    } text-background`} />
+                  </div>
+                </div>
+                
+                <div className="flex-1" />
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p
+            className="text-center mt-16 text-xl text-primary font-bold max-w-3xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={isJourneyInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
+            Proven at Industrial Scale — Ready to Deploy
+          </motion.p>
+        </div>
+      </section>
+
+      {/* TRANSFORMATION VIDEO SECTION */}
+      <section ref={videoRef} className="min-h-screen flex items-center justify-center relative py-24 bg-gradient-to-b from-background to-muted/30">
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={isVideoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.9 }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#0B281D' }}>
-              See It In Action
+            <h2 className="text-5xl md:text-7xl font-black mb-6">
+              <span style={{ 
+                  background: 'linear-gradient(135deg, hsl(160 100% 50%), hsl(270 80% 70%))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
+                SEE THE TRANSFORMATION
+              </span>
             </h2>
-            <p className="text-base max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
-              Watch how we transform waste into energy
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+              Watch how we transform plastic waste streams into premium petrochemical feedstock
             </p>
           </motion.div>
 
           <motion.div
             className="max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: 30, scale: 0.95, filter: "blur(8px)" }}
-            animate={isVideoInView ? { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" } : { opacity: 0, y: 30, scale: 0.95, filter: "blur(8px)" }}
-            transition={{ delay: 0.2, duration: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isVideoInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <div 
-              className="relative aspect-video backdrop-blur-sm rounded-3xl overflow-hidden"
+            <Card 
+              className="rounded-3xl overflow-hidden border-2 relative aspect-video"
               style={{
-                background: 'rgba(255, 255, 255, 0.3)',
-                border: '2px solid rgba(184, 255, 114, 0.4)',
-                boxShadow: '0 8px 32px rgba(14, 54, 44, 0.15)'
+                background: 'linear-gradient(135deg, hsl(0 0% 12% / 0.9), hsl(0 0% 8% / 0.9))',
+                borderColor: 'hsl(160 100% 50% / 0.4)',
+                boxShadow: '0 0 60px hsl(160 100% 50% / 0.3)'
               }}
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex flex-col items-center gap-4">
-                  <div 
-                    className="w-24 h-24 rounded-full backdrop-blur-sm flex items-center justify-center"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.7)',
-                      boxShadow: '0 4px 20px rgba(14, 54, 44, 0.2)'
-                    }}
-                  >
-                    <Play className="ml-1" size={40} fill="#B8FF72" style={{ color: '#B8FF72' }} />
-                  </div>
-                  <p className="text-base font-semibold" style={{ color: '#0B281D' }}>Coming Soon</p>
-                  <p className="text-sm max-w-md text-center px-4" style={{ color: '#0E362C' }}>
-                    Video content will be added here showcasing our transformation process
-                  </p>
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
+                <div className="text-center">
+                  <Play className="w-24 h-24 mx-auto mb-6 text-primary" />
+                  <p className="text-2xl font-bold text-foreground">Video Coming Soon</p>
+                  <p className="text-gray-400 mt-2">Experience the transformation process</p>
                 </div>
               </div>
-            </div>
+            </Card>
           </motion.div>
         </div>
       </section>
 
-      {/* ROADMAP SECTION */}
-      <section ref={roadmapRef} className="min-h-[85vh] flex items-center justify-center relative py-28">
+      {/* CALL TO ACTION SECTION */}
+      <section ref={actionRef} className="relative py-32 bg-gradient-to-b from-muted/30 to-background">
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
-            className="text-center mb-20"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isRoadmapInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="max-w-4xl mx-auto text-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isActionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.9 }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#0B281D' }}>
-              Our Journey
+            <h2 className="text-5xl md:text-7xl font-black mb-8">
+              <span style={{ 
+                  background: 'linear-gradient(135deg, hsl(160 100% 50%), hsl(150 100% 50%))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
+                Ready to Transform Waste<br />Into Value?
+              </span>
             </h2>
-            <p className="text-base max-w-2xl mx-auto font-light" style={{ color: '#0E362C' }}>
-              From laboratory to industrial impact
+            <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+              Join us in revolutionizing the plastic waste industry with proven industrial-scale technology
             </p>
-          </motion.div>
-
-          <div className="max-w-5xl mx-auto">
-            <div className="relative mb-12">
-              <div className="h-0.5 rounded-full" style={{ backgroundColor: 'rgba(184, 255, 114, 0.2)' }} />
-              <motion.div
-                className="absolute top-0 left-0 h-0.5 rounded-full"
-                style={{
-                  background: 'linear-gradient(90deg, #B8FF72, #C6FF5C, rgba(255, 255, 255, 0.5))'
-                }}
-                initial={{ width: "0%" }}
-                animate={isRoadmapInView ? { width: "66%" } : { width: "0%" }}
-                transition={{ duration: 2, ease: "easeOut" }}
-              />
-
-              <div className="grid grid-cols-3 gap-8 mt-10">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
-                  animate={isRoadmapInView ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
-                  transition={{ delay: 0.2, duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
-                >
-                  <RoadmapNode
-                    label="TRL 1-2"
-                    title="Lab Tests"
-                    status="complete"
-                    isInView={isRoadmapInView}
-                    delay={0}
-                  />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
-                  animate={isRoadmapInView ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
-                  transition={{ delay: 0.4, duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
-                >
-                  <RoadmapNode
-                    label="TRL 3-5"
-                    title="Pilot Phase"
-                    status="current"
-                    isInView={isRoadmapInView}
-                    delay={0}
-                  />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
-                  animate={isRoadmapInView ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
-                  transition={{ delay: 0.6, duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
-                >
-                  <RoadmapNode
-                    label="TRL 7-8"
-                    title="Industrial Scale"
-                    status="target"
-                    isInView={isRoadmapInView}
-                    delay={0}
-                  />
-                </motion.div>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button 
+                size="lg" 
+                className="text-lg px-12 py-7 font-bold bg-primary text-primary-foreground hover:bg-primary/90"
+                style={{ boxShadow: 'var(--glow-electric)' }}
+                asChild
+              >
+                <Link to="/contact">Get in Touch</Link>
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="text-lg px-12 py-7 font-bold border-2 border-secondary text-foreground hover:bg-secondary/10 hover:border-secondary"
+                asChild
+              >
+                <Link to="/about">Learn More</Link>
+              </Button>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* VISION SECTION */}
-      <section ref={visionRef} className="min-h-screen flex items-center justify-center relative py-32">
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <motion.h2 
-            className="text-3xl md:text-6xl font-bold mb-12"
-            style={{ color: '#0B281D' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            Our Vision
-          </motion.h2>
-          
-          <div className="text-lg md:text-2xl leading-relaxed font-light max-w-5xl mx-auto mb-12 space-y-4">
-            <motion.p
-              initial={{ opacity: 0, x: -40 }}
-              animate={isVisionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              <span className="text-primary font-medium" style={{ filter: 'drop-shadow(0 0 15px hsl(88 68% 66% / 0.4))' }}>
-                Nature's design.
-              </span>
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, x: 40 }}
-              animate={isVisionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-            >
-              <span className="text-secondary font-medium" style={{ filter: 'drop-shadow(0 0 15px hsl(43 90% 72% / 0.4))' }}>
-                Human innovation.
-              </span>
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 40 }}
-              animate={isVisionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-              transition={{ delay: 0.7, duration: 0.8 }}
-            >
-              <span className="text-foreground font-medium">
-                Circular power for the planet.
-              </span>
-            </motion.p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isVisionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-            transition={{ delay: 0.9, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Button 
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 text-base px-8 py-5 rounded-full shadow-xl hover:shadow-[var(--glow-primary)] transition-all"
-            >
-              <Link to="/contact">
-                Join the Movement <ArrowRight className="ml-2" size={22} />
-              </Link>
-            </Button>
           </motion.div>
         </div>
       </section>
+
     </div>
-  );
-};
-
-const ProcessStep = ({ icon: Icon, title, description, isInView, delay, highlighted = false }: any) => (
-  <motion.div
-    className="text-center relative"
-    initial={{ opacity: 0, y: 40, scale: 0.8 }}
-    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.8 }}
-    transition={{ delay, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
-  >
-    <motion.div
-      className={`w-24 h-24 mx-auto mb-5 rounded-full flex items-center justify-center ${
-        highlighted 
-          ? 'bg-gradient-to-br from-primary to-secondary shadow-xl' 
-          : 'bg-white/80 backdrop-blur-sm border-2 border-primary/50 shadow-md'
-      }`}
-      whileHover={{ 
-        scale: 1.2, 
-        rotate: 360,
-        boxShadow: 'var(--glow-primary)',
-        transition: { duration: 0.5 }
-      }}
-      animate={highlighted ? {
-        boxShadow: [
-          '0 0 25px hsl(88 68% 66% / 0.5)',
-          '0 0 40px hsl(43 90% 72% / 0.7)',
-          '0 0 25px hsl(88 68% 66% / 0.5)'
-        ],
-        scale: [1, 1.05, 1]
-      } : {}}
-      transition={highlighted ? { duration: 2.5, repeat: Infinity } : {}}
-    >
-      <Icon className={highlighted ? "text-background" : "text-primary"} size={28} />
-    </motion.div>
-    <h3 className="text-base font-bold mb-2 text-foreground">{title}</h3>
-    <p className="text-sm text-muted-foreground">{description}</p>
-  </motion.div>
-);
-
-const ProductCard = ({ icon: Icon, title, description, color, isInView, delay }: any) => {
-  const colorClass = color === 'primary' ? 'text-primary' : color === 'secondary' ? 'text-secondary' : 'text-accent';
-  
-  return (
-    <motion.div
-      whileHover={{ 
-        y: -20, 
-        scale: 1.06,
-        rotateY: 5,
-        rotateX: -3,
-        transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
-      }}
-      style={{
-        perspective: "1000px",
-        transformStyle: "preserve-3d"
-      }}
-    >
-      <Card className="p-8 h-full bg-white/70 backdrop-blur-md border-primary/40 hover:border-primary/70 transition-all group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-primary/30">
-        <motion.div
-          className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/90 flex items-center justify-center shadow-md"
-          whileHover={{ 
-            rotate: 360,
-            scale: 1.15,
-            boxShadow: 'var(--glow-primary)'
-          }}
-          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <Icon className={colorClass} size={32} />
-        </motion.div>
-        <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
-        <p className="text-base text-muted-foreground leading-relaxed">{description}</p>
-      </Card>
-    </motion.div>
-  );
-};
-
-const RoadmapNode = ({ label, title, status, isInView, delay }: any) => {
-  const bgClass = status === 'complete' ? 'bg-primary shadow-[var(--glow-primary)]' : status === 'current' ? 'bg-secondary shadow-[var(--glow-secondary)]' : 'bg-white/70 border-2 border-muted';
-  const statusIcon = status === 'complete' ? '✓' : status === 'current' ? '▶' : '◻';
-  
-  return (
-    <motion.div
-      className="text-center"
-      initial={{ opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
-      animate={isInView ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.5, y: 40, filter: "blur(10px)" }}
-      transition={{ delay, duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
-    >
-      <motion.div
-        className={`w-20 h-20 mx-auto mb-4 rounded-full ${bgClass} flex items-center justify-center border-4 border-background`}
-        whileHover={{ 
-          scale: 1.2,
-          rotate: [0, 10, -10, 0],
-          transition: { duration: 0.6 }
-        }}
-        animate={status === 'current' ? {
-          scale: [1, 1.08, 1],
-          boxShadow: [
-            'var(--glow-secondary)',
-            '0 0 45px hsl(43 90% 72% / 0.9)',
-            'var(--glow-secondary)'
-          ]
-        } : {}}
-        transition={status === 'current' ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" } : {}}
-      >
-        <span className="text-lg font-bold text-foreground">{statusIcon}</span>
-      </motion.div>
-      <div className="text-base font-bold text-primary mb-2">{label}</div>
-      <h3 className="text-base font-semibold text-foreground">{title}</h3>
-    </motion.div>
   );
 };
 
