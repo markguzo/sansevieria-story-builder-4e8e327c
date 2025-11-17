@@ -8,78 +8,77 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Dark Industrial Theme */
-    --background: 0 0% 6%; /* Deep black #0F0F0F */
+    /* Professional Industrial Theme */
+    --background: 217 18% 15%; /* Dark slate #1a1f2e */
     --foreground: 0 0% 100%; /* Pure white */
 
-    --card: 0 0% 10%; /* Dark charcoal #1A1A1A */
+    --card: 220 17% 14%; /* Dark blue-gray #1e2433 */
     --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 10%;
+    --popover: 220 17% 14%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 160 100% 50%; /* Electric blue #00D9FF */
+    --primary: 150 100% 50%; /* Professional green #00FF88 */
     --primary-foreground: 0 0% 0%;
 
-    --secondary: 150 100% 50%; /* Neon green #00FF88 */
+    --secondary: 195 100% 45%; /* Softer blue #00C4E4 */
     --secondary-foreground: 0 0% 0%;
 
-    --muted: 0 0% 16%; /* #292929 */
-    --muted-foreground: 0 0% 60%;
+    --muted: 220 13% 18%; /* Medium slate #2a3142 */
+    --muted-foreground: 215 16% 77%; /* Light gray #B8C5D6 */
 
-    --accent: 270 80% 70%; /* Energy purple #B066FF */
+    --accent: 260 100% 70%; /* Toned purple #9966FF */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%; /* #333333 */
-    --input: 0 0% 16%;
-    --ring: 160 100% 50%;
+    --border: 0 0% 100% / 0.1; /* Subtle white border */
+    --input: 220 17% 14%;
+    --ring: 150 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Industrial Energy Design Tokens */
-    --gradient-hero: linear-gradient(180deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 10%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 12%) 0%, hsl(0, 0%, 8%) 100%);
-    --gradient-primary: linear-gradient(135deg, hsl(160, 100%, 50%) 0%, hsl(150, 100%, 50%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(270, 80%, 70%) 0%, hsl(160, 100%, 50%) 100%);
-    --glow-electric: 0 0 40px hsl(160 100% 50% / 0.6), 0 0 80px hsl(160 100% 50% / 0.3);
-    --glow-neon: 0 0 30px hsl(150 100% 50% / 0.6), 0 0 60px hsl(150 100% 50% / 0.3);
-    --glow-purple: 0 0 35px hsl(270 80% 70% / 0.5), 0 0 70px hsl(270 80% 70% / 0.25);
-    --shadow-elevated: 0 8px 32px hsl(0 0% 0% / 0.6);
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-glow: box-shadow 0.3s ease, border-color 0.3s ease;
+    /* Refined Design Tokens */
+    --gradient-hero: linear-gradient(135deg, hsl(217, 18%, 15%) 0%, hsl(220, 17%, 14%) 50%, hsl(217, 18%, 15%) 100%);
+    --gradient-section: linear-gradient(180deg, hsl(217, 18%, 15%) 0%, hsl(220, 13%, 18%) 100%);
+    --card-subtle: hsla(220, 17%, 14%, 0.4);
+    --card-elevated: hsla(220, 17%, 14%, 0.6);
+    --glow-cta: 0 0 20px hsl(150 100% 50% / 0.15);
+    --glow-highlight: 0 0 30px hsl(150 100% 50% / 0.2);
+    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.3);
+    --shadow-card-hover: 0 4px 16px hsl(0 0% 0% / 0.4);
+    --transition-fast: all 0.2s ease;
   }
 
   .dark {
-    --background: 0 0% 6%;
+    --background: 217 18% 15%;
     --foreground: 0 0% 100%;
 
-    --card: 0 0% 10%;
+    --card: 220 17% 14%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 10%;
+    --popover: 220 17% 14%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 160 100% 50%;
+    --primary: 150 100% 50%;
     --primary-foreground: 0 0% 0%;
 
-    --secondary: 150 100% 50%;
+    --secondary: 195 100% 45%;
     --secondary-foreground: 0 0% 0%;
 
-    --muted: 0 0% 16%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 220 13% 18%;
+    --muted-foreground: 215 16% 77%;
 
-    --accent: 270 80% 70%;
+    --accent: 260 100% 70%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 16%;
-    --ring: 160 100% 50%;
+    --border: 0 0% 100% / 0.1;
+    --input: 220 17% 14%;
+    --ring: 150 100% 50%;
   }
 }
 
@@ -93,7 +92,13 @@ All colors MUST be HSL.
     font-family: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     overflow-x: hidden;
-    letter-spacing: -0.01em;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+    line-height: 1.3;
   }
 
 html {
@@ -126,26 +131,25 @@ html {
   will-change: transform;
 }
 
-/* Stat card hover glow effect */
+/* Stat card hover effect */
 .stat-card-hover {
   position: relative;
-  transition: var(--transition-glow);
+  transition: var(--transition-fast);
 }
 
 .stat-card-hover:hover {
-  box-shadow: var(--glow-electric);
-  border-color: hsl(160 100% 50% / 0.8) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: hsl(150 100% 50% / 0.4) !important;
 }
 
-/* Energy particles animation */
-@keyframes particle-float {
+/* TRL 6 pulse animation */
+@keyframes trl-pulse {
   0%, 100% {
-    transform: translate(0, 0);
-    opacity: 0.3;
+    box-shadow: 0 0 0 0 hsl(150 100% 50% / 0.4);
   }
   50% {
-    transform: translate(20px, -20px);
-    opacity: 0.8;
+    box-shadow: 0 0 0 8px hsl(150 100% 50% / 0);
   }
 }
 }
