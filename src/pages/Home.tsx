@@ -6,6 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
 import { TRLJourney } from "@/components/TRLJourney";
+import heroNatureBg from "@/assets/hero-nature-bg.png";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -33,8 +34,12 @@ const Home = () => {
       {/* HERO SECTION */}
       <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-primary" />
-          <div className="absolute inset-0 bg-black/60" />
+          <img 
+            src={heroNatureBg} 
+            alt="Nature background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 text-center max-w-6xl">
@@ -48,7 +53,8 @@ const Home = () => {
           </motion.p>
 
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-background leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -57,7 +63,8 @@ const Home = () => {
           </motion.h1>
           
           <motion.p
-            className="text-base md:text-lg text-white max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-base md:text-lg text-background max-w-3xl mx-auto mb-10 leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]"
+            style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
@@ -73,7 +80,7 @@ const Home = () => {
           >
             <Button 
               size="lg" 
-              className="bg-accent text-foreground hover:bg-accent/90 font-semibold px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="bg-primary text-background hover:bg-primary/90 font-semibold px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               asChild
             >
               <Link to="/about">
@@ -83,7 +90,7 @@ const Home = () => {
             <Button 
               size="lg" 
               variant="outline"
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-semibold px-8 py-6 text-base transition-all duration-300"
+              className="bg-transparent border-2 border-background text-background hover:bg-background hover:text-primary font-semibold px-8 py-6 text-base transition-all duration-300"
               asChild
             >
               <Link to="/contact">Get in Touch</Link>
@@ -99,7 +106,7 @@ const Home = () => {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-white/80"
+              className="text-background/80 drop-shadow-lg"
             >
               <ArrowRight className="w-6 h-6 rotate-90" />
             </motion.div>
