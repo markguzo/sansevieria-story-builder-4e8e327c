@@ -1,29 +1,29 @@
 import { Link } from "react-router-dom";
-import { Beaker, Plane, Truck, Sparkles, TrendingUp, Package, Droplets, Flame, Zap, ArrowRight, Play, Factory, Award, Recycle, Target, CheckCircle2 } from "lucide-react";
+import { Beaker, Plane, Truck, Sparkles, TrendingUp, Package, Droplets, Flame, Zap, ArrowRight, Play, Factory, Award, Recycle, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { motion, useScroll, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
 import { TRLJourney } from "@/components/TRLJourney";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const opportunityRef = useRef(null);
-  const differentiationRef = useRef(null);
-  const energyRef = useRef(null);
-  const everestRef = useRef(null);
   const solutionsRef = useRef(null);
+  const technologyRef = useRef(null);
+  const energyRef = useRef(null);
   const economicsRef = useRef(null);
+  const everestRef = useRef(null);
   const videoRef = useRef(null);
   const ctaRef = useRef(null);
 
   const isOpportunityInView = useInView(opportunityRef, { amount: 0.2, once: true });
-  const isDifferentiationInView = useInView(differentiationRef, { amount: 0.2, once: true });
-  const isEnergyInView = useInView(energyRef, { amount: 0.2, once: true });
-  const isEverestInView = useInView(everestRef, { amount: 0.3, once: true });
   const isSolutionsInView = useInView(solutionsRef, { amount: 0.2, once: true });
+  const isTechnologyInView = useInView(technologyRef, { amount: 0.2, once: true });
+  const isEnergyInView = useInView(energyRef, { amount: 0.2, once: true });
   const isEconomicsInView = useInView(economicsRef, { amount: 0.2, once: true });
+  const isEverestInView = useInView(everestRef, { amount: 0.3, once: true });
   const isVideoInView = useInView(videoRef, { amount: 0.3, once: true });
   const isCtaInView = useInView(ctaRef, { amount: 0.2, once: true });
 
@@ -32,7 +32,6 @@ const Home = () => {
       
       {/* HERO SECTION */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image Placeholder - Replace with actual nature/circularity image */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-primary/80" />
           <div className="absolute inset-0 bg-black/40" />
@@ -74,7 +73,7 @@ const Home = () => {
           >
             <Button 
               size="lg" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="bg-accent text-foreground hover:bg-accent/90 font-semibold px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               asChild
             >
               <Link to="/about">
@@ -91,7 +90,6 @@ const Home = () => {
             </Button>
           </motion.div>
 
-          {/* Scroll Indicator */}
           <motion.div
             className="flex justify-center"
             initial={{ opacity: 0 }}
@@ -110,7 +108,7 @@ const Home = () => {
       </section>
 
       {/* THE OPPORTUNITY */}
-      <section ref={opportunityRef} className="py-24 md:py-32 bg-secondary">
+      <section ref={opportunityRef} className="py-24 md:py-32 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
             className="text-center mb-16"
@@ -118,7 +116,7 @@ const Home = () => {
             animate={isOpportunityInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-accent text-sm font-semibold tracking-[0.3em] mb-4 uppercase">The Opportunity</p>
+            <p className="text-primary text-sm font-semibold tracking-[0.3em] mb-4 uppercase">The Opportunity</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground max-w-4xl mx-auto leading-tight">
               Plastic waste represents untapped energy and massive economic value waiting to be unlocked
             </h2>
@@ -159,9 +157,73 @@ const Home = () => {
         </div>
       </section>
 
-      {/* DIFFERENTIATION SECTION */}
-      <section ref={differentiationRef} className="py-24 md:py-32 bg-background">
+      {/* THREE CLEAN SOLUTIONS */}
+      <section ref={solutionsRef} className="py-24 md:py-32 bg-secondary">
         <div className="container mx-auto px-6 max-w-7xl">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isSolutionsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-primary">Three Clean Solutions</h2>
+            <p className="text-lg md:text-xl text-foreground">From waste to specialized fuel fractions</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { 
+                icon: Beaker, 
+                name: "PlastiNaphtha", 
+                desc: "Petrochemical feedstock for polymer production",
+                color: "bg-green-100"
+              },
+              { 
+                icon: Plane, 
+                name: "PlastiSAF", 
+                desc: "Sustainable Aviation Fuel meeting ASTM D7566",
+                color: "bg-yellow-100"
+              },
+              { 
+                icon: Truck, 
+                name: "PlastiDiesel", 
+                desc: "Ultra-clean diesel for transport and industry",
+                color: "bg-blue-100"
+              }
+            ].map((product, i) => (
+              <motion.div
+                key={i}
+                className="group"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isSolutionsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+              >
+                <Card className="p-8 h-full hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 bg-card">
+                  <div className={`w-16 h-16 rounded-full ${product.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    <product.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">{product.name}</h3>
+                  <p className="text-base text-muted-foreground leading-relaxed">{product.desc}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW WE DO IT - TECHNOLOGY */}
+      <section ref={technologyRef} className="py-24 md:py-32 bg-background">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isTechnologyInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="text-primary text-sm font-semibold tracking-[0.3em] mb-4 uppercase">How We Do It</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">Our Technology</h2>
+          </motion.div>
+
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
             {[
               { 
@@ -187,7 +249,7 @@ const Home = () => {
                 key={i}
                 className="text-center group"
                 initial={{ opacity: 0, y: 20 }}
-                animate={isDifferentiationInView ? { opacity: 1, y: 0 } : {}}
+                animate={isTechnologyInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.15 }}
               >
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent flex items-center justify-center group-hover:rotate-[360deg] transition-transform duration-500">
@@ -237,7 +299,6 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Energy Flow Diagram */}
           <motion.div
             className="bg-white/10 backdrop-blur-sm p-8 md:p-10 rounded-xl border border-white/20"
             initial={{ opacity: 0, y: 30 }}
@@ -267,9 +328,72 @@ const Home = () => {
         </div>
       </section>
 
+      {/* TRL JOURNEY VISUALIZATION */}
+      <TRLJourney />
+
+      {/* THE ECONOMICS */}
+      <section ref={economicsRef} className="py-24 md:py-32 bg-background">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isEconomicsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">The Economics</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Proven profitability at industrial scale with attractive returns
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {[
+              { label: "Input Cost", value: "$XXX", sublabel: "per tonne feedstock" },
+              { label: "Processing Cost", value: "$XXX", sublabel: "per tonne output" },
+              { label: "Output Value", value: "$XXX", sublabel: "per tonne fuel" }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isEconomicsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <Card className="p-8 bg-card border-border">
+                  <div className="text-accent font-bold mb-2 text-5xl">{item.value}</div>
+                  <div className="text-foreground font-semibold mb-1 uppercase tracking-widest text-sm">{item.label}</div>
+                  <div className="text-muted-foreground text-sm">{item.sublabel}</div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isEconomicsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            <Card className="p-10 bg-accent/10 border-2 border-accent inline-block">
+              <h3 className="text-2xl font-semibold mb-6 text-foreground">Net Margin</h3>
+              <div className="text-accent font-bold mb-6 text-6xl">$xxx/ton</div>
+              <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                <div>
+                  <div className="text-4xl font-bold text-primary mb-2">XX%</div>
+                  <div className="text-muted-foreground font-medium uppercase tracking-widest text-sm">Annual ROI</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold text-primary mb-2">X.X years</div>
+                  <div className="text-muted-foreground font-medium uppercase tracking-widest text-sm">Payback Period</div>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+        </div>
+      </section>
+
       {/* THE EVEREST STORY SECTION */}
       <section ref={everestRef} className="relative py-24 md:py-32 overflow-hidden">
-        {/* Background Image Placeholder - Replace with actual Everest/mountain image */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary to-primary/80" />
           <div className="absolute inset-0 bg-black/50" />
@@ -315,11 +439,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* TRL JOURNEY VISUALIZATION */}
-      <TRLJourney />
-
       {/* VIDEO SECTION */}
-      <section ref={videoRef} className="py-24 md:py-32 bg-background">
+      <section ref={videoRef} className="py-24 md:py-32 bg-secondary">
         <div className="container mx-auto px-6 max-w-5xl">
           <motion.div 
             className="text-center mb-12"
@@ -334,126 +455,14 @@ const Home = () => {
           </motion.div>
 
           <motion.div
-            className="relative aspect-video bg-secondary rounded-2xl overflow-hidden shadow-xl group cursor-pointer"
+            className="relative aspect-video bg-card rounded-2xl overflow-hidden shadow-xl group cursor-pointer border border-border"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isVideoInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            {/* Video Placeholder - Replace with actual video */}
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
               <div className="w-20 h-20 rounded-full bg-accent flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <Play className="w-10 h-10 text-white ml-1" />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* THREE CLEAN SOLUTIONS */}
-      <section ref={solutionsRef} className="py-24 md:py-32 bg-gradient-to-b from-secondary via-background to-secondary">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isSolutionsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-primary">Three Clean Solutions</h2>
-            <p className="text-lg md:text-xl text-muted-foreground">From waste to specialized fuel fractions</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { 
-                icon: Beaker, 
-                name: "PlastiNaphtha", 
-                desc: "Petrochemical feedstock for polymer production",
-                color: "bg-green-100"
-              },
-              { 
-                icon: Plane, 
-                name: "PlastiSAF", 
-                desc: "Sustainable Aviation Fuel meeting ASTM D7566",
-                color: "bg-yellow-100"
-              },
-              { 
-                icon: Truck, 
-                name: "PlastiDiesel", 
-                desc: "Ultra-clean diesel for transport and industry",
-                color: "bg-blue-100"
-              }
-            ].map((product, i) => (
-              <motion.div
-                key={i}
-                className="group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isSolutionsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-              >
-                <Card className="p-8 h-full hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 bg-card">
-                  <div className={`w-16 h-16 rounded-full ${product.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <product.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">{product.name}</h3>
-                  <p className="text-base text-muted-foreground leading-relaxed">{product.desc}</p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ECONOMICS SECTION */}
-      <section ref={economicsRef} className="py-24 md:py-32 bg-primary text-white">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isEconomicsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">The Economics</h2>
-            <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto">
-              Proven profitability at industrial scale with attractive returns
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {[
-              { label: "Input Cost", value: "$XXX", sublabel: "per tonne feedstock" },
-              { label: "Processing Cost", value: "$XXX", sublabel: "per tonne output" },
-              { label: "Output Value", value: "$XXX", sublabel: "per tonne fuel" }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                className="bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20 text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isEconomicsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-              >
-                <div className="text-5xl font-bold text-accent mb-3">{item.value}</div>
-                <div className="text-sm font-semibold uppercase tracking-widest mb-2">{item.label}</div>
-                <div className="text-sm text-white/70">{item.sublabel}</div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            className="bg-accent/10 backdrop-blur-sm p-10 rounded-xl border-2 border-accent text-center"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isEconomicsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5, duration: 0.5 }}
-          >
-            <h3 className="text-2xl font-semibold mb-6">Net Margin</h3>
-            <div className="text-6xl md:text-7xl font-bold text-accent mb-8">$xxx/ton</div>
-            <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-              <div>
-                <div className="text-4xl font-bold text-white mb-2">XX%</div>
-                <div className="text-sm uppercase tracking-widest text-white/80">Annual ROI</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-white mb-2">X.X years</div>
-                <div className="text-sm uppercase tracking-widest text-white/80">Payback Period</div>
               </div>
             </div>
           </motion.div>
