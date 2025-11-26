@@ -53,7 +53,7 @@ const Home = () => {
           </motion.p>
 
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-background leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 text-background leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
             style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,7 +63,7 @@ const Home = () => {
           </motion.h1>
           
           <motion.p
-            className="text-base md:text-lg text-background max-w-3xl mx-auto mb-10 leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]"
+            className="text-sm md:text-base text-background max-w-3xl mx-auto mb-8 leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]"
             style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ const Home = () => {
             <Button 
               size="lg" 
               variant="outline"
-              className="bg-transparent border-2 border-background text-background hover:bg-background hover:text-primary font-semibold px-8 py-6 text-base transition-all duration-300"
+              className="bg-background/90 border-2 border-primary text-primary hover:bg-background hover:border-primary/80 font-semibold px-8 py-6 text-base transition-all duration-300"
               asChild
             >
               <Link to="/contact">Get in Touch</Link>
@@ -115,16 +115,16 @@ const Home = () => {
       </section>
 
       {/* THE OPPORTUNITY */}
-      <section ref={opportunityRef} className="py-20 md:py-24 bg-background">
+      <section ref={opportunityRef} className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={isOpportunityInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-primary text-sm font-semibold tracking-[0.3em] mb-4 uppercase">The Opportunity</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground max-w-4xl mx-auto leading-tight">
+            <p className="text-primary text-xs font-semibold tracking-[0.3em] mb-3 uppercase">The Opportunity</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground max-w-4xl mx-auto leading-tight">
               Plastic waste represents untapped energy and massive economic value waiting to be unlocked
             </h2>
           </motion.div>
@@ -165,16 +165,16 @@ const Home = () => {
       </section>
 
       {/* THREE CLEAN SOLUTIONS */}
-      <section ref={solutionsRef} className="py-20 md:py-24 bg-secondary">
+      <section ref={solutionsRef} className="py-16 md:py-20 bg-secondary">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={isSolutionsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-primary">Three Clean Solutions</h2>
-            <p className="text-lg md:text-xl text-foreground">From waste to specialized fuel fractions</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-primary">Three Clean Solutions</h2>
+            <p className="text-base md:text-lg text-foreground">From waste to specialized fuel fractions</p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -219,16 +219,16 @@ const Home = () => {
       </section>
 
       {/* HOW WE DO IT - TECHNOLOGY */}
-      <section ref={technologyRef} className="py-20 md:py-24 bg-background">
+      <section ref={technologyRef} className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={isTechnologyInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-primary text-sm font-semibold tracking-[0.3em] mb-4 uppercase">How We Do It</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">Our Technology</h2>
+            <p className="text-primary text-xs font-semibold tracking-[0.3em] mb-3 uppercase">How We Do It</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">Our Technology</h2>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
@@ -272,21 +272,21 @@ const Home = () => {
       </section>
 
       {/* ENERGY SOLUTION SECTION */}
-      <section ref={energyRef} className="py-20 md:py-24 bg-primary text-white">
+      <section ref={energyRef} className="py-16 md:py-20 bg-primary">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={isEnergyInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">No Energy Problem</h2>
-            <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-background">No Energy Problem</h2>
+            <p className="text-base md:text-lg text-background/80 max-w-3xl mx-auto">
               Our process is energy-positive, generating more energy than it consumes
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
             {[
               { icon: Flame, title: "Energy Positive", desc: "Generates surplus energy from waste heat recovery" },
               { icon: Zap, title: "Self-Sustaining", desc: "Powers itself with byproduct syngas" },
@@ -294,14 +294,14 @@ const Home = () => {
             ].map((item, i) => (
               <motion.div
                 key={i}
-                className="bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20 hover:bg-white/15 transition-all duration-300"
+                className="bg-background/10 backdrop-blur-sm p-6 rounded-xl border border-background/20 hover:bg-background/15 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isEnergyInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
               >
-                <item.icon className="w-10 h-10 mb-4 text-accent" />
-                <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-white/80 leading-relaxed">{item.desc}</p>
+                <item.icon className="w-8 h-8 mb-3 text-accent" />
+                <h3 className="text-lg font-semibold mb-2 text-background">{item.title}</h3>
+                <p className="text-background/80 leading-relaxed text-sm">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -339,16 +339,16 @@ const Home = () => {
       <TRLJourney />
 
       {/* THE ECONOMICS */}
-      <section ref={economicsRef} className="py-20 md:py-24 bg-background">
+      <section ref={economicsRef} className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={isEconomicsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">The Economics</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">The Economics</h2>
+            <p className="text-base text-muted-foreground max-w-3xl mx-auto">
               Proven profitability at industrial scale with attractive returns
             </p>
           </motion.div>
@@ -400,24 +400,23 @@ const Home = () => {
       </section>
 
       {/* THE EVEREST STORY SECTION */}
-      <section ref={everestRef} className="relative py-20 md:py-24 overflow-hidden">
+      <section ref={everestRef} className="relative py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary to-primary/80" />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-primary" />
         </div>
 
         <div className="container mx-auto px-6 max-w-7xl">
-          <div className="grid md:grid-cols-5 gap-12">
+          <div className="grid md:grid-cols-5 gap-8">
             <motion.div
               className="md:col-span-3"
               initial={{ opacity: 0, x: -30 }}
               animate={isEverestInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-accent text-xs font-semibold tracking-[0.2em] mb-4 uppercase">The Founder's Journey</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">From the Summit to Sustainability</h2>
+              <p className="text-accent text-xs font-semibold tracking-[0.2em] mb-3 uppercase">The Founder's Journey</p>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">From the Summit to Sustainability</h2>
               
-              <div className="space-y-6 text-white/95 text-base md:text-lg leading-relaxed">
+              <div className="space-y-4 text-foreground text-sm md:text-base leading-relaxed">
                 <p>
                   Like climbing Everest, transforming the plastic waste industry requires preparation, persistence, and an unwavering commitment to reaching the summit. Our founder's journey to the top of the world taught invaluable lessons about incremental progress, overcoming obstacles, and the importance of each small step toward an ambitious goal.
                 </p>
@@ -429,12 +428,12 @@ const Home = () => {
                 </p>
               </div>
 
-              <p className="text-accent text-base italic mt-8">— Founder & CEO</p>
+              <p className="text-accent text-sm italic mt-6">— Dan, Founder & CEO</p>
             </motion.div>
 
             <div className="md:col-span-2 flex items-center justify-center">
               <motion.div
-                className="text-9xl text-white/10 font-bold"
+                className="text-9xl text-foreground/10 font-bold"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isEverestInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -447,16 +446,16 @@ const Home = () => {
       </section>
 
       {/* VIDEO SECTION */}
-      <section ref={videoRef} className="py-20 md:py-24 bg-secondary">
+      <section ref={videoRef} className="py-16 md:py-20 bg-secondary">
         <div className="container mx-auto px-6 max-w-5xl">
           <motion.div 
-            className="text-center mb-12"
+            className="text-center mb-10"
             initial={{ opacity: 0, y: 20 }}
             animate={isVideoInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">See The Transformation</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">See The Transformation</h2>
+            <p className="text-base text-muted-foreground max-w-3xl mx-auto">
               Watch how we transform plastic waste into premium fuel at industrial scale
             </p>
           </motion.div>
@@ -477,20 +476,20 @@ const Home = () => {
       </section>
 
       {/* CALL-TO-ACTION SECTION */}
-      <section ref={ctaRef} className="py-20 bg-accent">
+      <section ref={ctaRef} className="py-16 bg-accent">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isCtaInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Ready to Transform Waste into Value?</h2>
-            <p className="text-lg text-primary/80 mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">Ready to Transform Waste into Value?</h2>
+            <p className="text-base text-foreground/80 mb-6">
               Let's discuss how our technology can work for your organization
             </p>
             <Button 
               size="lg" 
-              className="bg-primary text-white hover:bg-primary/90 font-semibold px-10 py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="bg-primary text-background hover:bg-primary/90 font-semibold px-10 py-6 text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               asChild
             >
               <Link to="/contact">Get in Touch</Link>
