@@ -50,13 +50,12 @@ const Home = () => {
           />
         </div>
 
-        <div className="container mx-auto px-6 relative z-10 text-center max-w-7xl">
+        <div className="container mx-auto px-6 relative z-10 text-center max-w-7xl pt-24">
           <motion.p
             className="font-bold tracking-[0.25em] mb-6 uppercase"
             style={{ 
               color: '#00e5c2',
               fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)',
-              letterSpacing: '0.25em'
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -66,25 +65,25 @@ const Home = () => {
           </motion.p>
 
           <motion.h1 
-            className="font-bold mb-8 leading-tight text-white"
+            className="font-bold mb-8 leading-[1.1] text-white"
             style={{ 
-              fontSize: 'clamp(3rem, 7vw, 7rem)',
+              fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
               textShadow: '0 0 40px rgba(0, 229, 194, 0.3), 0 4px 12px rgba(0, 0, 0, 0.5)'
             }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Transforming Plastic Waste Into Premium Fuel
+            Transforming Plastic Waste<br />Into Premium Fuel
           </motion.h1>
           
           <motion.p
             className="leading-relaxed mx-auto"
             style={{ 
               color: '#e0f2f1',
-              fontSize: 'clamp(1.25rem, 2vw, 2rem)',
+              fontSize: 'clamp(1rem, 1.8vw, 1.5rem)',
               maxWidth: '800px',
-              lineHeight: '1.6'
+              lineHeight: '1.7'
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -101,7 +100,7 @@ const Home = () => {
           >
             <Button 
               size="lg"
-              className="font-bold px-10 py-7 text-base rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 hover:brightness-110"
+              className="font-bold px-10 py-6 text-lg rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 hover:brightness-110"
               style={{
                 backgroundColor: '#004d47',
                 color: 'white'
@@ -114,13 +113,10 @@ const Home = () => {
             </Button>
             <Button 
               size="lg"
-              variant="outline"
-              className="font-bold px-10 py-7 text-base rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
+              className="font-bold px-10 py-6 text-lg rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110 border-2 bg-transparent hover:bg-white/10"
               style={{
                 borderColor: 'white',
-                borderWidth: '2px',
                 color: 'white',
-                backgroundColor: 'transparent'
               }}
               asChild
             >
