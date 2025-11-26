@@ -6,7 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
 import { TRLJourney } from "@/components/TRLJourney";
-import heroNatureBg from "@/assets/hero-nature-bg.png";
+import heroGoldenForest from "@/assets/hero-golden-forest.jpg";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -32,55 +32,80 @@ const Home = () => {
     <div className="min-h-screen bg-background">
       
       {/* HERO SECTION */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen max-h-[1100px] flex items-center justify-center overflow-hidden">
+        {/* Background Image - Fixed on Desktop */}
         <div className="absolute inset-0 -z-10">
-          <img 
-            src={heroNatureBg} 
-            alt="Nature background" 
-            className="w-full h-full object-cover"
+          <div 
+            className="w-full h-full bg-center bg-no-repeat bg-cover md:bg-fixed"
+            style={{ 
+              backgroundImage: `url(${heroGoldenForest})`,
+            }}
           />
-          <div className="absolute inset-0 bg-black/40" />
+          {/* Dark Teal Gradient Overlay */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(180deg, rgba(0, 50, 50, 0.55) 0%, rgba(0, 70, 60, 0.75) 100%)'
+            }}
+          />
         </div>
 
-        <div className="container mx-auto px-4 relative z-10 text-center max-w-5xl">
+        <div className="container mx-auto px-6 relative z-10 text-center max-w-7xl">
           <motion.p
-            className="text-accent text-[0.5rem] font-bold tracking-[0.2em] mb-2 uppercase"
-            initial={{ opacity: 0, y: 10 }}
+            className="font-bold tracking-[0.25em] mb-6 uppercase"
+            style={{ 
+              color: '#00e5c2',
+              fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)',
+              letterSpacing: '0.25em'
+            }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6 }}
           >
-            Industrial-Scale Breakthrough
+            INDUSTRIAL-SCALE BREAKTHROUGH
           </motion.p>
 
           <motion.h1 
-            className="text-lg md:text-xl lg:text-2xl font-bold mb-2 text-background leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
-            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
-            initial={{ opacity: 0, y: 30 }}
+            className="font-bold mb-8 leading-tight text-white"
+            style={{ 
+              fontSize: 'clamp(3rem, 7vw, 7rem)',
+              textShadow: '0 0 40px rgba(0, 229, 194, 0.3), 0 4px 12px rgba(0, 0, 0, 0.5)'
+            }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             Transforming Plastic Waste Into Premium Fuel
           </motion.h1>
           
           <motion.p
-            className="text-[0.6rem] md:text-xs text-background max-w-xl mx-auto mb-3 leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]"
-            style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}
-            initial={{ opacity: 0, y: 15 }}
+            className="leading-relaxed mx-auto"
+            style={{ 
+              color: '#e0f2f1',
+              fontSize: 'clamp(1.25rem, 2vw, 2rem)',
+              maxWidth: '800px',
+              lineHeight: '1.6'
+            }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
             Industrial-scale breakthrough technology that converts any plastic waste stream into high-value petrochemical feedstock
           </motion.p>
           
           <motion.div
-            className="flex flex-col sm:flex-row gap-2 justify-center items-center mb-5"
-            initial={{ opacity: 0, y: 15 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
           >
             <Button 
-              size="sm" 
-              className="bg-primary text-background hover:bg-primary/90 font-semibold px-4 py-2 text-xs shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              size="lg"
+              className="font-bold px-10 py-7 text-base rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 hover:brightness-110"
+              style={{
+                backgroundColor: '#004d47',
+                color: 'white'
+              }}
               asChild
             >
               <Link to="/about">
@@ -88,9 +113,15 @@ const Home = () => {
               </Link>
             </Button>
             <Button 
-              size="sm" 
+              size="lg"
               variant="outline"
-              className="bg-background/90 border-2 border-primary text-primary hover:bg-background hover:border-primary/80 font-semibold px-4 py-2 text-xs transition-all duration-300"
+              className="font-bold px-10 py-7 text-base rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
+              style={{
+                borderColor: 'white',
+                borderWidth: '2px',
+                color: 'white',
+                backgroundColor: 'transparent'
+              }}
               asChild
             >
               <Link to="/contact">Get in Touch</Link>
@@ -98,17 +129,17 @@ const Home = () => {
           </motion.div>
 
           <motion.div
-            className="flex justify-center"
+            className="flex justify-center mt-16"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
           >
             <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-background/80 drop-shadow-lg"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="text-white/70"
             >
-              <ArrowRight className="w-3 h-3 rotate-90" />
+              <ArrowRight className="w-8 h-8 rotate-90" />
             </motion.div>
           </motion.div>
         </div>
