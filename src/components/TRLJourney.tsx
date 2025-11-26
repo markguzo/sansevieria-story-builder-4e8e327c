@@ -19,7 +19,7 @@ const trlLevels: TRLLevel[] = [
 
 export const TRLJourney = () => {
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+    <section className="relative py-20 md:py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
       {/* Everest Background */}
       <div className="absolute inset-0 opacity-20">
         <img 

@@ -31,15 +31,15 @@ const Home = () => {
     <div className="min-h-screen bg-background">
       
       {/* HERO SECTION */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-primary/80" />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-primary" />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
 
-        <div className="container mx-auto px-6 relative z-10 text-center max-w-5xl">
+        <div className="container mx-auto px-6 relative z-10 text-center max-w-6xl">
           <motion.p
-            className="text-accent text-xs font-semibold tracking-[0.2em] mb-6 uppercase"
+            className="text-accent text-sm font-bold tracking-[0.2em] mb-8 uppercase"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -48,16 +48,16 @@ const Home = () => {
           </motion.p>
 
           <motion.h1 
-            className="text-5xl md:text-6xl font-bold mb-6 text-white leading-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Transforming Plastic Waste Into Premium Fuel
+            Transforming Plastic Waste<br />Into Premium Fuel
           </motion.h1>
           
           <motion.p
-            className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-base md:text-lg text-white max-w-3xl mx-auto mb-10 leading-relaxed"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
@@ -99,7 +99,7 @@ const Home = () => {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-white/60"
+              className="text-white/80"
             >
               <ArrowRight className="w-6 h-6 rotate-90" />
             </motion.div>
@@ -108,7 +108,7 @@ const Home = () => {
       </section>
 
       {/* THE OPPORTUNITY */}
-      <section ref={opportunityRef} className="py-24 md:py-32 bg-background">
+      <section ref={opportunityRef} className="py-20 md:py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
             className="text-center mb-16"
@@ -158,7 +158,7 @@ const Home = () => {
       </section>
 
       {/* THREE CLEAN SOLUTIONS */}
-      <section ref={solutionsRef} className="py-24 md:py-32 bg-secondary">
+      <section ref={solutionsRef} className="py-20 md:py-24 bg-secondary">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
             className="text-center mb-16"
@@ -212,7 +212,7 @@ const Home = () => {
       </section>
 
       {/* HOW WE DO IT - TECHNOLOGY */}
-      <section ref={technologyRef} className="py-24 md:py-32 bg-background">
+      <section ref={technologyRef} className="py-20 md:py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
             className="text-center mb-16"
@@ -265,7 +265,7 @@ const Home = () => {
       </section>
 
       {/* ENERGY SOLUTION SECTION */}
-      <section ref={energyRef} className="py-24 md:py-32 bg-primary text-white">
+      <section ref={energyRef} className="py-20 md:py-24 bg-primary text-white">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
             className="text-center mb-16"
@@ -332,7 +332,7 @@ const Home = () => {
       <TRLJourney />
 
       {/* THE ECONOMICS */}
-      <section ref={economicsRef} className="py-24 md:py-32 bg-background">
+      <section ref={economicsRef} className="py-20 md:py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div 
             className="text-center mb-16"
@@ -393,10 +393,10 @@ const Home = () => {
       </section>
 
       {/* THE EVEREST STORY SECTION */}
-      <section ref={everestRef} className="relative py-24 md:py-32 overflow-hidden">
+      <section ref={everestRef} className="relative py-20 md:py-24 overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary to-primary/80" />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
 
         <div className="container mx-auto px-6 max-w-7xl">
@@ -440,7 +440,7 @@ const Home = () => {
       </section>
 
       {/* VIDEO SECTION */}
-      <section ref={videoRef} className="py-24 md:py-32 bg-secondary">
+      <section ref={videoRef} className="py-20 md:py-24 bg-secondary">
         <div className="container mx-auto px-6 max-w-5xl">
           <motion.div 
             className="text-center mb-12"
