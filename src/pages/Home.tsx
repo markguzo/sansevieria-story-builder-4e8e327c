@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { Beaker, Plane, Truck, Sparkles, TrendingUp, Package, Droplets, Flame, Zap, ArrowRight, Play, Factory, Award, Recycle, Target } from "lucide-react";
+import { Beaker, Plane, Truck, Sparkles, TrendingUp, Package, Droplets, Recycle, Target, ArrowRight, Play, Factory, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
 import { TRLJourney } from "@/components/TRLJourney";
+import { EnergyFlowProcess } from "@/components/EnergyFlowProcess";
 import heroGoldenForest from "@/assets/hero-golden-forest.jpg";
 
 const Home = () => {
@@ -13,7 +14,6 @@ const Home = () => {
   const opportunityRef = useRef(null);
   const solutionsRef = useRef(null);
   const technologyRef = useRef(null);
-  const energyRef = useRef(null);
   const economicsRef = useRef(null);
   const everestRef = useRef(null);
   const videoRef = useRef(null);
@@ -22,7 +22,6 @@ const Home = () => {
   const isOpportunityInView = useInView(opportunityRef, { amount: 0.2, once: true });
   const isSolutionsInView = useInView(solutionsRef, { amount: 0.2, once: true });
   const isTechnologyInView = useInView(technologyRef, { amount: 0.2, once: true });
-  const isEnergyInView = useInView(energyRef, { amount: 0.2, once: true });
   const isEconomicsInView = useInView(economicsRef, { amount: 0.2, once: true });
   const isEverestInView = useInView(everestRef, { amount: 0.3, once: true });
   const isVideoInView = useInView(videoRef, { amount: 0.3, once: true });
@@ -298,69 +297,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ENERGY SOLUTION SECTION */}
-      <section ref={energyRef} className="py-6 md:py-8 bg-primary">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <motion.div 
-            className="text-center mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isEnergyInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-sm md:text-base font-bold mb-1 text-background">No Energy Problem</h2>
-            <p className="text-[0.6rem] md:text-xs text-background/80 max-w-xl mx-auto">
-              Our process is energy-positive, generating more energy than it consumes
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-2 mb-3">
-            {[
-              { icon: Flame, title: "Energy Positive", desc: "Generates surplus energy from waste heat recovery" },
-              { icon: Zap, title: "Self-Sustaining", desc: "Powers itself with byproduct syngas" },
-              { icon: TrendingUp, title: "Net Contributor", desc: "Exports excess energy to the grid" }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                className="bg-background/10 backdrop-blur-sm p-2 rounded-xl border border-background/20 hover:bg-background/15 transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isEnergyInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-              >
-                <item.icon className="w-4 h-4 mb-1 text-accent" />
-                <h3 className="text-xs font-semibold mb-0.5 text-background">{item.title}</h3>
-                <p className="text-background/80 leading-relaxed text-[0.5rem]">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            className="bg-background/10 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-background/20"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isEnergyInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5, duration: 0.5 }}
-          >
-            <h3 className="text-xs font-semibold mb-3 text-center text-background">Energy Flow Process</h3>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-2">
-              {[
-                { icon: Package, label: "Plastic Input" },
-                { icon: Flame, label: "Pyrolysis" },
-                { icon: Zap, label: "Energy Recovery" },
-                { icon: Droplets, label: "Premium Fuel Output" }
-              ].map((step, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <div className="flex flex-col items-center">
-                    <div className="w-7 h-7 rounded-full bg-accent flex items-center justify-center mb-0.5">
-                      <step.icon className="w-3 h-3 text-white" />
-                    </div>
-                    <span className="text-[0.5rem] font-medium text-center text-background">{step.label}</span>
-                  </div>
-                  {i < 3 && <ArrowRight className="w-4 h-4 text-accent hidden md:block" />}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* ENERGY FLOW PROCESS */}
+      <EnergyFlowProcess />
 
       {/* TRL JOURNEY VISUALIZATION */}
       <TRLJourney />
