@@ -13,23 +13,15 @@ const Navigation = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  const navLinks = [{
-    name: "Home",
-    path: "/"
-  }, {
-    name: "About",
-    path: "/about"
-  }, {
-    name: "Products",
-    path: "/products"
-  }, {
-    name: "Market",
-    path: "/market"
-  }, {
-    name: "Founder",
-    path: "/founder"
-  }];
-  return <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-md shadow-lg border-b border-border" : "bg-transparent"}`}>
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Technology", path: "/about" },
+    { name: "Products", path: "/products" },
+    { name: "Impact", path: "/market" },
+    { name: "Journey", path: "/founder" },
+    { name: "Contact", path: "/contact" }
+  ];
+  return <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-md shadow-md border-b border-border" : "bg-transparent"}`}>
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-2xl font-bold text-primary hover:text-secondary transition-colors">
