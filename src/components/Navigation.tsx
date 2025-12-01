@@ -11,7 +11,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -31,13 +31,17 @@ const Navigation = () => {
     <>
       {/* Minimal Top Navbar - Logo Only */}
       <nav className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 text-white",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out text-white",
         isScrolled 
           ? "backdrop-blur-md bg-black/30 shadow-md shadow-black/30 border-b border-white/10"
-          : "backdrop-blur-sm bg-black/20"
+          : "bg-transparent backdrop-blur-none"
       )}>
-        <div className="container mx-auto px-6 py-5">
-          <Link to="/" className="text-2xl font-serif text-teal-300 hover:text-teal-200 transition-colors">
+        <div className="container mx-auto px-6 py-4">
+          <Link 
+            to="/" 
+            className="text-xl md:text-2xl font-sans font-bold text-teal-300 tracking-wide hover:text-teal-200 transition-all duration-200"
+            style={{ filter: 'drop-shadow(0 0 4px rgba(0,191,165,0.3))' }}
+          >
             Sansevieria
           </Link>
         </div>
