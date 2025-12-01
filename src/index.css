@@ -80,9 +80,7 @@ All colors MUST be HSL.
     --input: 162 20% 25%;
     --ring: 158 100% 50%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -164,7 +162,7 @@ html {
     opacity: 0.1;
   }
 }
-
+}
 
 @layer utilities {
   .animate-fade-in {
