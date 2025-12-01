@@ -1,18 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Menu } from "lucide-react";
+import { cn } from "@/lib/utils";
 const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Technology", path: "/about" },
@@ -22,78 +16,64 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" }
   ];
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-lg bg-black/40 text-white border-b border-white/10">
-      <div className="container mx-auto px-6 py-5">
-        <div className="flex items-center justify-between">
-          {/* Logo - Elegant serif in teal */}
+    <>
+      {/* Minimal Top Navbar - Logo Only */}
+      <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-black/30 text-white border-b border-white/10">
+        <div className="container mx-auto px-6 py-5">
           <Link to="/" className="text-2xl font-serif text-teal-300 hover:text-teal-200 transition-colors">
             Sansevieria
           </Link>
+        </div>
+      </nav>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => (
-              <Link 
-                key={link.path} 
-                to={link.path} 
-                className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-teal-400 hover:after:w-full after:transition-all ${
-                  location.pathname === link.path 
-                    ? "text-teal-300" 
-                    : "text-white/80 hover:text-teal-200"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <Button 
-              asChild 
-              size="sm" 
-              className="bg-teal-600 text-white px-6 py-2 rounded-full hover:bg-teal-500 transition-all shadow-lg shadow-teal-500/25 font-semibold"
+      {/* Floating Action Button (FAB) - Bottom Right */}
+      <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50">
+        <Popover open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+          <PopoverTrigger asChild>
+            <button 
+              className="bg-teal-600 w-12 h-12 md:w-14 md:h-14 rounded-full shadow-lg hover:bg-teal-500 transition-colors flex items-center justify-center"
+              aria-label="Open navigation menu"
             >
-              <Link to="/contact">Get in Touch</Link>
-            </Button>
-          </div>
-
-          {/* Mobile Menu - Sheet Component */}
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <button className="md:hidden flex flex-col gap-1.5 p-2">
-                <span className="w-6 h-0.5 bg-teal-400 transition-all" />
-                <span className="w-6 h-0.5 bg-teal-400 transition-all" />
-                <span className="w-6 h-0.5 bg-teal-400 transition-all" />
-              </button>
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-black/95 backdrop-blur-xl border-white/10 flex flex-col">
-              <div className="flex-1 flex flex-col gap-6 mt-8">
-                {navLinks.map(link => (
-                  <Link 
-                    key={link.path} 
-                    to={link.path} 
-                    className={`block py-3 text-lg font-medium transition-colors ${
-                      location.pathname === link.path 
-                        ? "text-teal-300" 
-                        : "text-white hover:text-teal-300"
-                    }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </div>
+              <Menu className="w-6 h-6 text-white" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent 
+            side="top" 
+            align="end" 
+            sideOffset={12}
+            className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-lg p-4 shadow-xl max-w-xs w-56 transition-all duration-300 ease-in-out"
+          >
+            <div className="flex flex-col">
+              {navLinks.map((link, index) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={cn(
+                    "font-sans text-base font-medium transition-colors py-3",
+                    location.pathname === link.path 
+                      ? "text-teal-600 dark:text-teal-400" 
+                      : "text-gray-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400",
+                    index !== navLinks.length - 1 && "border-b border-gray-200 dark:border-gray-700"
+                  )}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              
               <Button 
                 asChild 
-                size="lg" 
-                className="w-full bg-teal-600 text-white py-4 rounded-full hover:bg-teal-500 transition-all font-semibold mt-auto"
+                className="mt-4 bg-teal-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-teal-500 transition-colors w-full"
               >
-                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                  Get in Touch
+                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                  Get In Touch
                 </Link>
               </Button>
-            </SheetContent>
-          </Sheet>
-        </div>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
-    </nav>
+    </>
   );
 };
 export default Navigation;
