@@ -64,17 +64,17 @@ const Home = () => {
           }}
         />
 
-        {/* Subtle Concentric Circles - 3 Rings, Compact Ripple Effect */}
+        {/* Visible Concentric Circles - Circular Economy Symbolism */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <svg className="w-full h-full max-w-2xl md:max-w-5xl" viewBox="0 0 600 600">
             <defs>
               <linearGradient id="subtleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.25 }} />
-                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.2 }} />
+                <stop offset="0%" style={{ stopColor: '#00D9FF', stopOpacity: 0.5 }} />
+                <stop offset="100%" style={{ stopColor: '#00BFA5', stopOpacity: 0.4 }} />
               </linearGradient>
             </defs>
-            {/* Three subtle rings: 80px, 140px, 200px - compact circular economy symbolism */}
-            {[80, 140, 200].map((r, i) => (
+            {/* Three visible rings: 100px, 180px, 280px - circular economy ripple effect */}
+            {[100, 180, 280].map((r, i) => (
               <circle
                 key={i}
                 cx="300"
@@ -82,7 +82,7 @@ const Home = () => {
                 r={r}
                 fill="none"
                 stroke="url(#subtleGradient)"
-                strokeWidth={1}
+                strokeWidth={1.5}
                 style={{ 
                   animation: `subtle-pulse 8s ease-in-out infinite alternate`
                 }}
