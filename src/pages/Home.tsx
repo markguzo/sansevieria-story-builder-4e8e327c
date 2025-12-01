@@ -7,7 +7,7 @@ import { useRef } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
 import { TRLJourney } from "@/components/TRLJourney";
 import { EnergyFlowProcess } from "@/components/EnergyFlowProcess";
-import heroGoldenForest from "@/assets/hero-golden-forest.jpg";
+import heroMountainValley from "@/assets/hero-mountain-valley.png";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -31,68 +31,135 @@ const Home = () => {
     <div className="min-h-screen bg-background">
       
       {/* HERO SECTION */}
-      <section ref={heroRef} className="relative min-h-screen max-h-[1100px] flex items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image - Fixed on Desktop */}
         <div className="absolute inset-0 -z-10">
           <div 
             className="w-full h-full bg-center bg-no-repeat bg-cover md:bg-fixed"
             style={{ 
-              backgroundImage: `url(${heroGoldenForest})`,
+              backgroundImage: `url(${heroMountainValley})`,
             }}
           />
-          {/* Dark Teal Gradient Overlay */}
+          {/* Subtle Dark Overlay for Readability */}
           <div 
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(180deg, rgba(0, 50, 50, 0.55) 0%, rgba(0, 70, 60, 0.75) 100%)'
+              background: 'linear-gradient(180deg, rgba(0, 40, 40, 0.45) 0%, rgba(0, 50, 45, 0.65) 100%)'
             }}
           />
         </div>
 
-        <div className="container mx-auto px-6 relative z-10 text-center max-w-7xl pt-24">
-          <motion.p
-            className="font-bold tracking-[0.25em] mb-6 uppercase"
-            style={{ 
-              color: '#00e5c2',
-              fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)',
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            INDUSTRIAL-SCALE BREAKTHROUGH
-          </motion.p>
+        {/* Concentric Circles SVG - Behind Title */}
+        <div className="absolute inset-0 flex items-center justify-center -z-5 pointer-events-none">
+          <svg className="w-full h-full max-w-4xl" viewBox="0 0 800 800">
+            <defs>
+              <radialGradient id="circleGradient1">
+                <stop offset="0%" stopColor="#00e5c2" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#004d47" stopOpacity="0.05" />
+              </radialGradient>
+              <radialGradient id="circleGradient2">
+                <stop offset="0%" stopColor="#006d5b" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#00e5c2" stopOpacity="0.03" />
+              </radialGradient>
+              <radialGradient id="circleGradient3">
+                <stop offset="0%" stopColor="#00e5c2" stopOpacity="0.1" />
+                <stop offset="100%" stopColor="#004d47" stopOpacity="0.02" />
+              </radialGradient>
+            </defs>
+            <motion.circle
+              cx="400"
+              cy="400"
+              r="150"
+              fill="none"
+              stroke="url(#circleGradient1)"
+              strokeWidth="2"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1.5, delay: 0.3 }}
+            />
+            <motion.circle
+              cx="400"
+              cy="400"
+              r="220"
+              fill="none"
+              stroke="url(#circleGradient2)"
+              strokeWidth="1.5"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1.5, delay: 0.5 }}
+            />
+            <motion.circle
+              cx="400"
+              cy="400"
+              r="300"
+              fill="none"
+              stroke="url(#circleGradient3)"
+              strokeWidth="1"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1.5, delay: 0.7 }}
+            />
+            <motion.circle
+              cx="400"
+              cy="400"
+              r="380"
+              fill="none"
+              stroke="url(#circleGradient1)"
+              strokeWidth="0.5"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1.5, delay: 0.9 }}
+            />
+          </svg>
+        </div>
 
-          <motion.h1 
-            className="font-bold mb-8 leading-[1.1] text-white"
-            style={{ 
-              fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
-              textShadow: '0 0 40px rgba(0, 229, 194, 0.3), 0 4px 12px rgba(0, 0, 0, 0.5)'
-            }}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Transforming Plastic Waste<br />Into Premium Fuel
-          </motion.h1>
-          
-          <motion.p
-            className="leading-relaxed mx-auto"
-            style={{ 
-              color: '#e0f2f1',
-              fontSize: 'clamp(1rem, 1.8vw, 1.5rem)',
-              maxWidth: '800px',
-              lineHeight: '1.7'
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Industrial-scale breakthrough technology that converts any plastic waste stream into high-value petrochemical feedstock
-          </motion.p>
+        <div className="container mx-auto px-6 relative z-10 text-center max-w-7xl pt-24 pb-20 flex flex-col justify-between min-h-screen">
+          <div className="flex-1 flex flex-col items-center justify-center">
+            <motion.p
+              className="font-bold tracking-[0.25em] mb-6 uppercase"
+              style={{ 
+                color: '#00e5c2',
+                fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)',
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              INDUSTRIAL-SCALE BREAKTHROUGH
+            </motion.p>
+
+            <motion.h1 
+              className="font-bold mb-8 leading-[1.1] text-white relative"
+              style={{ 
+                fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
+                textShadow: '0 2px 20px rgba(0, 0, 0, 0.6), 0 4px 40px rgba(0, 229, 194, 0.2)'
+              }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Transforming Plastic Waste<br />Into Premium Fuel
+            </motion.h1>
+            
+            <motion.p
+              className="leading-relaxed mx-auto mb-12"
+              style={{ 
+                color: '#e0f2f1',
+                fontSize: 'clamp(1rem, 1.8vw, 1.5rem)',
+                maxWidth: '800px',
+                lineHeight: '1.7',
+                textShadow: '0 2px 12px rgba(0, 0, 0, 0.5)'
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Industrial-scale breakthrough technology that converts any plastic waste stream into high-value petrochemical feedstock
+            </motion.p>
+          </div>
           
           <motion.div
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
@@ -121,21 +188,6 @@ const Home = () => {
             >
               <Link to="/contact">Get in Touch</Link>
             </Button>
-          </motion.div>
-
-          <motion.div
-            className="flex justify-center mt-16"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
-          >
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-white/70"
-            >
-              <ArrowRight className="w-8 h-8 rotate-90" />
-            </motion.div>
           </motion.div>
         </div>
       </section>
