@@ -32,24 +32,26 @@ const Home = () => {
       
       {/* HERO SECTION */}
       <section ref={heroRef} className="relative min-h-screen w-full overflow-hidden">
-        {/* Full-Screen Background Image with Enhanced Vibrancy */}
+        {/* Dark base fill for image */}
+        <div className="absolute inset-0 bg-slate-900" />
+        
+        {/* Full-Screen Background Image - Show Entire Scene */}
         <div 
           className="absolute inset-0 w-full h-full bg-scroll md:bg-fixed"
           style={{ 
             backgroundImage: `url(${heroMistyMountain})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
             filter: 'brightness(1.1) contrast(1.2) saturate(1.1)'
           }}
         />
         
-        {/* Dark Overlay Gradient - Top to Bottom */}
+        {/* Lighter Overlay Gradient for Better Image Visibility */}
         <div 
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%)',
-            mixBlendMode: 'multiply'
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.25) 100%)'
           }}
         />
 
@@ -62,45 +64,38 @@ const Home = () => {
           }}
         />
 
-        {/* Enhanced Concentric Circles - 5 Circles with Wave Animation */}
+        {/* Subtle Concentric Circles - 3 Rings, Much Smaller and Less Notable */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg className="w-full h-full max-w-6xl" viewBox="0 0 1000 1000">
+          <svg className="w-full h-full max-w-xl md:max-w-3xl" viewBox="0 0 600 600">
             <defs>
-              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.6 }} />
-                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.5 }} />
+              <linearGradient id="subtleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.25 }} />
+                <stop offset="100%" style={{ stopColor: '#A7F3D0', stopOpacity: 0.2 }} />
               </linearGradient>
             </defs>
-            {/* Five concentric circles: 120px, 220px, 330px, 420px, 500px with varying stroke widths */}
-            {[
-              { r: 120, strokeWidth: 3 },
-              { r: 220, strokeWidth: 2.7 },
-              { r: 330, strokeWidth: 2.4 },
-              { r: 420, strokeWidth: 2.1 },
-              { r: 500, strokeWidth: 1.5 }
-            ].map((circle, i) => (
+            {/* Three subtle rings: 80px, 160px, 250px */}
+            {[80, 160, 250].map((r, i) => (
               <circle
                 key={i}
-                cx="500"
-                cy="500"
-                r={circle.r}
+                cx="300"
+                cy="300"
+                r={r}
                 fill="none"
-                stroke="url(#waveGradient)"
-                strokeWidth={circle.strokeWidth}
+                stroke="url(#subtleGradient)"
+                strokeWidth={1}
                 style={{ 
-                  animation: `wave-circle 5s ease-in-out infinite`,
-                  animationDelay: `${i * 0.5}s`
+                  animation: `subtle-pulse 8s ease-in-out infinite alternate`
                 }}
               />
             ))}
           </svg>
         </div>
 
-        {/* Hero Content - Centered with Generous Padding */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 py-32 md:py-48">
-          {/* Updated Tagline */}
+        {/* Hero Content - Refined Spacing and Proportions */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 py-24 md:py-40">
+          {/* Tagline - Smaller and Lighter */}
           <motion.p
-            className="text-teal-400 text-sm md:text-md tracking-widest uppercase font-bold opacity-90 mb-6"
+            className="text-teal-400 text-xs md:text-sm tracking-widest uppercase font-semibold opacity-85 mb-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -108,10 +103,10 @@ const Home = () => {
             Revolutionary Industrial-Scale Breakthrough in Sustainability
           </motion.p>
 
-          {/* Main Title with Green Glow */}
+          {/* Main Title with Subtle Green Tint */}
           <motion.h1 
-            className="text-5xl md:text-7xl xl:text-8xl font-extrabold text-white leading-tight drop-shadow-2xl mb-8"
-            style={{ textShadow: '0 0 10px rgba(0,255,0,0.3), 0 4px 30px rgba(0,0,0,0.5)' }}
+            className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-lg mb-6"
+            style={{ textShadow: '0 0 5px rgba(16,185,129,0.2)' }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -119,18 +114,18 @@ const Home = () => {
             Transforming Plastic Waste<br />Into Premium Fuel
           </motion.h1>
           
-          {/* Enhanced Description */}
+          {/* Compact Description with Refined Wording */}
           <motion.p
-            className="text-md md:text-lg text-white/85 max-w-3xl mx-auto font-light leading-relaxed mb-12"
+            className="text-sm md:text-md text-white/75 max-w-2xl mx-auto font-light leading-relaxed mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            Our innovative pyrolysis technology converts any plastic waste stream into high-value petrochemical feedstock, powering a true circular economy and reducing environmental impact
+            Our innovative pyrolysis technology converts any plastic waste stream into high-value petrochemical feedstock, powering a true circular economy and reducing environmental impact worldwide.
           </motion.p>
         </div>
 
-        {/* Redesigned CTA Buttons */}
+        {/* CTA Buttons - Softer Styling */}
         <motion.div
           className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-6 px-6"
           initial={{ opacity: 0, y: 20 }}
@@ -138,8 +133,8 @@ const Home = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <Button 
-            size="lg"
-            className="bg-emerald-600 text-white px-10 py-4 rounded-full font-semibold hover:bg-emerald-500 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 active:translate-y-0"
+            size="default"
+            className="bg-emerald-500 text-white px-6 py-3 rounded-full font-medium hover:bg-emerald-400 shadow-sm transition-all"
             asChild
           >
             <Link to="/about">
@@ -147,8 +142,8 @@ const Home = () => {
             </Link>
           </Button>
           <Button 
-            size="lg"
-            className="border-2 border-teal-300 text-teal-300 bg-transparent px-10 py-4 rounded-full font-semibold hover:bg-teal-300/20 hover:text-teal-200 transition-all hover:-translate-y-1 active:translate-y-0"
+            size="default"
+            className="border-2 border-teal-300/80 text-teal-100 bg-transparent px-6 py-3 rounded-full font-medium hover:bg-teal-300/10 transition-all"
             asChild
           >
             <Link to="/contact">Get in Touch</Link>
