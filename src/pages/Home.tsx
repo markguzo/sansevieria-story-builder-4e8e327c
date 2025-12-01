@@ -64,6 +64,33 @@ const Home = () => {
           }}
         />
 
+        {/* Visible Concentric Circles - Circular Economy Symbolism */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <svg className="w-full h-full max-w-xl md:max-w-3xl" viewBox="0 0 600 600">
+            <defs>
+              <linearGradient id="subtleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{ stopColor: '#00E5FF', stopOpacity: 0.7 }} />
+                <stop offset="100%" style={{ stopColor: '#00D9FF', stopOpacity: 0.6 }} />
+              </linearGradient>
+            </defs>
+            {/* Three compact rings: 60px, 120px, 180px - circular economy ripple effect */}
+            {[60, 120, 180].map((r, i) => (
+              <circle
+                key={i}
+                cx="300"
+                cy="300"
+                r={r}
+                fill="none"
+                stroke="url(#subtleGradient)"
+                strokeWidth={2}
+                style={{ 
+                  animation: `subtle-pulse 8s ease-in-out infinite alternate`
+                }}
+              />
+            ))}
+          </svg>
+        </div>
+
         {/* Hero Content - Refined Spacing and Proportions */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 py-24 md:py-40">
           {/* Tagline - Smaller and Lighter */}

@@ -34,7 +34,7 @@ const Navigation = () => {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 text-white",
         isScrolled 
           ? "backdrop-blur-md bg-black/30 shadow-md shadow-black/30 border-b border-white/10"
-          : "bg-transparent"
+          : "backdrop-blur-sm bg-black/20"
       )}>
         <div className="container mx-auto px-6 py-5">
           <Link to="/" className="text-2xl font-serif text-teal-300 hover:text-teal-200 transition-colors">
