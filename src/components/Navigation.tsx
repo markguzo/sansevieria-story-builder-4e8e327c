@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,57 +21,79 @@ const Navigation = () => {
     { name: "Journey", path: "/founder" },
     { name: "Contact", path: "/contact" }
   ];
-  return <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-md shadow-md border-b border-border" : "bg-gradient-to-b from-black/30 to-transparent"}`}>
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-lg bg-black/40 text-white border-b border-white/10">
       <div className="container mx-auto px-6 py-5">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold transition-colors" style={{ color: isScrolled ? '#004d47' : 'white' }}>
+          {/* Logo - Elegant serif in teal */}
+          <Link to="/" className="text-2xl font-serif text-teal-300 hover:text-teal-200 transition-colors">
             Sansevieria
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => <Link key={link.path} to={link.path} className={`text-sm font-medium transition-colors ${location.pathname === link.path ? (isScrolled ? "text-[#004d47]" : "text-[#00e5c2]") : (isScrolled ? "text-foreground hover:text-[#004d47]" : "text-white/90 hover:text-white")}`}>
+            {navLinks.map(link => (
+              <Link 
+                key={link.path} 
+                to={link.path} 
+                className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-teal-400 hover:after:w-full after:transition-all ${
+                  location.pathname === link.path 
+                    ? "text-teal-300" 
+                    : "text-white/80 hover:text-teal-200"
+                }`}
+              >
                 {link.name}
-              </Link>)}
+              </Link>
+            ))}
             <Button 
               asChild 
               size="sm" 
-              className="font-semibold rounded-xl transition-all duration-300 hover:scale-105"
-              style={{
-                backgroundColor: '#004d47',
-                color: 'white'
-              }}
+              className="bg-teal-600 text-white px-6 py-2 rounded-full hover:bg-teal-500 transition-all shadow-lg shadow-teal-500/25 font-semibold"
             >
               <Link to="/contact">Get in Touch</Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button className={`md:hidden transition-colors ${isScrolled ? 'text-foreground hover:text-primary' : 'text-white hover:text-[#00e5c2]'}`} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile Menu - Sheet Component */}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <button className="md:hidden flex flex-col gap-1.5 p-2">
+                <span className="w-6 h-0.5 bg-teal-400 transition-all" />
+                <span className="w-6 h-0.5 bg-teal-400 transition-all" />
+                <span className="w-6 h-0.5 bg-teal-400 transition-all" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-black/95 backdrop-blur-xl border-white/10 flex flex-col">
+              <div className="flex-1 flex flex-col gap-6 mt-8">
+                {navLinks.map(link => (
+                  <Link 
+                    key={link.path} 
+                    to={link.path} 
+                    className={`block py-3 text-lg font-medium transition-colors ${
+                      location.pathname === link.path 
+                        ? "text-teal-300" 
+                        : "text-white hover:text-teal-300"
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+              <Button 
+                asChild 
+                size="lg" 
+                className="w-full bg-teal-600 text-white py-4 rounded-full hover:bg-teal-500 transition-all font-semibold mt-auto"
+              >
+                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                  Get in Touch
+                </Link>
+              </Button>
+            </SheetContent>
+          </Sheet>
         </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && <div className="md:hidden mt-4 pb-4 space-y-4 animate-fade-in bg-background/95 backdrop-blur-md rounded-lg p-4 -mx-2">
-            {navLinks.map(link => <Link key={link.path} to={link.path} className={`block text-sm font-medium transition-colors hover:text-primary ${location.pathname === link.path ? "text-primary" : "text-foreground"}`} onClick={() => setIsMobileMenuOpen(false)}>
-                {link.name}
-              </Link>)}
-            <Button 
-              asChild 
-              size="sm" 
-              className="w-full font-semibold"
-              style={{
-                backgroundColor: '#004d47',
-                color: 'white'
-              }}
-            >
-              <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                Get in Touch
-              </Link>
-            </Button>
-          </div>}
       </div>
-    </nav>;
+    </nav>
+  );
 };
 export default Navigation;
