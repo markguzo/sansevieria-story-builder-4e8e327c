@@ -68,8 +68,8 @@ const Home = () => {
           <svg className="w-full h-full max-w-2xl md:max-w-4xl" viewBox="0 0 600 600">
             <defs>
               <linearGradient id="subtleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.5 }} />
-                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.4 }} />
+                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.8 }} />
+                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.7 }} />
               </linearGradient>
             </defs>
             {/* Four prominent rings - circular economy ripple effect */}
@@ -81,7 +81,7 @@ const Home = () => {
                 r={r}
                 fill="none"
                 stroke="url(#subtleGradient)"
-                strokeWidth={3}
+                strokeWidth={5}
                 style={{ 
                   animation: `subtle-pulse 8s ease-in-out infinite alternate`
                 }}
