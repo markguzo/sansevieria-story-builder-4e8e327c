@@ -7,7 +7,7 @@ import { useRef } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
 import { TRLJourney } from "@/components/TRLJourney";
 import { EnergyFlowProcess } from "@/components/EnergyFlowProcess";
-import heroMistyMountain from "@/assets/image-2-new.png";
+import heroMistyMountain from "@/assets/hero-mountain-lake.png";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -63,17 +63,17 @@ const Home = () => {
           }}
         />
 
-        {/* Visible Concentric Circles - Circular Economy Symbolism */}
+        {/* Prominent Concentric Circles - Circular Economy Symbolism */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg className="w-full h-full max-w-xl md:max-w-3xl" viewBox="0 0 600 600">
+          <svg className="w-full h-full max-w-2xl md:max-w-4xl" viewBox="0 0 600 600">
             <defs>
               <linearGradient id="subtleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.25 }} />
-                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.2 }} />
+                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.5 }} />
+                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.4 }} />
               </linearGradient>
             </defs>
-            {/* Three compact rings: 60px, 120px, 180px - circular economy ripple effect */}
-            {[60, 120, 180].map((r, i) => (
+            {/* Four prominent rings - circular economy ripple effect */}
+            {[80, 150, 220, 290].map((r, i) => (
               <circle
                 key={i}
                 cx="300"
@@ -81,7 +81,7 @@ const Home = () => {
                 r={r}
                 fill="none"
                 stroke="url(#subtleGradient)"
-                strokeWidth={2}
+                strokeWidth={3}
                 style={{ 
                   animation: `subtle-pulse 8s ease-in-out infinite alternate`
                 }}
@@ -92,16 +92,6 @@ const Home = () => {
 
         {/* Hero Content - Refined Spacing and Proportions */}
         <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
-          {/* Tagline */}
-          <motion.p
-            className="text-teal-400 text-sm md:text-md tracking-widest uppercase font-semibold opacity-90 mb-3"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut', delay: 0.2 }}
-          >
-            Transforming Plastic into Premium Fuel
-          </motion.p>
-
           {/* Main Title */}
           <motion.h1 
             className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-lg mb-6"
@@ -110,8 +100,8 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: 'easeOut', delay: 0.4 }}
           >
-            Clean Energy from<br />
-            <span className="text-teal-300">Waste Plastic</span>
+            Transforming waste into<br />
+            <span className="text-teal-300">premium products</span>
           </motion.h1>
           
           {/* Description */}
@@ -121,8 +111,7 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: 'easeOut', delay: 0.6 }}
           >
-            Converting plastic waste into high-value transportation fuels through advanced thermochemical processing.
-            Our technology creates sustainable solutions while reducing environmental impact.
+            We are closing the Loop by converting hard to recycle plastic into high quality feedstock for the petrochemical industry and sustainable fuels.
           </motion.p>
         </div>
 

@@ -43,7 +43,7 @@ const Navigation = () => {
             className="text-xl md:text-2xl font-sans font-bold text-teal-300 tracking-wide hover:text-teal-200 transition-all duration-200"
             style={{ filter: 'drop-shadow(0 0 4px rgba(0,191,165,0.3))' }}
           >
-            Sansevieria
+            Sansevieria waste refineries
           </Link>
 
           {/* Menu Button - Right */}
