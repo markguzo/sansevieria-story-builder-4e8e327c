@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Beaker, Plane, Truck, Sparkles, TrendingUp, Package, Droplets, Recycle, Target, ArrowRight, Play, Factory, Award, ChevronDown } from "lucide-react";
+import { Beaker, Plane, Truck, Sparkles, TrendingUp, Package, Droplets, Recycle, Target, ArrowRight, Play, Factory, Award, ChevronDown, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, useInView } from "framer-motion";
@@ -31,18 +31,17 @@ const Home = () => {
     <div className="min-h-screen bg-background">
       
       {/* HERO SECTION */}
-      <section ref={heroRef} className="relative min-h-screen w-full overflow-hidden">
-        {/* Dark base fill for image */}
-        <div className="absolute inset-0 bg-slate-900" />
-        
-        {/* Full-Screen Background Image - Show Entire Scene */}
+      <section ref={heroRef} className="relative h-screen w-full overflow-hidden">
+        {/* Full-Screen Background Image - Edge-to-Edge Coverage */}
         <div 
-          className="absolute inset-0 w-full h-full bg-scroll md:bg-fixed"
+          className="absolute inset-0 w-full h-full"
           style={{ 
             backgroundImage: `url(${heroMistyMountain})`,
-            backgroundSize: 'contain',
+            backgroundSize: 'cover',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
+            height: '100vh',
+            width: '100%',
             filter: 'brightness(1.1) contrast(1.2) saturate(1.1)'
           }}
         />
@@ -69,8 +68,8 @@ const Home = () => {
           <svg className="w-full h-full max-w-xl md:max-w-3xl" viewBox="0 0 600 600">
             <defs>
               <linearGradient id="subtleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00E5FF', stopOpacity: 0.7 }} />
-                <stop offset="100%" style={{ stopColor: '#00D9FF', stopOpacity: 0.6 }} />
+                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.25 }} />
+                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.2 }} />
               </linearGradient>
             </defs>
             {/* Three compact rings: 60px, 120px, 180px - circular economy ripple effect */}
@@ -92,58 +91,64 @@ const Home = () => {
         </div>
 
         {/* Hero Content - Refined Spacing and Proportions */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 py-24 md:py-40">
-          {/* Tagline - Smaller and Lighter */}
+        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
+          {/* Tagline */}
           <motion.p
-            className="text-teal-400 text-xs md:text-sm tracking-widest uppercase font-semibold opacity-85 mb-2"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-teal-400 text-sm md:text-md tracking-widest uppercase font-semibold opacity-90 mb-3"
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.3, ease: 'easeOut', delay: 0.2 }}
           >
-            Revolutionary Industrial-Scale Breakthrough in Sustainability
+            Transforming Plastic into Premium Fuel
           </motion.p>
 
-          {/* Main Title with Subtle Green Tint */}
+          {/* Main Title */}
           <motion.h1 
             className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-lg mb-6"
-            style={{ textShadow: '0 0 5px rgba(16,185,129,0.2)' }}
-            initial={{ opacity: 0, y: 40 }}
+            style={{ textShadow: '0 0 5px rgba(16,185,129,0.3)' }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.3, ease: 'easeOut', delay: 0.4 }}
           >
-            Transforming Plastic Waste<br />Into Premium Fuel
+            Clean Energy from<br />
+            <span className="text-teal-300">Waste Plastic</span>
           </motion.h1>
           
-          {/* Compact Description with Refined Wording */}
+          {/* Description */}
           <motion.p
-            className="text-sm md:text-md text-white/75 max-w-2xl mx-auto font-light leading-relaxed mb-12"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-sm md:text-md text-white/80 max-w-2xl mx-auto font-light leading-relaxed mb-12"
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.3, ease: 'easeOut', delay: 0.6 }}
           >
-            Our innovative pyrolysis technology converts any plastic waste stream into high-value petrochemical feedstock, powering a true circular economy and reducing environmental impact worldwide.
+            Converting plastic waste into high-value transportation fuels through advanced thermochemical processing.
+            Our technology creates sustainable solutions while reducing environmental impact.
           </motion.p>
         </div>
 
-        {/* CTA Buttons - Softer Styling */}
+        {/* CTA Buttons - Modern Eco-Tech Style */}
         <motion.div
-          className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-6 px-6"
+          className="absolute bottom-16 md:bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-4 sm:gap-8 px-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
+          {/* Learn More - Solid Emerald */}
           <Button 
-            size="default"
-            className="bg-emerald-500 text-white px-6 py-3 rounded-full font-medium hover:bg-emerald-400 shadow-sm transition-all"
+            size="lg"
+            className="bg-emerald-600 text-white px-8 py-3 rounded-full font-medium shadow-sm hover:bg-emerald-500 hover:shadow-md hover:scale-105 transition-all duration-200 ease-in-out flex items-center gap-2"
             asChild
           >
             <Link to="/about">
+              <Leaf className="w-5 h-5 text-green-200" />
               Learn More
             </Link>
           </Button>
+          
+          {/* Get In Touch - Outlined Teal */}
           <Button 
-            size="default"
-            className="border-2 border-teal-300/80 text-teal-100 bg-transparent px-6 py-3 rounded-full font-medium hover:bg-teal-300/10 transition-all"
+            size="lg"
+            className="border-2 border-teal-400 text-teal-400 bg-transparent px-8 py-3 rounded-full font-medium hover:bg-teal-400/10 hover:text-teal-300 hover:scale-105 transition-all duration-200 ease-in-out"
             asChild
           >
             <Link to="/contact">Get in Touch</Link>
