@@ -60,19 +60,20 @@ const Navigation = () => {
               side="bottom" 
               align="end" 
               sideOffset={12}
-              className="bg-black/40 backdrop-blur-xl rounded-2xl p-5 shadow-2xl shadow-black/50 max-w-xs w-60 border border-white/10 transition-all duration-300 ease-in-out"
+              className="bg-black/30 backdrop-blur-xl rounded-2xl p-4 shadow-2xl shadow-black/50 max-w-xs w-60 border border-white/10 transition-all duration-300 ease-in-out"
             >
-              <div className="flex flex-col">
-                {navLinks.map((link, index) => (
+              <div className="flex flex-col gap-2">
+                {navLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
                     className={cn(
-                      "font-sans text-base font-medium transition-all duration-200 py-3 px-2 rounded-lg",
+                      "font-sans text-base font-medium transition-all duration-200 py-3 px-4 rounded-xl",
+                      "bg-white/10 backdrop-blur-sm border border-white/5",
+                      "hover:bg-white/20 hover:border-white/10 hover:scale-[1.02]",
                       location.pathname === link.path 
-                        ? "text-teal-300 bg-white/10" 
-                        : "text-white/90 hover:text-teal-300 hover:bg-white/5",
-                      index !== navLinks.length - 1 && "border-b border-white/10"
+                        ? "text-teal-300 bg-teal-500/20 border-teal-400/30" 
+                        : "text-white/90 hover:text-teal-300"
                     )}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -82,7 +83,7 @@ const Navigation = () => {
                 
                 <Button 
                   asChild 
-                  className="mt-4 bg-teal-500/80 text-white px-4 py-2.5 rounded-full font-semibold hover:bg-teal-400 hover:shadow-lg hover:shadow-teal-500/30 transition-all duration-200 w-full"
+                  className="mt-2 bg-teal-500/80 text-white px-4 py-2.5 rounded-xl font-semibold hover:bg-teal-400 hover:shadow-lg hover:shadow-teal-500/30 transition-all duration-200 w-full"
                 >
                   <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
                     Get In Touch
