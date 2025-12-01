@@ -7,7 +7,7 @@ import { useRef } from "react";
 import CountUpMetric from "@/components/CountUpMetric";
 import { TRLJourney } from "@/components/TRLJourney";
 import { EnergyFlowProcess } from "@/components/EnergyFlowProcess";
-import heroMistyMountain from "@/assets/hero-misty-mountain.png";
+import heroMistyMountain from "@/assets/image-2-new.png";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
