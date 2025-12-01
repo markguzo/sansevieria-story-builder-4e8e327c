@@ -92,6 +92,17 @@ const Home = () => {
 
         {/* Hero Content - Refined Spacing and Proportions */}
         <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
+          {/* Company Name */}
+          <motion.div
+            className="text-2xl md:text-3xl font-bold text-teal-300 tracking-wide mb-4"
+            style={{ filter: 'drop-shadow(0 0 4px rgba(0,191,165,0.3))' }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: 'easeOut', delay: 0.2 }}
+          >
+            Sansevieria Waste Refineries
+          </motion.div>
+
           {/* Main Title */}
           <motion.h1 
             className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-lg mb-6"
