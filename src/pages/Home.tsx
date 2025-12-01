@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Beaker, Plane, Truck, Sparkles, TrendingUp, Package, Droplets, Recycle, Target, ArrowRight, Play, Factory, Award } from "lucide-react";
+import { Beaker, Plane, Truck, Sparkles, TrendingUp, Package, Droplets, Recycle, Target, ArrowRight, Play, Factory, Award, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, useInView } from "framer-motion";
@@ -31,15 +31,16 @@ const Home = () => {
     <div className="min-h-screen bg-background">
       
       {/* HERO SECTION */}
-      <section ref={heroRef} className="relative h-screen w-full overflow-hidden">
-        {/* Full-Screen Background Image */}
+      <section ref={heroRef} className="relative min-h-screen w-full overflow-hidden">
+        {/* Full-Screen Background Image with Enhanced Vibrancy */}
         <div 
           className="absolute inset-0 w-full h-full bg-scroll md:bg-fixed"
           style={{ 
             backgroundImage: `url(${heroMistyMountain})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
+            backgroundRepeat: 'no-repeat',
+            filter: 'brightness(1.1) contrast(1.2) saturate(1.1)'
           }}
         />
         
@@ -47,54 +48,70 @@ const Home = () => {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%)'
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%)',
+            mixBlendMode: 'multiply'
           }}
         />
 
-        {/* Animated Concentric Circles - Behind Title */}
+        {/* Teal Brand Overlay */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'rgba(0,191,165,0.1)',
+            mixBlendMode: 'overlay'
+          }}
+        />
+
+        {/* Enhanced Concentric Circles - 5 Circles with Wave Animation */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg className="w-full h-full max-w-4xl" viewBox="0 0 800 800">
+          <svg className="w-full h-full max-w-6xl" viewBox="0 0 1000 1000">
             <defs>
-              <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.3 }} />
-                <stop offset="100%" style={{ stopColor: '#4CAF50', stopOpacity: 0.3 }} />
+              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.6 }} />
+                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.5 }} />
               </linearGradient>
             </defs>
-            {/* Four concentric circles with larger radii: 100px, 200px, 300px, 400px */}
-            {[100, 200, 300, 400].map((r, i) => (
+            {/* Five concentric circles: 120px, 220px, 330px, 420px, 500px with varying stroke widths */}
+            {[
+              { r: 120, strokeWidth: 3 },
+              { r: 220, strokeWidth: 2.7 },
+              { r: 330, strokeWidth: 2.4 },
+              { r: 420, strokeWidth: 2.1 },
+              { r: 500, strokeWidth: 1.5 }
+            ].map((circle, i) => (
               <circle
                 key={i}
-                cx="400"
-                cy="400"
-                r={r}
+                cx="500"
+                cy="500"
+                r={circle.r}
                 fill="none"
-                stroke="url(#circleGradient)"
-                strokeWidth="3"
+                stroke="url(#waveGradient)"
+                strokeWidth={circle.strokeWidth}
                 style={{ 
-                  animation: `pulse-circle 3s ease-in-out infinite alternate`,
-                  animationDelay: `${i * 0.3}s`
+                  animation: `wave-circle 5s ease-in-out infinite`,
+                  animationDelay: `${i * 0.5}s`
                 }}
               />
             ))}
           </svg>
         </div>
 
-        {/* Hero Content - Centered */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          {/* Tagline FIRST */}
+        {/* Hero Content - Centered with Generous Padding */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 py-32 md:py-48">
+          {/* Updated Tagline */}
           <motion.p
-            className="text-teal-400 text-sm tracking-widest uppercase font-semibold mb-4"
+            className="text-teal-400 text-sm md:text-md tracking-widest uppercase font-bold opacity-90 mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            INDUSTRIAL-SCALE BREAKTHROUGH
+            Revolutionary Industrial-Scale Breakthrough in Sustainability
           </motion.p>
 
-          {/* Main Title */}
+          {/* Main Title with Green Glow */}
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6"
-            style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+            className="text-5xl md:text-7xl xl:text-8xl font-extrabold text-white leading-tight drop-shadow-2xl mb-8"
+            style={{ textShadow: '0 0 10px rgba(0,255,0,0.3), 0 4px 30px rgba(0,0,0,0.5)' }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -102,27 +119,27 @@ const Home = () => {
             Transforming Plastic Waste<br />Into Premium Fuel
           </motion.h1>
           
-          {/* Description Paragraph - 70% opacity */}
+          {/* Enhanced Description */}
           <motion.p
-            className="text-md md:text-lg text-white/70 leading-relaxed max-w-2xl mx-auto mb-10"
+            className="text-md md:text-lg text-white/85 max-w-3xl mx-auto font-light leading-relaxed mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            Industrial-scale breakthrough technology that converts any plastic waste stream into high-value petrochemical feedstock
+            Our innovative pyrolysis technology converts any plastic waste stream into high-value petrochemical feedstock, powering a true circular economy and reducing environmental impact
           </motion.p>
         </div>
 
-        {/* CTA Buttons - Positioned at Bottom */}
+        {/* Redesigned CTA Buttons */}
         <motion.div
-          className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-4 px-6"
+          className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-6 px-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <Button 
             size="lg"
-            className="bg-green-900 text-white hover:bg-green-700 rounded-full px-8 py-4 font-medium shadow-lg transition-all duration-200"
+            className="bg-emerald-600 text-white px-10 py-4 rounded-full font-semibold hover:bg-emerald-500 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 active:translate-y-0"
             asChild
           >
             <Link to="/about">
@@ -131,12 +148,17 @@ const Home = () => {
           </Button>
           <Button 
             size="lg"
-            className="border-2 border-white text-white bg-transparent hover:bg-white/20 rounded-full px-8 py-4 font-medium transition-all duration-200"
+            className="border-2 border-teal-300 text-teal-300 bg-transparent px-10 py-4 rounded-full font-semibold hover:bg-teal-300/20 hover:text-teal-200 transition-all hover:-translate-y-1 active:translate-y-0"
             asChild
           >
             <Link to="/contact">Get in Touch</Link>
           </Button>
         </motion.div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <ChevronDown className="w-8 h-8 text-teal-400 animate-bounce" />
+        </div>
       </section>
 
       {/* THE OPPORTUNITY */}
