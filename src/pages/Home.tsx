@@ -31,148 +31,112 @@ const Home = () => {
     <div className="min-h-screen bg-background">
       
       {/* HERO SECTION */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image - Fixed on Desktop, Scroll on Mobile */}
-        <div className="absolute inset-0 -z-10">
-          <div 
-            className="w-full h-full bg-center bg-no-repeat bg-cover md:bg-fixed"
-            style={{ 
-              backgroundImage: `url(${heroMistyMountain})`,
-              backgroundAttachment: 'fixed'
-            }}
-          />
-          {/* Bottom-Heavy Dark Gradient Overlay for Text Readability */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, transparent 60%)'
-            }}
-          />
-        </div>
+      <section ref={heroRef} className="relative h-screen w-full overflow-hidden">
+        {/* Full-Screen Background Image */}
+        <div 
+          className="absolute inset-0 w-full h-full bg-scroll md:bg-fixed"
+          style={{ 
+            backgroundImage: `url(${heroMistyMountain})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        
+        {/* Dark Overlay Gradient - Top to Bottom */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%)'
+          }}
+        />
 
         {/* Animated Concentric Circles - Behind Title */}
-        <div className="absolute inset-0 flex items-center justify-center -z-5 pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <svg className="w-full h-full max-w-4xl" viewBox="0 0 800 800">
             <defs>
-              <linearGradient id="circleGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.3 }} />
-                <stop offset="100%" style={{ stopColor: '#4CAF50', stopOpacity: 0.4 }} />
-              </linearGradient>
-              <linearGradient id="circleGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.25 }} />
                 <stop offset="100%" style={{ stopColor: '#4CAF50', stopOpacity: 0.3 }} />
               </linearGradient>
-              <linearGradient id="circleGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.2 }} />
-                <stop offset="100%" style={{ stopColor: '#4CAF50', stopOpacity: 0.25 }} />
-              </linearGradient>
-              <linearGradient id="circleGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.15 }} />
-                <stop offset="100%" style={{ stopColor: '#4CAF50', stopOpacity: 0.2 }} />
-              </linearGradient>
             </defs>
-            {/* Innermost Circle - 50px radius */}
-            <circle
-              cx="400"
-              cy="400"
-              r="50"
-              fill="none"
-              stroke="url(#circleGradient1)"
-              strokeWidth="4"
-              style={{ animation: 'pulse-circle 3s ease-in-out infinite' }}
-            />
-            {/* Second Circle - 120px radius */}
-            <circle
-              cx="400"
-              cy="400"
-              r="120"
-              fill="none"
-              stroke="url(#circleGradient2)"
-              strokeWidth="3"
-              style={{ animation: 'pulse-circle 3s ease-in-out infinite 0.5s' }}
-            />
-            {/* Third Circle - 200px radius */}
-            <circle
-              cx="400"
-              cy="400"
-              r="200"
-              fill="none"
-              stroke="url(#circleGradient3)"
-              strokeWidth="2"
-              style={{ animation: 'pulse-circle 3s ease-in-out infinite 1s' }}
-            />
-            {/* Outermost Circle - 300px radius */}
-            <circle
-              cx="400"
-              cy="400"
-              r="300"
-              fill="none"
-              stroke="url(#circleGradient4)"
-              strokeWidth="2"
-              style={{ animation: 'pulse-circle 3s ease-in-out infinite 1.5s' }}
-            />
+            {/* Four concentric circles with larger radii: 100px, 200px, 300px, 400px */}
+            {[100, 200, 300, 400].map((r, i) => (
+              <circle
+                key={i}
+                cx="400"
+                cy="400"
+                r={r}
+                fill="none"
+                stroke="url(#circleGradient)"
+                strokeWidth="3"
+                style={{ 
+                  animation: `pulse-circle 3s ease-in-out infinite alternate`,
+                  animationDelay: `${i * 0.3}s`
+                }}
+              />
+            ))}
           </svg>
         </div>
 
-        {/* Hero Content */}
-        <div className="container mx-auto px-6 relative z-10 text-center max-w-7xl flex flex-col justify-center items-center min-h-screen py-20">
-          <div className="flex flex-col items-center justify-center mb-12">
-            {/* Main Title */}
-            <motion.h1 
-              className="text-3xl md:text-6xl font-bold mb-6 leading-tight text-white shadow-lg"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              Transforming Plastic Waste<br />Into Premium Fuel
-            </motion.h1>
-
-            {/* Subtitle - Below Title */}
-            <motion.p
-              className="text-xl text-teal-400 uppercase tracking-wide font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              INDUSTRIAL-SCALE BREAKTHROUGH
-            </motion.p>
-            
-            {/* Description Paragraph */}
-            <motion.p
-              className="text-lg text-white/50 leading-relaxed mx-auto max-w-[800px]"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              Industrial-scale breakthrough technology that converts any plastic waste stream into high-value petrochemical feedstock
-            </motion.p>
-          </div>
-          
-          {/* CTA Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+        {/* Hero Content - Centered */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+          {/* Tagline FIRST */}
+          <motion.p
+            className="text-teal-400 text-sm tracking-widest uppercase font-semibold mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Button 
-              size="lg"
-              className="bg-green-800 text-white hover:bg-green-700 rounded-full px-6 py-3 font-medium transition-all duration-200"
-              asChild
-            >
-              <Link to="/about">
-                Learn More
-              </Link>
-            </Button>
-            <Button 
-              size="lg"
-              className="border border-white text-white bg-transparent hover:bg-white/10 rounded-full px-6 py-3 font-medium transition-all duration-200"
-              asChild
-            >
-              <Link to="/contact">Get in Touch</Link>
-            </Button>
-          </motion.div>
+            INDUSTRIAL-SCALE BREAKTHROUGH
+          </motion.p>
+
+          {/* Main Title */}
+          <motion.h1 
+            className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6"
+            style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Transforming Plastic Waste<br />Into Premium Fuel
+          </motion.h1>
+          
+          {/* Description Paragraph - 70% opacity */}
+          <motion.p
+            className="text-md md:text-lg text-white/70 leading-relaxed max-w-2xl mx-auto mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            Industrial-scale breakthrough technology that converts any plastic waste stream into high-value petrochemical feedstock
+          </motion.p>
         </div>
+
+        {/* CTA Buttons - Positioned at Bottom */}
+        <motion.div
+          className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-4 px-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <Button 
+            size="lg"
+            className="bg-green-900 text-white hover:bg-green-700 rounded-full px-8 py-4 font-medium shadow-lg transition-all duration-200"
+            asChild
+          >
+            <Link to="/about">
+              Learn More
+            </Link>
+          </Button>
+          <Button 
+            size="lg"
+            className="border-2 border-white text-white bg-transparent hover:bg-white/20 rounded-full px-8 py-4 font-medium transition-all duration-200"
+            asChild
+          >
+            <Link to="/contact">Get in Touch</Link>
+          </Button>
+        </motion.div>
       </section>
 
       {/* THE OPPORTUNITY */}
