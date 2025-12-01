@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -6,7 +6,19 @@ import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Technology", path: "/about" },
@@ -18,7 +30,12 @@ const Navigation = () => {
   return (
     <>
       {/* Minimal Top Navbar - Logo Only */}
-      <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-black/30 text-white border-b border-white/10">
+      <nav className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 text-white",
+        isScrolled 
+          ? "backdrop-blur-md bg-black/30 shadow-md shadow-black/30 border-b border-white/10"
+          : "backdrop-blur-sm bg-black/20"
+      )}>
         <div className="container mx-auto px-6 py-5">
           <Link to="/" className="text-2xl font-serif text-teal-300 hover:text-teal-200 transition-colors">
             Sansevieria
