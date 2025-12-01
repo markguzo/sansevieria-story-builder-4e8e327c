@@ -64,17 +64,17 @@ const Home = () => {
           }}
         />
 
-        {/* Subtle Concentric Circles - 3 Rings, Much Smaller and Less Notable */}
+        {/* Subtle Concentric Circles - 3 Rings, Compact Ripple Effect */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg className="w-full h-full max-w-xl md:max-w-3xl" viewBox="0 0 600 600">
+          <svg className="w-full h-full max-w-2xl md:max-w-5xl" viewBox="0 0 600 600">
             <defs>
               <linearGradient id="subtleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" style={{ stopColor: '#00BFA5', stopOpacity: 0.25 }} />
-                <stop offset="100%" style={{ stopColor: '#A7F3D0', stopOpacity: 0.2 }} />
+                <stop offset="100%" style={{ stopColor: '#10B981', stopOpacity: 0.2 }} />
               </linearGradient>
             </defs>
-            {/* Three subtle rings: 80px, 160px, 250px */}
-            {[80, 160, 250].map((r, i) => (
+            {/* Three subtle rings: 80px, 140px, 200px - compact circular economy symbolism */}
+            {[80, 140, 200].map((r, i) => (
               <circle
                 key={i}
                 cx="300"
