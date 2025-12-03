@@ -3,234 +3,311 @@ import { Package, Beaker, Fuel } from "lucide-react";
 export const EcoForgePipeline = () => {
   return (
     <section 
-      className="py-12 min-h-[700px] flex flex-col justify-center relative overflow-hidden"
+      className="py-16 min-h-[800px] flex flex-col justify-center relative overflow-hidden"
       style={{
-        background: 'linear-gradient(90deg, rgba(34,139,34,0.15) 0%, rgba(0,128,128,0.12) 50%, rgba(34,139,34,0.15) 100%)'
+        background: 'linear-gradient(135deg, rgba(34,139,34,0.95) 0%, rgba(0,128,128,0.80) 100%)'
       }}
+      aria-label="Veiled EcoForge: Waste enters mystery, emerges premium"
     >
-      {/* Subtle misty overlay for biophilic depth */}
+      {/* Industrial fog overlay */}
       <div 
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-30"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(0,128,128,0.08) 0%, transparent 70%)'
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          mixBlendMode: 'overlay'
         }}
       />
       
-      <div className="container mx-auto px-4 max-w-5xl relative z-10">
-        {/* Title with drop-shadow */}
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        {/* Title */}
         <h2 
-          className="text-[36px] font-semibold text-[#008080] text-center mb-12"
+          className="text-4xl md:text-[36px] font-bold text-[#008080] text-center mb-16"
           style={{ 
-            textShadow: '0 2px 8px rgba(0,128,128,0.3)',
-            lineHeight: '1.2'
+            textShadow: '0 2px 12px rgba(0,0,0,0.4), 0 0 20px rgba(0,128,128,0.3)',
+            fontFamily: 'Inter, system-ui, sans-serif'
           }}
         >
           EcoForge Pipeline: From Waste to Wealth
         </h2>
 
-        {/* Desktop Layout - The Veiled Forge */}
-        <div className="hidden md:flex items-center justify-between gap-6 relative">
+        {/* Desktop Layout */}
+        <div className="hidden md:flex items-center justify-center gap-8 relative">
           
           {/* Curved SVG Arrows arcing over the vault */}
           <svg 
-            className="absolute inset-0 w-full h-full pointer-events-none z-0"
-            viewBox="0 0 1000 300"
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 1200 350"
             preserveAspectRatio="xMidYMid meet"
+            style={{ zIndex: 5 }}
           >
-            {/* Left arrow - curves up and over */}
+            {/* Gold dashed energy trace - underlayer */}
             <path
-              d="M 80 150 Q 200 40, 320 150"
+              d="M 120 175 Q 300 30, 480 175"
+              fill="none"
+              stroke="#DAA520"
+              strokeWidth="2"
+              strokeDasharray="8,6"
+              opacity="0.6"
+            />
+            <path
+              d="M 720 175 Q 900 30, 1080 175"
+              fill="none"
+              stroke="#DAA520"
+              strokeWidth="2"
+              strokeDasharray="8,6"
+              opacity="0.6"
+            />
+            
+            {/* Main teal arrows */}
+            <path
+              d="M 130 175 Q 310 20, 490 175"
               fill="none"
               stroke="#008080"
-              strokeWidth="3"
+              strokeWidth="4"
               strokeLinecap="round"
             />
-            {/* Right arrow - curves up and over */}
             <path
-              d="M 680 150 Q 800 40, 920 150"
+              d="M 710 175 Q 890 20, 1070 175"
               fill="none"
               stroke="#008080"
-              strokeWidth="3"
+              strokeWidth="4"
               strokeLinecap="round"
             />
+            
             {/* Arrow heads */}
-            <polygon points="315,145 325,150 315,155" fill="#008080" />
-            <polygon points="915,145 925,150 915,155" fill="#008080" />
+            <polygon points="485,170 495,175 485,180" fill="#008080" />
+            <polygon points="1065,170 1075,175 1065,180" fill="#008080" />
           </svg>
 
-          {/* Left Input Node: The Humble Offering */}
+          {/* Left Input Node */}
           <div 
-            className="flex flex-col items-center z-20 flex-shrink-0"
-            style={{ marginRight: '-40px' }}
+            className="flex flex-col items-center flex-shrink-0 relative"
+            style={{ zIndex: 10, marginRight: '-60px' }}
           >
             <div 
-              className="w-32 h-32 rounded-xl border-2 border-[#008080] shadow-md flex items-center justify-center"
-              style={{ backgroundColor: 'rgba(34,139,34,0.8)' }}
+              className="w-40 h-40 rounded-xl border-2 border-[#008080] flex items-center justify-center relative overflow-hidden"
+              style={{ 
+                background: 'linear-gradient(145deg, rgba(34,139,34,0.95) 0%, rgba(34,139,34,0.85) 50%, rgba(20,80,20,0.9) 100%)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.2)'
+              }}
             >
+              {/* Metallic texture overlay */}
+              <div 
+                className="absolute inset-0 opacity-20"
+                style={{
+                  backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%)',
+                  backgroundSize: '4px 4px'
+                }}
+              />
               <Package 
-                className="w-12 h-12 text-gray-400" 
-                style={{ transform: 'rotate(-15deg)' }}
+                className="w-12 h-12 relative z-10" 
+                style={{ 
+                  color: '#808080',
+                  filter: 'drop-shadow(2px 2px 2px rgba(0,0,0,0.5))'
+                }}
                 strokeWidth={1.5}
               />
             </div>
-            <p 
-              className="text-[18px] font-semibold italic text-[#228B22] mt-3 text-center max-w-[140px]"
-            >
+            <p className="text-lg font-semibold text-[#228B22] mt-4 text-center max-w-[160px]" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
               Any Type of Plastic Waste
             </p>
           </div>
 
-          {/* Central Veiled Vault: The Alchemical Abyss */}
+          {/* Central Veiled Vault - The Industrial Powerhouse */}
           <div 
-            className="relative flex-1 max-w-[70%] h-40 z-10"
-            aria-label="Sealed transformation vault—process veiled in innovation"
+            className="relative flex-1 max-w-[75%] h-48"
+            style={{ zIndex: 1 }}
           >
-            {/* The Black Monolith */}
+            {/* Main vault structure */}
             <div 
-              className="w-full h-full bg-black rounded-2xl border border-[#008080]/30 relative overflow-hidden"
+              className="w-full h-full rounded-3xl border border-[#008080]/20 relative overflow-hidden"
               style={{ 
-                boxShadow: 'inset 0 4px 20px rgba(0,0,0,0.8), 0 8px 32px rgba(0,0,0,0.4)'
+                background: 'linear-gradient(180deg, #0a0a0a 0%, #000000 50%, #0a0a0a 100%)',
+                boxShadow: 'inset 0 4px 30px rgba(0,0,0,0.9), inset 0 -2px 10px rgba(0,128,128,0.1), 0 10px 40px rgba(0,0,0,0.5)'
               }}
             >
-              {/* Faint etched runes - top edge */}
+              {/* Metallic grain texture */}
               <div 
-                className="absolute top-0 left-0 right-0 h-2"
+                className="absolute inset-0 opacity-10"
                 style={{
-                  background: 'linear-gradient(90deg, transparent 0%, rgba(0,128,128,0.2) 20%, rgba(0,128,128,0.15) 40%, transparent 50%, rgba(0,128,128,0.2) 60%, rgba(0,128,128,0.15) 80%, transparent 100%)'
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
                 }}
               />
               
-              {/* Faint etched runes - bottom edge */}
-              <div 
-                className="absolute bottom-0 left-0 right-0 h-2"
-                style={{
-                  background: 'linear-gradient(90deg, transparent 0%, rgba(0,128,128,0.15) 25%, rgba(0,128,128,0.2) 50%, rgba(0,128,128,0.15) 75%, transparent 100%)'
-                }}
-              />
+              {/* Top edge highlight */}
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#008080]/40 to-transparent" />
+              
+              {/* Bottom edge shadow */}
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#000]/80 to-transparent" />
 
-              {/* Ethereal fake process silhouettes */}
-              <div className="absolute inset-0 flex items-center justify-center gap-4 px-8">
-                {/* Silhouette 1 - funnel-like */}
+              {/* Internal silhouettes - blurred pipes/valves/gears */}
+              <div className="absolute inset-0 flex items-center justify-around px-12">
+                {/* Silhouette 1 - vertical pipe */}
                 <div 
-                  className="w-16 h-20 rounded-t-full rounded-b-lg border border-[#008080]/20 backdrop-blur-sm"
-                  style={{ backgroundColor: 'rgba(75,85,99,0.25)', transform: 'rotate(-5deg)' }}
+                  className="w-16 h-28 rounded-lg"
+                  style={{ 
+                    background: 'linear-gradient(180deg, rgba(75,85,99,0.3) 0%, rgba(75,85,99,0.15) 100%)',
+                    border: '1px solid rgba(0,128,128,0.15)',
+                    transform: 'rotate(-8deg)',
+                    filter: 'blur(1px)'
+                  }}
                 />
-                {/* Silhouette 2 - wave-form */}
+                
+                {/* Silhouette 2 - chamber */}
                 <div 
-                  className="w-20 h-14 rounded-full border border-[#008080]/15 backdrop-blur-sm"
-                  style={{ backgroundColor: 'rgba(75,85,99,0.2)', transform: 'skewX(-10deg)' }}
+                  className="w-20 h-24 rounded-2xl"
+                  style={{ 
+                    background: 'linear-gradient(135deg, rgba(75,85,99,0.25) 0%, rgba(0,128,128,0.1) 100%)',
+                    border: '1px solid rgba(0,128,128,0.12)',
+                    transform: 'rotate(5deg) translateY(-10px)',
+                    filter: 'blur(1px)'
+                  }}
                 />
-                {/* Silhouette 3 - chamber */}
+                
+                {/* Silhouette 3 - valve wheel */}
                 <div 
-                  className="w-14 h-18 rounded-lg border border-[#008080]/20 backdrop-blur-sm"
-                  style={{ backgroundColor: 'rgba(75,85,99,0.3)', transform: 'rotate(8deg)' }}
+                  className="w-24 h-24 rounded-full"
+                  style={{ 
+                    background: 'radial-gradient(circle, rgba(75,85,99,0.2) 30%, rgba(0,128,128,0.08) 70%)',
+                    border: '1px solid rgba(0,128,128,0.1)',
+                    filter: 'blur(1px)'
+                  }}
                 />
-                {/* Silhouette 4 - oval conduit */}
+                
+                {/* Silhouette 4 - horizontal conduit */}
                 <div 
-                  className="w-18 h-16 rounded-full border border-[#008080]/15 backdrop-blur-sm"
-                  style={{ backgroundColor: 'rgba(75,85,99,0.2)', transform: 'rotate(-12deg) scaleX(1.3)' }}
+                  className="w-28 h-16 rounded-xl"
+                  style={{ 
+                    background: 'linear-gradient(90deg, rgba(75,85,99,0.15) 0%, rgba(75,85,99,0.25) 50%, rgba(75,85,99,0.15) 100%)',
+                    border: '1px solid rgba(0,128,128,0.12)',
+                    transform: 'rotate(-3deg) translateY(15px)',
+                    filter: 'blur(1px)'
+                  }}
                 />
-                {/* Silhouette 5 - extraction form */}
+                
+                {/* Silhouette 5 - extraction column */}
                 <div 
-                  className="w-12 h-20 rounded-b-full rounded-t-lg border border-[#008080]/20 backdrop-blur-sm"
-                  style={{ backgroundColor: 'rgba(75,85,99,0.25)', transform: 'rotate(5deg)' }}
+                  className="w-14 h-32 rounded-t-full rounded-b-lg"
+                  style={{ 
+                    background: 'linear-gradient(180deg, rgba(0,128,128,0.12) 0%, rgba(75,85,99,0.25) 100%)',
+                    border: '1px solid rgba(0,128,128,0.15)',
+                    transform: 'rotate(6deg)',
+                    filter: 'blur(1px)'
+                  }}
                 />
               </div>
+
+              {/* Teal energy veins connecting silhouettes */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+                <line x1="15%" y1="50%" x2="30%" y2="45%" stroke="#008080" strokeWidth="1" opacity="0.2" />
+                <line x1="30%" y1="45%" x2="45%" y2="50%" stroke="#008080" strokeWidth="1" opacity="0.15" />
+                <line x1="45%" y1="50%" x2="60%" y2="55%" stroke="#008080" strokeWidth="1" opacity="0.2" />
+                <line x1="60%" y1="55%" x2="75%" y2="48%" stroke="#008080" strokeWidth="1" opacity="0.15" />
+                <line x1="75%" y1="48%" x2="88%" y2="50%" stroke="#008080" strokeWidth="1" opacity="0.2" />
+              </svg>
             </div>
           </div>
 
-          {/* Right Output Cluster: The Gilded Emergence */}
+          {/* Right Output Node */}
           <div 
-            className="flex flex-col items-center z-20 flex-shrink-0"
-            style={{ marginLeft: '-40px' }}
+            className="flex flex-col items-center flex-shrink-0 relative"
+            style={{ zIndex: 10, marginLeft: '-60px' }}
           >
             <div 
-              className="w-48 h-32 rounded-xl border-2 border-[#DAA520] shadow-lg flex items-center justify-center gap-4"
+              className="w-56 h-40 rounded-xl border-2 border-[#DAA520] flex items-center justify-center gap-6 relative overflow-hidden"
               style={{ 
-                background: 'linear-gradient(135deg, rgba(0,128,128,0.8) 0%, rgba(218,165,32,0.7) 100%)',
-                boxShadow: '0 4px 20px rgba(218,165,32,0.3)'
+                background: 'linear-gradient(145deg, rgba(0,128,128,0.85) 0%, rgba(218,165,32,0.75) 100%)',
+                boxShadow: '0 8px 32px rgba(218,165,32,0.3), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.2)'
               }}
             >
-              <div style={{ filter: 'drop-shadow(0 0 6px rgba(218,165,32,0.5))' }}>
-                <Beaker className="w-10 h-10 text-[#DAA520]" />
-              </div>
-              <div style={{ filter: 'drop-shadow(0 0 6px rgba(50,205,50,0.5))' }}>
-                <Fuel className="w-10 h-10 text-[#32CD32]" />
-              </div>
+              {/* Metallic sheen overlay */}
+              <div 
+                className="absolute inset-0 opacity-15"
+                style={{
+                  backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%)',
+                  backgroundSize: '4px 4px'
+                }}
+              />
+              <Beaker 
+                className="w-12 h-12 relative z-10" 
+                style={{ 
+                  color: '#DAA520',
+                  filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.4)) drop-shadow(0 0 8px rgba(218,165,32,0.4))'
+                }}
+              />
+              <Fuel 
+                className="w-12 h-12 relative z-10" 
+                style={{ 
+                  color: '#32CD32',
+                  filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.4)) drop-shadow(0 0 8px rgba(50,205,50,0.4))'
+                }}
+              />
             </div>
-            <p 
-              className="text-[18px] font-semibold text-[#DAA520] mt-3 text-center max-w-[180px]"
-              style={{
-                textDecoration: 'underline',
-                textDecorationColor: 'rgba(218,165,32,0.4)',
-                textUnderlineOffset: '4px'
-              }}
-            >
+            <p className="text-lg font-semibold text-[#DAA520] mt-4 text-center max-w-[200px]" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
               Premium Petrochemicals & Sustainable Fuels
             </p>
           </div>
         </div>
 
-        {/* Mobile Layout - Vertical Stack */}
+        {/* Mobile Layout */}
         <div className="md:hidden flex flex-col items-center gap-6">
-          {/* Input Node */}
+          {/* Input */}
           <div className="flex flex-col items-center">
             <div 
-              className="w-24 h-24 rounded-xl border-2 border-[#008080] shadow-md flex items-center justify-center"
-              style={{ backgroundColor: 'rgba(34,139,34,0.8)' }}
+              className="w-28 h-28 rounded-xl border-2 border-[#008080] flex items-center justify-center"
+              style={{ 
+                background: 'linear-gradient(145deg, rgba(34,139,34,0.95), rgba(20,80,20,0.9))',
+                boxShadow: '0 6px 24px rgba(0,0,0,0.4)'
+              }}
             >
-              <Package className="w-10 h-10 text-gray-400" style={{ transform: 'rotate(-15deg)' }} strokeWidth={1.5} />
+              <Package className="w-10 h-10 text-gray-500" style={{ filter: 'drop-shadow(1px 1px 2px rgba(0,0,0,0.5))' }} />
             </div>
-            <p className="text-base font-semibold italic text-[#228B22] mt-2 text-center">
+            <p className="text-base font-semibold text-[#228B22] mt-3 text-center">
               Any Type of Plastic Waste
             </p>
           </div>
 
-          {/* Vertical Arrow */}
-          <svg width="20" height="40" viewBox="0 0 20 40">
-            <path d="M 10 0 Q 5 20, 10 35" fill="none" stroke="#008080" strokeWidth="3" strokeLinecap="round" />
-            <polygon points="6,32 10,40 14,32" fill="#008080" />
+          {/* Arrow */}
+          <svg width="24" height="48" viewBox="0 0 24 48">
+            <path d="M 12 0 Q 6 24, 12 40" fill="none" stroke="#008080" strokeWidth="3" strokeLinecap="round" />
+            <polygon points="8,38 12,48 16,38" fill="#008080" />
           </svg>
 
-          {/* Mobile Vault */}
+          {/* Vault */}
           <div 
-            className="w-full max-w-[300px] h-28 bg-black rounded-2xl border border-[#008080]/30 relative overflow-hidden"
-            style={{ boxShadow: 'inset 0 4px 16px rgba(0,0,0,0.8)' }}
-            aria-label="Sealed transformation vault"
+            className="w-full max-w-[320px] h-32 rounded-2xl border border-[#008080]/20 relative overflow-hidden"
+            style={{ 
+              background: 'linear-gradient(180deg, #0a0a0a, #000000)',
+              boxShadow: 'inset 0 4px 20px rgba(0,0,0,0.9)'
+            }}
           >
-            {/* Runes */}
-            <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,128,128,0.2), transparent)' }} />
-            <div className="absolute bottom-0 left-0 right-0 h-1.5" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,128,128,0.2), transparent)' }} />
-            {/* Silhouettes */}
-            <div className="absolute inset-0 flex items-center justify-center gap-3 px-4">
-              <div className="w-10 h-12 rounded-full border border-[#008080]/20 backdrop-blur-sm" style={{ backgroundColor: 'rgba(75,85,99,0.25)' }} />
-              <div className="w-12 h-10 rounded-lg border border-[#008080]/15 backdrop-blur-sm" style={{ backgroundColor: 'rgba(75,85,99,0.2)' }} />
-              <div className="w-10 h-14 rounded-full border border-[#008080]/20 backdrop-blur-sm" style={{ backgroundColor: 'rgba(75,85,99,0.25)' }} />
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#008080]/30 to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-around px-6">
+              <div className="w-12 h-16 rounded-lg" style={{ background: 'rgba(75,85,99,0.25)', border: '1px solid rgba(0,128,128,0.15)', filter: 'blur(1px)' }} />
+              <div className="w-14 h-14 rounded-full" style={{ background: 'rgba(75,85,99,0.2)', border: '1px solid rgba(0,128,128,0.1)', filter: 'blur(1px)' }} />
+              <div className="w-10 h-20 rounded-t-full rounded-b-lg" style={{ background: 'rgba(75,85,99,0.25)', border: '1px solid rgba(0,128,128,0.15)', filter: 'blur(1px)' }} />
             </div>
           </div>
 
-          {/* Vertical Arrow */}
-          <svg width="20" height="40" viewBox="0 0 20 40">
-            <path d="M 10 0 Q 15 20, 10 35" fill="none" stroke="#008080" strokeWidth="3" strokeLinecap="round" />
-            <polygon points="6,32 10,40 14,32" fill="#008080" />
+          {/* Arrow */}
+          <svg width="24" height="48" viewBox="0 0 24 48">
+            <path d="M 12 0 Q 18 24, 12 40" fill="none" stroke="#008080" strokeWidth="3" strokeLinecap="round" />
+            <polygon points="8,38 12,48 16,38" fill="#008080" />
           </svg>
 
-          {/* Output Cluster */}
+          {/* Output */}
           <div className="flex flex-col items-center">
             <div 
-              className="w-36 h-24 rounded-xl border-2 border-[#DAA520] shadow-lg flex items-center justify-center gap-3"
+              className="w-40 h-28 rounded-xl border-2 border-[#DAA520] flex items-center justify-center gap-4"
               style={{ 
-                background: 'linear-gradient(135deg, rgba(0,128,128,0.8), rgba(218,165,32,0.7))',
-                boxShadow: '0 4px 16px rgba(218,165,32,0.3)'
+                background: 'linear-gradient(145deg, rgba(0,128,128,0.85), rgba(218,165,32,0.75))',
+                boxShadow: '0 6px 24px rgba(218,165,32,0.3)'
               }}
             >
-              <Beaker className="w-8 h-8 text-[#DAA520]" style={{ filter: 'drop-shadow(0 0 4px rgba(218,165,32,0.5))' }} />
-              <Fuel className="w-8 h-8 text-[#32CD32]" style={{ filter: 'drop-shadow(0 0 4px rgba(50,205,50,0.5))' }} />
+              <Beaker className="w-10 h-10 text-[#DAA520]" style={{ filter: 'drop-shadow(0 0 6px rgba(218,165,32,0.4))' }} />
+              <Fuel className="w-10 h-10 text-[#32CD32]" style={{ filter: 'drop-shadow(0 0 6px rgba(50,205,50,0.4))' }} />
             </div>
-            <p 
-              className="text-base font-semibold text-[#DAA520] mt-2 text-center max-w-[160px]"
-              style={{ textDecoration: 'underline', textDecorationColor: 'rgba(218,165,32,0.4)', textUnderlineOffset: '3px' }}
-            >
+            <p className="text-base font-semibold text-[#DAA520] mt-3 text-center max-w-[180px]">
               Premium Petrochemicals & Sustainable Fuels
             </p>
           </div>
