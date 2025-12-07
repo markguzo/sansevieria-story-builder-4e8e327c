@@ -62,6 +62,31 @@ export const EngineeringBlueprint = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         
+        {/* Section Title */}
+        <motion.div
+          className="text-center mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 
+            className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight"
+            style={{ 
+              color: '#0A0A0A',
+              fontFamily: '"Inter", system-ui, sans-serif',
+              letterSpacing: '-0.02em'
+            }}
+          >
+            The Global Opportunity
+          </h2>
+          <p 
+            className="text-lg md:text-xl mt-4"
+            style={{ color: '#666666' }}
+          >
+            Turning a global waste problem into a $180B advantage
+          </p>
+        </motion.div>
+
         {/* Main Orbital System */}
         <div className="relative max-w-4xl mx-auto">
           
