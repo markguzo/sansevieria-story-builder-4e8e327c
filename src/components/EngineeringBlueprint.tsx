@@ -267,65 +267,6 @@ export const EngineeringBlueprint = () => {
           </div>
         </div>
 
-        {/* BOTTOM ANCHOR: Break the Cycle */}
-        <motion.div
-          className="mt-20 md:mt-28 max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 1 }}
-        >
-          {/* Section Label */}
-          <p 
-            className="text-center text-xs uppercase tracking-[0.25em] mb-6"
-            style={{ color: '#888888' }}
-          >
-            BREAK THE CYCLE
-          </p>
-
-          {/* Modern Progress Bar */}
-          <div className="relative h-3 rounded-full overflow-hidden" style={{ backgroundColor: '#F0F0F0' }}>
-            {/* Lost Segment - 91% */}
-            <div 
-              className="absolute left-0 top-0 bottom-0 rounded-l-full"
-              style={{ 
-                width: '91%',
-                backgroundColor: '#E0E0E0'
-              }}
-            />
-            
-            {/* Recycled Segment - 9% */}
-            <motion.div 
-              className="absolute right-0 top-0 bottom-0 rounded-r-full"
-              style={{ 
-                width: '9%',
-                background: 'linear-gradient(90deg, #00A896, #00BFA5)'
-              }}
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 0.8, delay: 1.2 }}
-            />
-          </div>
-
-          {/* Labels */}
-          <div className="flex justify-between mt-4 text-xs" style={{ color: '#888888' }}>
-            <span>91% LOST (Landfilled / Incinerated)</span>
-            <span style={{ color: '#00BFA5', fontWeight: 600 }}>9% RECYCLED</span>
-          </div>
-
-          {/* Data Readout */}
-          <p 
-            className="text-center text-xs mt-6"
-            style={{ color: '#AAAAAA' }}
-          >
-            Globally: 50% Landfilled • 22% Mismanaged • 19% Incinerated
-          </p>
-          <p 
-            className="text-center text-sm mt-2"
-            style={{ color: '#0A0A0A' }}
-          >
-            <span style={{ color: '#00BFA5', fontWeight: 600 }}>We capture the lost 91%.</span>
-          </p>
-        </motion.div>
       </div>
     </section>
   );
