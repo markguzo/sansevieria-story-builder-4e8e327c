@@ -53,13 +53,13 @@ export const TRLStatusGauge = () => {
             className="text-3xl md:text-4xl font-bold text-black mb-4"
             style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
           >
-            Technology Readiness Level
+            Proven Scalability
           </h2>
           <p 
-            className="text-lg text-gray-600"
+            className="text-lg text-gray-500"
             style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
           >
-            Current Status: <span className="text-teal-600 font-semibold">TRL 6 - Industrial Scale</span>
+            From laboratory precision to industrial reality.
           </p>
         </motion.div>
 
@@ -67,29 +67,29 @@ export const TRLStatusGauge = () => {
         <div className="relative max-w-3xl mx-auto">
           {/* SVG Gauge */}
           <svg
-            viewBox="0 0 400 220"
+            viewBox="0 0 400 240"
             className="w-full h-auto"
             style={{ overflow: 'visible' }}
           >
-            {/* Background Arc (grey track) */}
+            {/* Dashed Grey Arc (future TRL 7-9) */}
             <path
               d="M 40 200 A 160 160 0 0 1 360 200"
               fill="none"
-              stroke="#e5e7eb"
-              strokeWidth="8"
+              stroke="#d1d5db"
+              strokeWidth="6"
               strokeLinecap="round"
+              strokeDasharray="8 6"
             />
             
-            {/* Animated Fill Arc (teal) */}
+            {/* Solid Teal Arc (completed TRL 4-6) - drawn on top */}
             <motion.path
               d="M 40 200 A 160 160 0 0 1 360 200"
               fill="none"
               stroke="#0d9488"
-              strokeWidth="8"
+              strokeWidth="6"
               strokeLinecap="round"
               style={{
                 pathLength: fillProgress,
-                filter: 'drop-shadow(0 0 8px rgba(13, 148, 136, 0.5))'
               }}
             />
 
@@ -102,94 +102,100 @@ export const TRLStatusGauge = () => {
               const cy = 200 - radius * Math.sin(angle);
               
               const isActive = node.position <= 0.4;
-              const nodeSize = node.isCurrent ? 20 : 14;
+              const nodeSize = node.isCurrent ? 22 : 14;
+
+              // Calculate label position - all labels go below the arc for clarity
+              const labelOffset = node.isCurrent ? 50 : 38;
 
               return (
                 <g key={node.trl}>
-                  {/* Node circle */}
-                  <motion.circle
-                    cx={cx}
-                    cy={cy}
-                    r={nodeSize}
-                    fill={isActive ? '#0d9488' : '#f3f4f6'}
-                    stroke={isActive ? '#0d9488' : '#d1d5db'}
-                    strokeWidth="3"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.3 }}
-                    style={node.isCurrent ? {
-                      filter: 'drop-shadow(0 0 12px rgba(13, 148, 136, 0.6))'
-                    } : {}}
-                  />
-                  
-                  {/* Pulsing ring for current node */}
+                  {/* Subtle glow for current node only */}
                   {node.isCurrent && (
                     <motion.circle
                       cx={cx}
                       cy={cy}
-                      r={nodeSize + 8}
+                      r={nodeSize + 6}
                       fill="none"
                       stroke="#0d9488"
                       strokeWidth="2"
-                      initial={{ opacity: 0.8, scale: 1 }}
+                      opacity="0.3"
+                      initial={{ scale: 1 }}
                       animate={{ 
-                        opacity: [0.8, 0, 0.8], 
-                        scale: [1, 1.5, 1] 
+                        opacity: [0.3, 0.6, 0.3], 
+                        scale: [1, 1.2, 1] 
                       }}
                       transition={{ 
-                        duration: 2, 
+                        duration: 2.5, 
                         repeat: Infinity,
                         ease: "easeInOut"
                       }}
                     />
                   )}
 
-                  {/* "YOU ARE HERE" badge for TRL 6 */}
-                  {node.isCurrent && (
-                    <g>
-                      <rect
-                        x={cx - 45}
-                        y={cy - 55}
-                        width="90"
-                        height="24"
-                        rx="12"
-                        fill="#0d9488"
-                      />
-                      <text
-                        x={cx}
-                        y={cy - 38}
-                        textAnchor="middle"
-                        fill="white"
-                        fontSize="10"
-                        fontWeight="bold"
-                        style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
-                      >
-                        YOU ARE HERE
-                      </text>
-                    </g>
-                  )}
+                  {/* Node circle */}
+                  <motion.circle
+                    cx={cx}
+                    cy={cy}
+                    r={nodeSize}
+                    fill={isActive ? '#0d9488' : '#f9fafb'}
+                    stroke={isActive ? '#0d9488' : '#d1d5db'}
+                    strokeWidth={node.isCurrent ? 3 : 2}
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.3 }}
+                  />
 
-                  {/* TRL number */}
+                  {/* TRL number inside circle */}
                   <text
                     x={cx}
-                    y={cy + 4}
+                    y={cy + 5}
                     textAnchor="middle"
                     fill={isActive ? 'white' : '#9ca3af'}
-                    fontSize={node.isCurrent ? "12" : "10"}
+                    fontSize={node.isCurrent ? "14" : "11"}
                     fontWeight="bold"
                     style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
                   >
                     {node.trl}
                   </text>
 
-                  {/* Label */}
+                  {/* "YOU ARE HERE" badge - positioned higher above node */}
+                  {node.isCurrent && (
+                    <g>
+                      <rect
+                        x={cx - 48}
+                        y={cy - 75}
+                        width="96"
+                        height="26"
+                        rx="13"
+                        fill="#0d9488"
+                      />
+                      <text
+                        x={cx}
+                        y={cy - 57}
+                        textAnchor="middle"
+                        fill="white"
+                        fontSize="11"
+                        fontWeight="bold"
+                        style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                      >
+                        YOU ARE HERE
+                      </text>
+                      {/* Small arrow pointing down */}
+                      <polygon
+                        points={`${cx - 6},${cy - 49} ${cx + 6},${cy - 49} ${cx},${cy - 40}`}
+                        fill="#0d9488"
+                      />
+                    </g>
+                  )}
+
+                  {/* Label below node */}
                   <text
                     x={cx}
-                    y={cy + (node.position <= 0.2 ? 40 : node.position >= 0.8 ? 40 : -35)}
+                    y={cy + labelOffset}
                     textAnchor="middle"
-                    fill={isActive ? '#1f2937' : '#9ca3af'}
-                    fontSize={node.isCurrent ? "11" : "9"}
+                    fill={isActive ? '#111827' : '#9ca3af'}
+                    fontSize={node.isCurrent ? "12" : "10"}
                     fontWeight={node.isCurrent ? "bold" : "normal"}
                     style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
                   >
@@ -210,10 +216,10 @@ export const TRLStatusGauge = () => {
           className="text-center mt-12"
         >
           <div 
-            className="inline-block px-8 py-4 bg-gray-900 rounded-full"
+            className="inline-block px-8 py-4 bg-teal-700 rounded-full"
             style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
           >
-            <span className="text-teal-400 font-medium text-sm md:text-base">
+            <span className="text-white font-semibold text-sm md:text-base">
               System proven at industrial scale. Ready for pilot deployment.
             </span>
           </div>
