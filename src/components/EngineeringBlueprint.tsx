@@ -5,12 +5,16 @@ export const EngineeringBlueprint = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { amount: 0.2, once: true });
 
-  // Satellite data
+  // Satellite positions in triangle formation
   const satellites = [
-    { value: "300M+", label: "TONNES / YR", angle: 210, delay: 0.2 },
-    { value: "$600-800", label: "PROFIT / TONNE", angle: 330, delay: 0.4 },
-    { value: "85%", label: "GHG REDUCTION", angle: 90, delay: 0.6 },
+    { value: "300M+", label: "TONNES AVAILABLE", angle: 270, delay: 0.3 }, // Top
+    { value: "85%", label: "GHG REDUCTION", angle: 150, delay: 0.5 },      // Bottom-Left
+    { value: "$600-800", label: "PROFIT / TONNE", angle: 30, delay: 0.7 }, // Bottom-Right
   ];
+
+  const centerRadius = 90; // px - core circle radius
+  const satelliteRadius = 50; // px - satellite circle radius
+  const orbitDistance = 180; // px - distance from center to satellites
 
   return (
     <section 
@@ -18,14 +22,14 @@ export const EngineeringBlueprint = () => {
       className="relative py-24 md:py-32 overflow-hidden"
       style={{ backgroundColor: '#FFFFFF' }}
     >
-      {/* Concentric Rings Background */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      {/* Concentric Ripple Background */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: '-10%' }}>
         <svg 
-          className="w-full h-full max-w-5xl" 
+          className="w-full h-full max-w-4xl" 
           viewBox="0 0 800 800"
-          style={{ opacity: 0.08 }}
+          style={{ opacity: 0.06 }}
         >
-          {[100, 180, 260, 340, 420].map((r, i) => (
+          {[80, 160, 240, 320, 400, 480].map((r, i) => (
             <circle
               key={i}
               cx="400"
@@ -33,7 +37,7 @@ export const EngineeringBlueprint = () => {
               r={r}
               fill="none"
               stroke="#00BFA5"
-              strokeWidth="1.5"
+              strokeWidth="1"
             />
           ))}
         </svg>
@@ -42,7 +46,7 @@ export const EngineeringBlueprint = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -51,56 +55,74 @@ export const EngineeringBlueprint = () => {
             className="text-xs uppercase tracking-[0.3em] mb-3"
             style={{ color: '#00BFA5', fontFamily: '"Roboto Mono", monospace' }}
           >
-            THE CIRCULAR ECONOMY ENGINE
+            THE MOLECULAR SYSTEM
           </p>
           <h2 
             className="text-3xl md:text-4xl font-bold"
             style={{ color: '#1A1A1A' }}
           >
-            Closing the Loop
+            Connected Ecosystem
           </h2>
         </motion.div>
 
-        {/* Orbital System */}
-        <div className="relative w-full max-w-3xl mx-auto aspect-square">
+        {/* Hub & Spoke System */}
+        <div className="relative w-full max-w-lg mx-auto" style={{ height: '420px' }}>
           
-          {/* SVG for orbital paths and connections */}
+          {/* SVG Layer for Connector Lines */}
           <svg 
             className="absolute inset-0 w-full h-full"
-            viewBox="0 0 600 600"
+            viewBox="0 0 400 420"
+            preserveAspectRatio="xMidYMid meet"
           >
-            {/* Orbital Ring */}
-            <motion.circle
-              cx="300"
-              cy="300"
-              r="200"
-              fill="none"
-              stroke="#00BFA5"
-              strokeWidth="1"
-              strokeDasharray="8 4"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 0.3, scale: 1 } : {}}
-              transition={{ duration: 0.8 }}
-            />
-
-            {/* Connection Lines to Satellites */}
+            {/* Connector Lines from satellites to center */}
             {satellites.map((sat, i) => {
               const rad = (sat.angle * Math.PI) / 180;
-              const x2 = 300 + Math.cos(rad) * 200;
-              const y2 = 300 + Math.sin(rad) * 200;
+              // Center point
+              const cx = 200;
+              const cy = 180;
+              // Satellite center position
+              const sx = cx + Math.cos(rad) * orbitDistance;
+              const sy = cy + Math.sin(rad) * orbitDistance;
+              // Calculate line endpoints (from edge of center to edge of satellite)
+              const lineStartX = cx + Math.cos(rad) * (centerRadius * 0.55);
+              const lineStartY = cy + Math.sin(rad) * (centerRadius * 0.55);
+              const lineEndX = sx - Math.cos(rad) * (satelliteRadius * 0.55);
+              const lineEndY = sy - Math.sin(rad) * (satelliteRadius * 0.55);
+
               return (
                 <motion.line
                   key={i}
-                  x1="300"
-                  y1="300"
-                  x2={x2}
-                  y2={y2}
-                  stroke="#00BFA5"
-                  strokeWidth="1"
-                  strokeDasharray="4 4"
-                  initial={{ opacity: 0, pathLength: 0 }}
-                  animate={isInView ? { opacity: 0.4, pathLength: 1 } : {}}
-                  transition={{ duration: 0.6, delay: sat.delay }}
+                  x1={lineStartX}
+                  y1={lineStartY}
+                  x2={lineEndX}
+                  y2={lineEndY}
+                  stroke="#CCCCCC"
+                  strokeWidth="2"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
+                  transition={{ duration: 0.8, delay: sat.delay - 0.2 }}
+                />
+              );
+            })}
+
+            {/* Connection dots at line ends */}
+            {satellites.map((sat, i) => {
+              const rad = (sat.angle * Math.PI) / 180;
+              const cx = 200;
+              const cy = 180;
+              const dotX = cx + Math.cos(rad) * (centerRadius * 0.55);
+              const dotY = cy + Math.sin(rad) * (centerRadius * 0.55);
+
+              return (
+                <motion.circle
+                  key={`dot-${i}`}
+                  cx={dotX}
+                  cy={dotY}
+                  r="4"
+                  fill="#00BFA5"
+                  initial={{ scale: 0 }}
+                  animate={isInView ? { scale: 1 } : {}}
+                  transition={{ duration: 0.3, delay: sat.delay }}
                 />
               );
             })}
@@ -108,26 +130,32 @@ export const EngineeringBlueprint = () => {
 
           {/* Central Core - $180B+ */}
           <motion.div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+            className="absolute left-1/2 z-20"
+            style={{ 
+              top: '180px',
+              transform: 'translate(-50%, -50%)',
+              width: `${centerRadius * 2}px`,
+              height: `${centerRadius * 2}px`
+            }}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
           >
             <div 
-              className="w-40 h-40 md:w-52 md:h-52 rounded-full flex flex-col items-center justify-center shadow-2xl"
+              className="w-full h-full rounded-full flex flex-col items-center justify-center"
               style={{ 
                 background: 'linear-gradient(145deg, #1A1A1A 0%, #0A0A0A 100%)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.1)'
+                boxShadow: '0 20px 60px -15px rgba(0, 0, 0, 0.5)'
               }}
             >
               <span 
-                className="text-4xl md:text-5xl font-black text-white leading-none"
+                className="text-3xl md:text-4xl font-black text-white leading-none"
                 style={{ fontFamily: '"Inter", sans-serif' }}
               >
                 $180B+
               </span>
               <span 
-                className="text-xs uppercase tracking-[0.2em] mt-2"
+                className="text-[9px] uppercase tracking-[0.15em] mt-1.5 text-center px-2"
                 style={{ color: '#00BFA5', fontFamily: '"Roboto Mono", monospace' }}
               >
                 GLOBAL VALUE
@@ -138,10 +166,10 @@ export const EngineeringBlueprint = () => {
           {/* Orbiting Satellites */}
           {satellites.map((sat, i) => {
             const rad = (sat.angle * Math.PI) / 180;
-            // Position on the orbital path (radius ~33% from center)
-            const orbitRadius = 33; // percentage
-            const left = 50 + Math.cos(rad) * orbitRadius;
-            const top = 50 + Math.sin(rad) * orbitRadius;
+            const cx = 50; // center percentage
+            const cy = 180 / 420 * 100; // center y percentage
+            const left = cx + (Math.cos(rad) * orbitDistance) / 4; // scale to percentage
+            const top = (180 + Math.sin(rad) * orbitDistance) / 420 * 100;
 
             return (
               <motion.div
@@ -150,7 +178,9 @@ export const EngineeringBlueprint = () => {
                 style={{
                   left: `${left}%`,
                   top: `${top}%`,
-                  transform: 'translate(-50%, -50%)'
+                  transform: 'translate(-50%, -50%)',
+                  width: `${satelliteRadius * 2}px`,
+                  height: `${satelliteRadius * 2}px`
                 }}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -162,22 +192,22 @@ export const EngineeringBlueprint = () => {
                 }}
               >
                 <div 
-                  className="w-24 h-24 md:w-32 md:h-32 rounded-full flex flex-col items-center justify-center backdrop-blur-sm"
+                  className="w-full h-full rounded-full flex flex-col items-center justify-center"
                   style={{ 
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    border: '2px solid #00BFA5',
-                    boxShadow: '0 10px 40px -10px rgba(0, 191, 165, 0.3)'
+                    background: '#FFFFFF',
+                    border: '1.5px solid #DDDDDD',
+                    boxShadow: '0 8px 30px -8px rgba(0, 0, 0, 0.12)'
                   }}
                 >
                   <span 
-                    className="text-lg md:text-2xl font-black leading-none"
+                    className="text-sm md:text-base font-bold leading-none"
                     style={{ color: '#1A1A1A', fontFamily: '"Inter", sans-serif' }}
                   >
                     {sat.value}
                   </span>
                   <span 
-                    className="text-[8px] md:text-[10px] uppercase tracking-wider mt-1 text-center px-2"
-                    style={{ color: '#666666', fontFamily: '"Roboto Mono", monospace' }}
+                    className="text-[7px] uppercase tracking-wider mt-1 text-center px-1 leading-tight"
+                    style={{ color: '#888888', fontFamily: '"Roboto Mono", monospace' }}
                   >
                     {sat.label}
                   </span>
@@ -185,64 +215,93 @@ export const EngineeringBlueprint = () => {
               </motion.div>
             );
           })}
+
+          {/* Narrative text below the system */}
+          <motion.p
+            className="absolute bottom-0 left-0 right-0 text-center text-sm"
+            style={{ color: '#666666' }}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.9 }}
+          >
+            The inevitable result of circular efficiency
+          </motion.p>
         </div>
 
-        {/* Outer Arc - Break the Cycle */}
+        {/* Bottom Anchor - Arc Meter */}
         <motion.div
-          className="mt-16 md:mt-24 max-w-2xl mx-auto"
+          className="mt-20 md:mt-24 max-w-lg mx-auto"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 1 }}
         >
-          {/* Arc Progress Visualization */}
-          <div className="relative flex justify-center mb-6">
+          {/* Label */}
+          <p 
+            className="text-center text-xs uppercase tracking-[0.2em] mb-6"
+            style={{ color: '#888888', fontFamily: '"Roboto Mono", monospace' }}
+          >
+            CURRENT INDUSTRY STATUS: BREAK THE CYCLE
+          </p>
+
+          {/* Arc Gauge */}
+          <div className="relative flex justify-center">
             <svg 
-              width="400" 
-              height="120" 
-              viewBox="0 0 400 120"
-              className="w-full max-w-md"
+              width="320" 
+              height="100" 
+              viewBox="0 0 320 100"
+              className="w-full max-w-xs"
             >
-              {/* Background Arc - 91% Lost (Grey) */}
+              {/* Background Arc - Full gauge track */}
               <path
-                d="M 30 100 A 170 170 0 0 1 370 100"
+                d="M 20 90 A 140 140 0 0 1 300 90"
                 fill="none"
-                stroke="#E5E5E5"
-                strokeWidth="16"
+                stroke="#E8E8E8"
+                strokeWidth="14"
                 strokeLinecap="round"
               />
               
-              {/* Teal Arc - 9% Recycled (on the right side) */}
+              {/* Grey Arc - 91% Lost */}
               <motion.path
-                d="M 338 85 A 170 170 0 0 1 370 100"
+                d="M 20 90 A 140 140 0 0 1 275 65"
                 fill="none"
-                stroke="#00BFA5"
-                strokeWidth="16"
+                stroke="#C0C0C0"
+                strokeWidth="14"
                 strokeLinecap="round"
                 initial={{ pathLength: 0 }}
                 animate={isInView ? { pathLength: 1 } : {}}
-                transition={{ duration: 1, delay: 1 }}
+                transition={{ duration: 1.2, delay: 1.1 }}
+              />
+              
+              {/* Teal Arc - 9% Recycled */}
+              <motion.path
+                d="M 280 70 A 140 140 0 0 1 300 90"
+                fill="none"
+                stroke="#00BFA5"
+                strokeWidth="14"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={isInView ? { pathLength: 1 } : {}}
+                transition={{ duration: 0.5, delay: 1.4 }}
               />
 
-              {/* Labels */}
+              {/* Percentage Labels */}
               <text 
-                x="80" 
-                y="70" 
-                fill="#888888" 
+                x="70" 
+                y="55" 
+                fill="#999999" 
                 fontSize="11" 
                 fontFamily="'Roboto Mono', monospace"
-                textAnchor="middle"
               >
                 91% LOST
               </text>
               
               <text 
-                x="340" 
-                y="70" 
+                x="255" 
+                y="40" 
                 fill="#00BFA5" 
                 fontSize="11" 
                 fontFamily="'Roboto Mono', monospace"
-                textAnchor="middle"
-                fontWeight="bold"
+                fontWeight="600"
               >
                 9%
               </text>
@@ -251,16 +310,11 @@ export const EngineeringBlueprint = () => {
 
           {/* Caption */}
           <p 
-            className="text-center text-base md:text-lg"
+            className="text-center text-base mt-6"
             style={{ color: '#444444' }}
           >
-            <span style={{ color: '#00BFA5', fontWeight: 600 }}>Closing the loop</span> on global mismanagement
-          </p>
-          <p 
-            className="text-center text-sm mt-2"
-            style={{ color: '#888888' }}
-          >
-            We capture what others waste—turning liability into value.
+            We capture what others waste—
+            <span style={{ color: '#00BFA5', fontWeight: 600 }}> closing the loop</span>.
           </p>
         </motion.div>
       </div>
