@@ -1,20 +1,17 @@
 import { Link } from "react-router-dom";
-import { TrendingUp, DollarSign, Leaf, RefreshCw, Globe, ChevronDown, Mail } from "lucide-react";
+import { Leaf, ChevronDown, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import CountUpMetric from "@/components/CountUpMetric";
 import { EcoForgePipeline } from "@/components/EcoForgePipeline";
-import { OpportunityCard } from "@/components/OpportunityCard";
+import { EngineeringBlueprint } from "@/components/EngineeringBlueprint";
 import heroMountainLake from "@/assets/hero-mountain-lake.png";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const opportunityRef = useRef(null);
   const footerRef = useRef(null);
 
-  const isOpportunityInView = useInView(opportunityRef, { amount: 0.1, once: true });
   const isFooterInView = useInView(footerRef, { amount: 0.3, once: true });
 
   return (
@@ -149,99 +146,8 @@ const Home = () => {
       {/* ECOFORGE PIPELINE */}
       <EcoForgePipeline />
 
-      {/* THE OPPORTUNITY - Immersive Vertical Cards */}
-      <section ref={opportunityRef} className="py-20 md:py-32 bg-background">
-        <div className="container mx-auto px-4 max-w-4xl">
-          {/* Section Header */}
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isOpportunityInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-              Unlock the Untapped Opportunity
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Plastic waste isn't a problem—it's a $180B+ annual goldmine. We transform it with precision.
-            </p>
-          </motion.div>
-
-          {/* Vertical Stacked Cards */}
-          <div className="space-y-8">
-            <OpportunityCard
-              icon={TrendingUp}
-              headline="300M+ Tonnes Available Annually"
-              description="Ready for conversion into circular economy wins. Global plastic production creates a continuous stream of feedstock for transformation."
-              index={0}
-              isInView={isOpportunityInView}
-              iconColor="text-emerald-300"
-            />
-
-            <OpportunityCard
-              icon={DollarSign}
-              headline="$600-800 Profit Per Tonne"
-              description="Turn liability into high-yield assets via advanced conversion. Our process creates premium value from waste others pay to dispose."
-              index={1}
-              isInView={isOpportunityInView}
-              iconColor="text-amber-400"
-              accentColor="from-amber-600/80 to-amber-500/70"
-            >
-              <div className="mt-4 text-3xl font-bold text-white">
-                <CountUpMetric end={700} prefix="$" suffix="/tonne" />
-              </div>
-            </OpportunityCard>
-
-            <OpportunityCard
-              icon={Leaf}
-              headline="70-85% GHG Reduction Per Tonne"
-              description="Equivalent to removing 1M+ cars from roads yearly—cleaner air, bolder future. Every tonne processed is a tonne saved from landfill or ocean."
-              index={2}
-              isInView={isOpportunityInView}
-              iconColor="text-green-300"
-              accentColor="from-emerald-700/80 to-emerald-500/70"
-            />
-
-            <OpportunityCard
-              icon={RefreshCw}
-              headline="Break the Cycle"
-              description="Globally: 9% recycled, 50% landfilled, 22% mismanaged, 19% incinerated. We capture what others waste—closing the loop on global mismanagement."
-              index={3}
-              isInView={isOpportunityInView}
-              iconColor="text-teal-300"
-              accentColor="from-teal-700/80 to-cyan-600/70"
-            >
-              <div className="mt-4 flex flex-wrap gap-3">
-                {[
-                  { label: "Recycled", value: "9%", color: "bg-green-500" },
-                  { label: "Landfilled", value: "50%", color: "bg-gray-500" },
-                  { label: "Mismanaged", value: "22%", color: "bg-red-500" },
-                  { label: "Incinerated", value: "19%", color: "bg-orange-500" }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1">
-                    <div className={`w-2 h-2 rounded-full ${item.color}`} />
-                    <span className="text-white text-sm">{item.value} {item.label}</span>
-                  </div>
-                ))}
-              </div>
-            </OpportunityCard>
-
-            <OpportunityCard
-              icon={Globe}
-              headline="$180B+ Global Value Unlock"
-              description="Economic transformation meets environmental restoration at scale. The opportunity is global, the solution is here."
-              index={4}
-              isInView={isOpportunityInView}
-              iconColor="text-blue-300"
-              accentColor="from-blue-700/80 to-indigo-600/70"
-            >
-              <div className="mt-4 text-3xl font-bold text-white">
-                <CountUpMetric end={180} prefix="$" suffix="B+" showMillionsToBillions />
-              </div>
-            </OpportunityCard>
-          </div>
-        </div>
-      </section>
+      {/* ENGINEERING BLUEPRINT - The Math Behind the Magic */}
+      <EngineeringBlueprint />
 
       {/* FOOTER CTA SECTION */}
       <section 
