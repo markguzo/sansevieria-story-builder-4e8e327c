@@ -5,278 +5,263 @@ export const EngineeringBlueprint = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { amount: 0.2, once: true });
 
+  // Satellite data
+  const satellites = [
+    { value: "300M+", label: "TONNES / YR", angle: 210, delay: 0.2 },
+    { value: "$600-800", label: "PROFIT / TONNE", angle: 330, delay: 0.4 },
+    { value: "85%", label: "GHG REDUCTION", angle: 90, delay: 0.6 },
+  ];
+
   return (
     <section 
       ref={sectionRef}
-      className="relative py-20 md:py-32 overflow-hidden"
+      className="relative py-24 md:py-32 overflow-hidden"
       style={{ backgroundColor: '#FFFFFF' }}
     >
-      {/* Grid Lines Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Vertical Lines */}
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={`v-${i}`}
-            className="absolute top-0 bottom-0 w-px"
-            style={{
-              left: `${(i + 1) * 8.33}%`,
-              backgroundColor: '#E5E5E5'
-            }}
-          />
-        ))}
-        {/* Horizontal Lines */}
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={`h-${i}`}
-            className="absolute left-0 right-0 h-px"
-            style={{
-              top: `${(i + 1) * 12.5}%`,
-              backgroundColor: '#E5E5E5'
-            }}
-          />
-        ))}
-        {/* Grid Intersection Markers */}
-        {[...Array(12)].map((_, vi) =>
-          [...Array(8)].map((_, hi) => (
-            <span
-              key={`marker-${vi}-${hi}`}
-              className="absolute text-xs font-light select-none"
-              style={{
-                left: `calc(${(vi + 1) * 8.33}% - 4px)`,
-                top: `calc(${(hi + 1) * 12.5}% - 6px)`,
-                color: '#00BFA5',
-                fontSize: '10px',
-                lineHeight: 1
-              }}
-            >
-              +
-            </span>
-          ))
-        )}
+      {/* Concentric Rings Background */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <svg 
+          className="w-full h-full max-w-5xl" 
+          viewBox="0 0 800 800"
+          style={{ opacity: 0.08 }}
+        >
+          {[100, 180, 260, 340, 420].map((r, i) => (
+            <circle
+              key={i}
+              cx="400"
+              cy="400"
+              r={r}
+              fill="none"
+              stroke="#00BFA5"
+              strokeWidth="1.5"
+            />
+          ))}
+        </svg>
       </div>
 
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          
-          {/* HERO CELL - $180B+ (Spans 2 rows on desktop) */}
-          <motion.div
-            className="lg:row-span-2 flex flex-col justify-center p-8 md:p-12"
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <p 
-              className="text-xs uppercase tracking-[0.2em] mb-4"
-              style={{ 
-                fontFamily: '"Roboto Mono", "Courier New", monospace',
-                color: '#555555'
-              }}
-            >
-              GLOBAL VALUE UNLOCK
-            </p>
-            <h2 
-              className="text-6xl md:text-7xl lg:text-8xl font-black leading-none mb-6"
-              style={{ 
-                fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-                color: '#0A0A0A'
-              }}
-            >
-              $180B+
-            </h2>
-            <p 
-              className="text-base md:text-lg leading-relaxed max-w-md"
-              style={{ color: '#444444' }}
-            >
-              Plastic waste isn't a problem—it's a goldmine. Economic transformation meets environmental restoration at scale.
-            </p>
-          </motion.div>
-
-          {/* TOP RIGHT - 300M+ */}
-          <motion.div
-            className="lg:col-span-2 p-8 md:p-10 border-l-0 lg:border-l"
-            style={{ borderColor: '#E5E5E5' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <p 
-              className="text-xs uppercase tracking-[0.2em] mb-3"
-              style={{ 
-                fontFamily: '"Roboto Mono", "Courier New", monospace',
-                color: '#555555'
-              }}
-            >
-              TONNES AVAILABLE / YR
-            </p>
-            <h3 
-              className="text-4xl md:text-5xl font-black mb-4"
-              style={{ 
-                fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-                color: '#0A0A0A'
-              }}
-            >
-              300M+
-            </h3>
-            <p 
-              className="text-sm md:text-base leading-relaxed max-w-lg"
-              style={{ color: '#666666' }}
-            >
-              Global plastic production creates a continuous stream of feedstock ready for conversion.
-            </p>
-          </motion.div>
-
-          {/* MIDDLE RIGHT - $600-800 */}
-          <motion.div
-            className="p-8 md:p-10 border-l-0 lg:border-l border-t lg:border-t-0"
-            style={{ borderColor: '#E5E5E5' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <p 
-              className="text-xs uppercase tracking-[0.2em] mb-3"
-              style={{ 
-                fontFamily: '"Roboto Mono", "Courier New", monospace',
-                color: '#555555'
-              }}
-            >
-              PROFIT PER TONNE
-            </p>
-            <h3 
-              className="text-4xl md:text-5xl font-black mb-4"
-              style={{ 
-                fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-                color: '#0A0A0A'
-              }}
-            >
-              $600-800
-            </h3>
-            <p 
-              className="text-sm md:text-base leading-relaxed"
-              style={{ color: '#666666' }}
-            >
-              Turning liability into high-yield assets. Premium value created from waste.
-            </p>
-          </motion.div>
-
-          {/* BOTTOM RIGHT - 85% */}
-          <motion.div
-            className="p-8 md:p-10 border-l-0 lg:border-l border-t lg:border-t-0"
-            style={{ borderColor: '#E5E5E5' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <p 
-              className="text-xs uppercase tracking-[0.2em] mb-3"
-              style={{ 
-                fontFamily: '"Roboto Mono", "Courier New", monospace',
-                color: '#555555'
-              }}
-            >
-              GHG REDUCTION
-            </p>
-            <h3 
-              className="text-4xl md:text-5xl font-black mb-4"
-              style={{ 
-                fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-                color: '#0A0A0A'
-              }}
-            >
-              85%
-            </h3>
-            <p 
-              className="text-sm md:text-base leading-relaxed"
-              style={{ color: '#666666' }}
-            >
-              Equivalent to removing 1M+ cars from roads yearly. Cleaner air, bolder future.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* BOTTOM FULL-WIDTH STRIP - Break the Cycle */}
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
         <motion.div
-          className="mt-16 md:mt-20 pt-12 border-t"
-          style={{ borderColor: '#E5E5E5' }}
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6 }}
         >
           <p 
-            className="text-xs uppercase tracking-[0.2em] mb-8 text-center"
-            style={{ 
-              fontFamily: '"Roboto Mono", "Courier New", monospace',
-              color: '#555555'
-            }}
+            className="text-xs uppercase tracking-[0.3em] mb-3"
+            style={{ color: '#00BFA5', fontFamily: '"Roboto Mono", monospace' }}
           >
-            CURRENT INDUSTRY STATUS: BREAK THE CYCLE
+            THE CIRCULAR ECONOMY ENGINE
           </p>
+          <h2 
+            className="text-3xl md:text-4xl font-bold"
+            style={{ color: '#1A1A1A' }}
+          >
+            Closing the Loop
+          </h2>
+        </motion.div>
 
-          {/* Progress Bar Chart */}
-          <div className="max-w-4xl mx-auto">
-            <div className="flex h-12 md:h-16 rounded-sm overflow-hidden">
-              {/* Lost Segment - 91% */}
-              <div 
-                className="relative flex items-center justify-center"
-                style={{ 
-                  width: '91%',
-                  background: 'repeating-linear-gradient(45deg, #D1D5DB, #D1D5DB 4px, #E5E7EB 4px, #E5E7EB 8px)'
-                }}
-              >
-                <span 
-                  className="text-xs md:text-sm font-medium px-2 text-center"
-                  style={{ color: '#374151' }}
-                >
-                  91% LOST (Landfilled / Incinerated)
-                </span>
-              </div>
-              
-              {/* Recycled Segment - 9% */}
-              <div 
-                className="relative flex items-center justify-center"
-                style={{ 
-                  width: '9%',
-                  backgroundColor: '#00BFA5'
-                }}
-              >
-                <span 
-                  className="text-xs md:text-sm font-bold text-white hidden md:block"
-                  style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
-                >
-                  9%
-                </span>
-              </div>
-            </div>
+        {/* Orbital System */}
+        <div className="relative w-full max-w-3xl mx-auto aspect-square">
+          
+          {/* SVG for orbital paths and connections */}
+          <svg 
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 600 600"
+          >
+            {/* Orbital Ring */}
+            <motion.circle
+              cx="300"
+              cy="300"
+              r="200"
+              fill="none"
+              stroke="#00BFA5"
+              strokeWidth="1"
+              strokeDasharray="8 4"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 0.3, scale: 1 } : {}}
+              transition={{ duration: 0.8 }}
+            />
 
-            {/* Legend */}
-            <div className="flex justify-between mt-4 text-xs" style={{ color: '#666666' }}>
-              <div className="flex items-center gap-2">
-                <div 
-                  className="w-4 h-4 rounded-sm"
-                  style={{ 
-                    background: 'repeating-linear-gradient(45deg, #D1D5DB, #D1D5DB 2px, #E5E7EB 2px, #E5E7EB 4px)'
-                  }}
+            {/* Connection Lines to Satellites */}
+            {satellites.map((sat, i) => {
+              const rad = (sat.angle * Math.PI) / 180;
+              const x2 = 300 + Math.cos(rad) * 200;
+              const y2 = 300 + Math.sin(rad) * 200;
+              return (
+                <motion.line
+                  key={i}
+                  x1="300"
+                  y1="300"
+                  x2={x2}
+                  y2={y2}
+                  stroke="#00BFA5"
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
+                  initial={{ opacity: 0, pathLength: 0 }}
+                  animate={isInView ? { opacity: 0.4, pathLength: 1 } : {}}
+                  transition={{ duration: 0.6, delay: sat.delay }}
                 />
-                <span style={{ fontFamily: '"Roboto Mono", monospace' }}>LOST</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div 
-                  className="w-4 h-4 rounded-sm"
-                  style={{ backgroundColor: '#00BFA5' }}
-                />
-                <span style={{ fontFamily: '"Roboto Mono", monospace' }}>CURRENTLY RECYCLED</span>
-              </div>
-            </div>
+              );
+            })}
+          </svg>
 
-            {/* Caption */}
-            <p 
-              className="text-center mt-8 text-sm md:text-base max-w-2xl mx-auto"
-              style={{ color: '#444444' }}
+          {/* Central Core - $180B+ */}
+          <motion.div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+          >
+            <div 
+              className="w-40 h-40 md:w-52 md:h-52 rounded-full flex flex-col items-center justify-center shadow-2xl"
+              style={{ 
+                background: 'linear-gradient(145deg, #1A1A1A 0%, #0A0A0A 100%)',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.1)'
+              }}
             >
-              We capture what others waste—closing the loop on global mismanagement.
-            </p>
+              <span 
+                className="text-4xl md:text-5xl font-black text-white leading-none"
+                style={{ fontFamily: '"Inter", sans-serif' }}
+              >
+                $180B+
+              </span>
+              <span 
+                className="text-xs uppercase tracking-[0.2em] mt-2"
+                style={{ color: '#00BFA5', fontFamily: '"Roboto Mono", monospace' }}
+              >
+                GLOBAL VALUE
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Orbiting Satellites */}
+          {satellites.map((sat, i) => {
+            const rad = (sat.angle * Math.PI) / 180;
+            // Position on the orbital path (radius ~33% from center)
+            const orbitRadius = 33; // percentage
+            const left = 50 + Math.cos(rad) * orbitRadius;
+            const top = 50 + Math.sin(rad) * orbitRadius;
+
+            return (
+              <motion.div
+                key={i}
+                className="absolute z-10"
+                style={{
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  transform: 'translate(-50%, -50%)'
+                }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: sat.delay,
+                  type: "spring",
+                  stiffness: 120
+                }}
+              >
+                <div 
+                  className="w-24 h-24 md:w-32 md:h-32 rounded-full flex flex-col items-center justify-center backdrop-blur-sm"
+                  style={{ 
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    border: '2px solid #00BFA5',
+                    boxShadow: '0 10px 40px -10px rgba(0, 191, 165, 0.3)'
+                  }}
+                >
+                  <span 
+                    className="text-lg md:text-2xl font-black leading-none"
+                    style={{ color: '#1A1A1A', fontFamily: '"Inter", sans-serif' }}
+                  >
+                    {sat.value}
+                  </span>
+                  <span 
+                    className="text-[8px] md:text-[10px] uppercase tracking-wider mt-1 text-center px-2"
+                    style={{ color: '#666666', fontFamily: '"Roboto Mono", monospace' }}
+                  >
+                    {sat.label}
+                  </span>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Outer Arc - Break the Cycle */}
+        <motion.div
+          className="mt-16 md:mt-24 max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          {/* Arc Progress Visualization */}
+          <div className="relative flex justify-center mb-6">
+            <svg 
+              width="400" 
+              height="120" 
+              viewBox="0 0 400 120"
+              className="w-full max-w-md"
+            >
+              {/* Background Arc - 91% Lost (Grey) */}
+              <path
+                d="M 30 100 A 170 170 0 0 1 370 100"
+                fill="none"
+                stroke="#E5E5E5"
+                strokeWidth="16"
+                strokeLinecap="round"
+              />
+              
+              {/* Teal Arc - 9% Recycled (on the right side) */}
+              <motion.path
+                d="M 338 85 A 170 170 0 0 1 370 100"
+                fill="none"
+                stroke="#00BFA5"
+                strokeWidth="16"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={isInView ? { pathLength: 1 } : {}}
+                transition={{ duration: 1, delay: 1 }}
+              />
+
+              {/* Labels */}
+              <text 
+                x="80" 
+                y="70" 
+                fill="#888888" 
+                fontSize="11" 
+                fontFamily="'Roboto Mono', monospace"
+                textAnchor="middle"
+              >
+                91% LOST
+              </text>
+              
+              <text 
+                x="340" 
+                y="70" 
+                fill="#00BFA5" 
+                fontSize="11" 
+                fontFamily="'Roboto Mono', monospace"
+                textAnchor="middle"
+                fontWeight="bold"
+              >
+                9%
+              </text>
+            </svg>
           </div>
+
+          {/* Caption */}
+          <p 
+            className="text-center text-base md:text-lg"
+            style={{ color: '#444444' }}
+          >
+            <span style={{ color: '#00BFA5', fontWeight: 600 }}>Closing the loop</span> on global mismanagement
+          </p>
+          <p 
+            className="text-center text-sm mt-2"
+            style={{ color: '#888888' }}
+          >
+            We capture what others waste—turning liability into value.
+          </p>
         </motion.div>
       </div>
     </section>
