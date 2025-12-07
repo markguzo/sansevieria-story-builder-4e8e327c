@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { EcoForgePipeline } from "@/components/EcoForgePipeline";
-import { EngineeringBlueprint } from "@/components/EngineeringBlueprint";
 import PlasticCrisisInfographic from "@/components/PlasticCrisisInfographic";
 import heroMountainLake from "@/assets/hero-mountain-lake.png";
 
@@ -146,9 +145,6 @@ const Home = () => {
 
       {/* ECOFORGE PIPELINE */}
       <EcoForgePipeline />
-
-      {/* ENGINEERING BLUEPRINT - The Math Behind the Magic */}
-      <EngineeringBlueprint />
 
       {/* PLASTIC CRISIS INFOGRAPHIC */}
       <PlasticCrisisInfographic />
