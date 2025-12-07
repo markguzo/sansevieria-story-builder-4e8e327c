@@ -7,7 +7,7 @@ import { useRef } from "react";
 import { EcoForgePipeline } from "@/components/EcoForgePipeline";
 import { EngineeringBlueprint } from "@/components/EngineeringBlueprint";
 import PlasticCrisisInfographic from "@/components/PlasticCrisisInfographic";
-import { InnovationArc } from "@/components/InnovationArc";
+import { TRLStatusGauge } from "@/components/TRLStatusGauge";
 import heroMountainLake from "@/assets/hero-mountain-lake.png";
 
 const Home = () => {
@@ -154,8 +154,8 @@ const Home = () => {
       {/* PLASTIC CRISIS INFOGRAPHIC */}
       <PlasticCrisisInfographic />
 
-      {/* INNOVATION ARC - Our Journey */}
-      <InnovationArc />
+      {/* TRL STATUS GAUGE */}
+      <TRLStatusGauge />
 
       {/* FOOTER CTA SECTION */}
       <section 
