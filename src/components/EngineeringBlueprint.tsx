@@ -11,8 +11,8 @@ export const EngineeringBlueprint = () => {
       position: "top",
       headline: "300M+",
       subtext: "Tonnes",
-      label: "Available Annually",
-      detail: "Continuous global feedstock stream ready for conversion.",
+      label: "Available / YR",
+      detail: "Continuous global feedstock.",
       delay: 0.4
     },
     {
@@ -20,15 +20,15 @@ export const EngineeringBlueprint = () => {
       headline: "70-85%",
       subtext: "",
       label: "GHG Reduction",
-      detail: "Equivalent to removing 1M+ cars from roads yearly.",
+      detail: "Cleaner than virgin fossil fuels.",
       delay: 0.6
     },
     {
       position: "bottom-right",
       headline: "$600-800",
       subtext: "",
-      label: "Profit Per Tonne",
-      detail: "High-yield asset conversion. Premium value from waste.",
+      label: "Profit / Tonne",
+      detail: "High-yield asset conversion.",
       delay: 0.8
     }
   ];
@@ -61,6 +61,32 @@ export const EngineeringBlueprint = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
+        
+        {/* Section Title */}
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 
+            className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight"
+            style={{ 
+              color: '#0A0A0A',
+              fontFamily: '"Inter", system-ui, sans-serif',
+              letterSpacing: '-0.02em'
+            }}
+          >
+            The Global Opportunity
+          </h2>
+          <p 
+            className="text-lg md:text-xl mt-4 max-w-xl mx-auto"
+            style={{ color: '#666666' }}
+          >
+            Turning a global waste problem into a{' '}
+            <span style={{ color: '#00BFA5', fontWeight: 700 }}>$180B advantage</span>.
+          </p>
+        </motion.div>
         
         {/* Main Orbital System */}
         <div className="relative max-w-4xl mx-auto">
@@ -191,13 +217,13 @@ export const EngineeringBlueprint = () => {
                 className="text-xs uppercase tracking-[0.15em] mt-1"
                 style={{ color: '#888888' }}
               >
-                Available Annually
+                Available / YR
               </p>
               <p 
                 className="text-xs mt-1 max-w-[200px] mx-auto hidden md:block"
                 style={{ color: '#AAAAAA' }}
               >
-                Continuous global feedstock stream ready for conversion.
+                Continuous global feedstock.
               </p>
             </motion.div>
 
@@ -229,7 +255,7 @@ export const EngineeringBlueprint = () => {
                 className="text-xs mt-1 max-w-[180px] hidden md:block"
                 style={{ color: '#AAAAAA' }}
               >
-                Equivalent to removing 1M+ cars from roads yearly.
+                Cleaner than virgin fossil fuels.
               </p>
             </motion.div>
 
@@ -255,13 +281,13 @@ export const EngineeringBlueprint = () => {
                 className="text-xs uppercase tracking-[0.15em] mt-1"
                 style={{ color: '#888888' }}
               >
-                Profit Per Tonne
+                Profit / Tonne
               </p>
               <p 
                 className="text-xs mt-1 max-w-[180px] ml-auto hidden md:block"
                 style={{ color: '#AAAAAA' }}
               >
-                High-yield asset conversion. Premium value from waste.
+                High-yield asset conversion.
               </p>
             </motion.div>
           </div>
@@ -279,7 +305,7 @@ export const EngineeringBlueprint = () => {
             className="text-center text-xs uppercase tracking-[0.25em] mb-6"
             style={{ color: '#888888' }}
           >
-            BREAK THE CYCLE
+            CURRENT STATUS: BREAK THE CYCLE
           </p>
 
           {/* Modern Progress Bar */}
@@ -308,22 +334,17 @@ export const EngineeringBlueprint = () => {
 
           {/* Labels */}
           <div className="flex justify-between mt-4 text-xs" style={{ color: '#888888' }}>
-            <span>91% LOST (Landfilled / Incinerated)</span>
+            <span>91% LOST</span>
             <span style={{ color: '#00BFA5', fontWeight: 600 }}>9% RECYCLED</span>
           </div>
 
-          {/* Data Readout */}
+          {/* Simplified Caption */}
           <p 
-            className="text-center text-xs mt-6"
-            style={{ color: '#AAAAAA' }}
+            className="text-center text-sm md:text-base mt-6"
+            style={{ color: '#666666' }}
           >
-            Globally: 50% Landfilled • 22% Mismanaged • 19% Incinerated
-          </p>
-          <p 
-            className="text-center text-sm mt-2"
-            style={{ color: '#0A0A0A' }}
-          >
-            <span style={{ color: '#00BFA5', fontWeight: 600 }}>We capture the lost 91%.</span>
+            We capture what others waste—
+            <span style={{ color: '#00BFA5', fontWeight: 600 }}>closing the loop</span>.
           </p>
         </motion.div>
       </div>
