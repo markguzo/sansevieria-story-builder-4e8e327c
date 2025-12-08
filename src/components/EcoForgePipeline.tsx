@@ -7,6 +7,13 @@ export const EcoForgePipeline = () => {
       aria-label="EcoForge Pipeline: From waste to premium outputs"
     >
       <div className="max-w-7xl mx-auto">
+        {/* Section Title */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            Converting Plastic Waste Into Premium Value
+          </h2>
+        </div>
+
         {/* Desktop Layout */}
         <div className="hidden lg:flex items-center justify-between gap-8">
           
@@ -45,8 +52,8 @@ export const EcoForgePipeline = () => {
             <p className="text-sm text-gray-600 mt-1">Any Type of Plastic Waste</p>
           </div>
 
-          {/* Arrow to Black Box */}
-          <div className="flex-shrink-0">
+          {/* Arrow to Black Box with "Transform" label */}
+          <div className="flex-shrink-0 flex flex-col items-center">
             <svg width="60" height="24" viewBox="0 0 60 24">
               <defs>
                 <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -57,6 +64,7 @@ export const EcoForgePipeline = () => {
               <line x1="0" y1="12" x2="45" y2="12" stroke="url(#arrowGradient)" strokeWidth="2" />
               <polygon points="45,6 60,12 45,18" fill="#374151" />
             </svg>
+            <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-2">Transform</span>
           </div>
 
           {/* ZONE 2: THE BLACK BOX */}
@@ -110,21 +118,22 @@ export const EcoForgePipeline = () => {
             </div>
           </div>
 
-          {/* Fanning Arrows */}
-          <div className="flex-shrink-0 relative h-44 w-20">
-            <svg width="80" height="176" viewBox="0 0 80 176" className="absolute top-0 left-0">
+          {/* Fanning Arrows with "Into" label */}
+          <div className="flex-shrink-0 relative h-44 w-20 flex flex-col items-center">
+            <svg width="80" height="150" viewBox="0 0 80 150" className="flex-shrink-0">
               {/* Top arrow */}
-              <line x1="0" y1="88" x2="50" y2="30" stroke="#374151" strokeWidth="2" />
-              <polygon points="50,24 65,30 52,38" fill="#374151" />
+              <line x1="0" y1="75" x2="50" y2="20" stroke="#374151" strokeWidth="2" />
+              <polygon points="50,14 65,20 52,28" fill="#374151" />
               
               {/* Middle arrow */}
-              <line x1="0" y1="88" x2="55" y2="88" stroke="#374151" strokeWidth="2" />
-              <polygon points="55,82 70,88 55,94" fill="#374151" />
+              <line x1="0" y1="75" x2="55" y2="75" stroke="#374151" strokeWidth="2" />
+              <polygon points="55,69 70,75 55,81" fill="#374151" />
               
               {/* Bottom arrow */}
-              <line x1="0" y1="88" x2="50" y2="146" stroke="#374151" strokeWidth="2" />
-              <polygon points="52,138 65,146 50,152" fill="#374151" />
+              <line x1="0" y1="75" x2="50" y2="130" stroke="#374151" strokeWidth="2" />
+              <polygon points="52,122 65,130 50,136" fill="#374151" />
             </svg>
+            <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">Into</span>
           </div>
 
           {/* ZONE 3: VERTICAL OUTPUT STACK */}
