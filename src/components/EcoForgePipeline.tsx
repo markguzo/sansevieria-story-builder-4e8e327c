@@ -7,9 +7,16 @@ export const EcoForgePipeline = () => {
       aria-label="EcoForge Pipeline: From waste to premium outputs"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Section Title */}
+        {/* Section Title - Matching Global Opportunity style */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+          <h2 
+            className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight"
+            style={{ 
+              color: '#0A0A0A',
+              fontFamily: '"Inter", system-ui, sans-serif',
+              letterSpacing: '-0.02em'
+            }}
+          >
             How We Create Premium Value
           </h2>
         </div>
@@ -53,18 +60,20 @@ export const EcoForgePipeline = () => {
           </div>
 
           {/* Arrow to Black Box with "Transform" label */}
-          <div className="flex-shrink-0 flex flex-col items-center">
-            <svg width="60" height="24" viewBox="0 0 60 24">
+          <div className="flex-shrink-0 flex flex-col items-center gap-2">
+            <svg width="80" height="24" viewBox="0 0 80 24">
               <defs>
                 <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#9ca3af" />
                   <stop offset="100%" stopColor="#374151" />
                 </linearGradient>
               </defs>
-              <line x1="0" y1="12" x2="45" y2="12" stroke="url(#arrowGradient)" strokeWidth="2" />
-              <polygon points="45,6 60,12 45,18" fill="#374151" />
+              <line x1="0" y1="12" x2="60" y2="12" stroke="url(#arrowGradient)" strokeWidth="3" />
+              <polygon points="60,5 80,12 60,19" fill="#374151" />
             </svg>
-            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-[0.2em] mt-2">Transform</span>
+            <div className="bg-gray-100 border border-gray-300 rounded px-3 py-1">
+              <span className="text-xs font-bold text-gray-700 uppercase tracking-wider">Transform</span>
+            </div>
           </div>
 
           {/* ZONE 2: THE BLACK BOX */}
@@ -119,21 +128,23 @@ export const EcoForgePipeline = () => {
           </div>
 
           {/* Fanning Arrows with "Into" label */}
-          <div className="flex-shrink-0 relative h-44 w-20 flex flex-col items-center">
-            <svg width="80" height="150" viewBox="0 0 80 150" className="flex-shrink-0">
+          <div className="flex-shrink-0 flex flex-col items-center justify-center gap-2">
+            <svg width="80" height="140" viewBox="0 0 80 140">
               {/* Top arrow */}
-              <line x1="0" y1="75" x2="50" y2="20" stroke="#374151" strokeWidth="2" />
-              <polygon points="50,14 65,20 52,28" fill="#374151" />
+              <line x1="0" y1="70" x2="50" y2="15" stroke="#374151" strokeWidth="3" />
+              <polygon points="50,8 68,15 52,24" fill="#374151" />
               
               {/* Middle arrow */}
-              <line x1="0" y1="75" x2="55" y2="75" stroke="#374151" strokeWidth="2" />
-              <polygon points="55,69 70,75 55,81" fill="#374151" />
+              <line x1="0" y1="70" x2="58" y2="70" stroke="#374151" strokeWidth="3" />
+              <polygon points="58,63 78,70 58,77" fill="#374151" />
               
               {/* Bottom arrow */}
-              <line x1="0" y1="75" x2="50" y2="130" stroke="#374151" strokeWidth="2" />
-              <polygon points="52,122 65,130 50,136" fill="#374151" />
+              <line x1="0" y1="70" x2="50" y2="125" stroke="#374151" strokeWidth="3" />
+              <polygon points="52,116 68,125 50,132" fill="#374151" />
             </svg>
-            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-[0.2em] mt-1">Into</span>
+            <div className="bg-gray-100 border border-gray-300 rounded px-3 py-1">
+              <span className="text-xs font-bold text-gray-700 uppercase tracking-wider">Into</span>
+            </div>
           </div>
 
           {/* ZONE 3: VERTICAL OUTPUT STACK */}
