@@ -26,18 +26,22 @@ export const TRLStatusGauge = () => {
       ref={containerRef}
       className="relative py-24 md:py-32 bg-white overflow-hidden"
     >
-      {/* Faint concentric ripples */}
+      {/* Faint concentric circles */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        {[1, 2, 3, 4].map((i) => (
-          <div
-            key={i}
-            className="absolute rounded-full border border-teal-500/5"
-            style={{
-              width: `${i * 25}%`,
-              height: `${i * 25}%`,
-            }}
-          />
-        ))}
+        <svg className="w-full h-full min-w-[800px] min-h-[800px]" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet">
+          {[100, 180, 260, 340, 420, 500].map((radius, i) => (
+            <circle
+              key={radius}
+              cx="400"
+              cy="400"
+              r={radius}
+              fill="none"
+              stroke="hsl(174, 100%, 29%)"
+              strokeWidth="1"
+              opacity={0.08 - i * 0.01}
+            />
+          ))}
+        </svg>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
