@@ -59,16 +59,12 @@ export const EcoForgePipeline = () => {
             <p className="text-sm text-gray-600 mt-1">Any Type of Plastic Waste</p>
           </div>
 
-          {/* Arrow to Black Box with "Transform" label - matching Into style */}
-          <div className="flex-shrink-0 flex flex-col items-center justify-center gap-2">
-            <svg width="80" height="140" viewBox="0 0 80 140">
-              {/* Single horizontal arrow centered vertically */}
-              <line x1="0" y1="70" x2="58" y2="70" stroke="#374151" strokeWidth="3" />
-              <polygon points="58,63 78,70 58,77" fill="#374151" />
+          {/* Arrow to Black Box */}
+          <div className="flex-shrink-0 flex items-center">
+            <svg width="80" height="24" viewBox="0 0 80 24">
+              <line x1="0" y1="12" x2="58" y2="12" stroke="#374151" strokeWidth="3" />
+              <polygon points="58,5 78,12 58,19" fill="#374151" />
             </svg>
-            <div className="bg-gray-100 border border-gray-300 rounded px-3 py-1">
-              <span className="text-xs font-bold text-gray-700 uppercase tracking-wider">Transform</span>
-            </div>
           </div>
 
           {/* ZONE 2: THE BLACK BOX */}
@@ -122,8 +118,8 @@ export const EcoForgePipeline = () => {
             </div>
           </div>
 
-          {/* Fanning Arrows with "Into" label */}
-          <div className="flex-shrink-0 flex flex-col items-center justify-center gap-2">
+          {/* Fanning Arrows */}
+          <div className="flex-shrink-0 flex items-center">
             <svg width="80" height="140" viewBox="0 0 80 140">
               {/* Top arrow */}
               <line x1="0" y1="70" x2="50" y2="15" stroke="#374151" strokeWidth="3" />
@@ -137,9 +133,6 @@ export const EcoForgePipeline = () => {
               <line x1="0" y1="70" x2="50" y2="125" stroke="#374151" strokeWidth="3" />
               <polygon points="52,116 68,125 50,132" fill="#374151" />
             </svg>
-            <div className="bg-gray-100 border border-gray-300 rounded px-3 py-1">
-              <span className="text-xs font-bold text-gray-700 uppercase tracking-wider">Into</span>
-            </div>
           </div>
 
           {/* ZONE 3: VERTICAL OUTPUT STACK */}
