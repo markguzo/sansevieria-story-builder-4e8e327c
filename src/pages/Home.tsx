@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Leaf, ChevronDown, Mail } from "lucide-react";
+import { ChevronDown, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, useInView } from "framer-motion";
@@ -10,6 +10,7 @@ import PlasticCrisisInfographic from "@/components/PlasticCrisisInfographic";
 import { TRLStatusGauge } from "@/components/TRLStatusGauge";
 import heroMountainLake from "@/assets/hero-mountain-lake.png";
 import logoColor from "@/assets/logo-color.png";
+import logoBw from "@/assets/logo-bw.png";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -125,8 +126,8 @@ const Home = () => {
             className="bg-emerald-600 text-white px-8 py-3 rounded-full font-medium shadow-sm hover:bg-emerald-500 hover:shadow-md hover:scale-105 transition-all duration-200 ease-in-out flex items-center gap-2"
             asChild
           >
-            <Link to="/about">
-              <Leaf className="w-5 h-5 text-green-200" />
+            <Link to="/products">
+              <img src={logoBw} alt="" className="w-5 h-5 object-contain brightness-0 invert" />
               Learn More
             </Link>
           </Button>
@@ -195,8 +196,8 @@ const Home = () => {
                 className="bg-white text-emerald-800 px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 flex items-center gap-2"
                 asChild
               >
-                <Link to="/about">
-                  <Leaf className="w-5 h-5" />
+                <Link to="/products">
+                  <img src={logoBw} alt="" className="w-5 h-5 object-contain" />
                   Learn More
                 </Link>
               </Button>
