@@ -161,17 +161,28 @@ const Home = () => {
       {/* FOOTER CTA SECTION */}
       <section 
         ref={footerRef}
-        className="relative py-20 md:py-28 overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #228B22 0%, #006400 50%, #004d00 100%)'
-        }}
+        className="relative py-20 md:py-28 overflow-hidden bg-white"
       >
-        {/* Subtle Pattern Overlay */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%)`
-          }} />
+        {/* Concentric Teal Circles */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <svg 
+            className="w-full h-full max-w-4xl" 
+            viewBox="0 0 800 600" 
+            preserveAspectRatio="xMidYMid meet"
+          >
+            {[100, 160, 220, 280, 340, 400, 460, 520].map((radius, i) => (
+              <circle
+                key={radius}
+                cx="400"
+                cy="300"
+                r={radius}
+                fill="none"
+                stroke="hsl(174, 100%, 29%)"
+                strokeWidth="1"
+                opacity={0.08 - i * 0.008}
+              />
+            ))}
+          </svg>
         </div>
 
         <div className="container mx-auto px-4 max-w-4xl relative z-10">
@@ -181,10 +192,10 @@ const Home = () => {
             animate={isFooterInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Ready to Transform Waste into Value?
             </h2>
-            <p className="text-white/80 text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-gray-600 text-lg mb-10 max-w-xl mx-auto">
               Join us in closing the loop on plastic waste. Let's build a sustainable future together.
             </p>
 
@@ -193,7 +204,7 @@ const Home = () => {
               <Link to="/products">
                 <Button 
                   size="lg"
-                  className="bg-white text-emerald-800 px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 flex items-center gap-2"
+                  className="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-emerald-500 hover:scale-105 transition-all duration-200 flex items-center gap-2"
                 >
                   <Leaf className="w-5 h-5" />
                   Learn More
@@ -203,7 +214,7 @@ const Home = () => {
               <Link to="/contact">
                 <Button 
                   size="lg"
-                  className="border-2 border-white text-white bg-transparent px-8 py-3 rounded-full font-semibold hover:bg-white/10 hover:scale-105 transition-all duration-200"
+                  className="border-2 border-teal-500 text-teal-600 bg-transparent px-8 py-3 rounded-full font-semibold hover:bg-teal-50 hover:scale-105 transition-all duration-200"
                 >
                   Get in Touch
                 </Button>
@@ -217,14 +228,14 @@ const Home = () => {
               animate={isFooterInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <p className="text-white/70 text-sm mb-3">Subscribe for updates</p>
+              <p className="text-gray-500 text-sm mb-3">Subscribe for updates</p>
               <div className="flex gap-2">
                 <Input 
                   type="email" 
                   placeholder="Enter your email" 
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-full px-4"
+                  className="bg-white border-teal-300 text-gray-800 placeholder:text-gray-400 rounded-full px-4"
                 />
-                <Button className="bg-amber-500 hover:bg-amber-400 text-white rounded-full px-6">
+                <Button className="bg-teal-500 hover:bg-teal-400 text-white rounded-full px-6">
                   <Mail className="w-4 h-4" />
                 </Button>
               </div>
@@ -239,25 +250,20 @@ const Home = () => {
             >
               <Link 
                 to="/products" 
-                className="text-teal-200 hover:text-white transition-colors text-sm underline underline-offset-4"
+                className="text-teal-600 hover:text-teal-800 transition-colors text-sm underline underline-offset-4"
               >
                 Discover Our Premium Outputs Soon →
               </Link>
             </motion.div>
 
-            {/* Logo and Copyright */}
+            {/* Copyright */}
             <motion.div
-              className="mt-12 flex flex-col items-center gap-4"
+              className="mt-12"
               initial={{ opacity: 0 }}
               animate={isFooterInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <img 
-                src={logoColor} 
-                alt="Sansevieria Waste Refineries" 
-                className="h-10 w-auto opacity-80"
-              />
-              <p className="text-white/50 text-sm">
+              <p className="text-gray-400 text-sm">
                 © 2025 Sansevieria Waste Refineries. All rights reserved.
               </p>
             </motion.div>
