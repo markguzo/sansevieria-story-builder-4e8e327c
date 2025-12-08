@@ -163,110 +163,98 @@ const Home = () => {
         ref={footerRef}
         className="relative py-20 md:py-28 overflow-hidden bg-white"
       >
-        {/* Concentric Teal Circles */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg 
-            className="w-full h-full max-w-4xl" 
-            viewBox="0 0 800 600" 
-            preserveAspectRatio="xMidYMid meet"
-          >
-            {[100, 160, 220, 280, 340, 400, 460, 520].map((radius, i) => (
-              <circle
-                key={radius}
-                cx="400"
-                cy="300"
-                r={radius}
-                fill="none"
-                stroke="hsl(174, 100%, 29%)"
-                strokeWidth="1"
-                opacity={0.08 - i * 0.008}
-              />
-            ))}
-          </svg>
-        </div>
-
-        <div className="container mx-auto px-4 max-w-4xl relative z-10">
+        <div className="container mx-auto px-4">
           <motion.div
-            className="text-center"
             initial={{ opacity: 0, y: 30 }}
-            animate={isFooterInView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="relative bg-secondary/30 rounded-[2.5rem] p-8 md:p-12 overflow-hidden"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Ready to Transform Waste into Value?
-            </h2>
-            <p className="text-gray-600 text-lg mb-10 max-w-xl mx-auto">
-              Join us in closing the loop on plastic waste. Let's build a sustainable future together.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link to="/products">
-                <Button 
-                  size="lg"
-                  className="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-emerald-500 hover:scale-105 transition-all duration-200 flex items-center gap-2"
-                >
-                  <Leaf className="w-5 h-5" />
-                  Learn More
-                </Button>
-              </Link>
-              
-              <Link to="/contact">
-                <Button 
-                  size="lg"
-                  className="border-2 border-teal-500 text-teal-600 bg-transparent px-8 py-3 rounded-full font-semibold hover:bg-teal-50 hover:scale-105 transition-all duration-200"
-                >
-                  Get in Touch
-                </Button>
-              </Link>
+            {/* Concentric Teal Circles */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <svg 
+                className="w-full h-full max-w-4xl" 
+                viewBox="0 0 800 600" 
+                preserveAspectRatio="xMidYMid meet"
+              >
+                {[100, 160, 220, 280, 340, 400, 460, 520].map((radius, i) => (
+                  <circle
+                    key={radius}
+                    cx="400"
+                    cy="300"
+                    r={radius}
+                    fill="none"
+                    stroke="hsl(174, 100%, 29%)"
+                    strokeWidth="1"
+                    opacity={0.1 - i * 0.01}
+                  />
+                ))}
+              </svg>
             </div>
 
-            {/* Newsletter */}
-            <motion.div
-              className="max-w-md mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isFooterInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <p className="text-gray-500 text-sm mb-3">Subscribe for updates</p>
-              <div className="flex gap-2">
-                <Input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="bg-white border-teal-300 text-gray-800 placeholder:text-gray-400 rounded-full px-4"
-                />
-                <Button className="bg-teal-500 hover:bg-teal-400 text-white rounded-full px-6">
-                  <Mail className="w-4 h-4" />
-                </Button>
-              </div>
-            </motion.div>
-
-            {/* Products Teaser */}
-            <motion.div
-              className="mt-12"
-              initial={{ opacity: 0 }}
-              animate={isFooterInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <Link 
-                to="/products" 
-                className="text-teal-600 hover:text-teal-800 transition-colors text-sm underline underline-offset-4"
-              >
-                Discover Our Premium Outputs Soon →
-              </Link>
-            </motion.div>
-
-            {/* Copyright */}
-            <motion.div
-              className="mt-12"
-              initial={{ opacity: 0 }}
-              animate={isFooterInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <p className="text-gray-400 text-sm">
-                © 2025 Sansevieria Waste Refineries. All rights reserved.
+            <div className="text-center relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Ready to Transform Waste into Value?
+              </h2>
+              <p className="text-muted-foreground text-lg mb-10 max-w-xl mx-auto">
+                Join us in closing the loop on plastic waste. Let's build a sustainable future together.
               </p>
-            </motion.div>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <Link to="/products">
+                  <Button 
+                    size="lg"
+                    className="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-emerald-500 hover:scale-105 transition-all duration-200 flex items-center gap-2"
+                  >
+                    <Leaf className="w-5 h-5" />
+                    Learn More
+                  </Button>
+                </Link>
+                
+                <Link to="/contact">
+                  <Button 
+                    size="lg"
+                    className="border-2 border-teal-500 text-teal-600 bg-transparent px-8 py-3 rounded-full font-semibold hover:bg-teal-50 hover:scale-105 transition-all duration-200"
+                  >
+                    Get in Touch
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Newsletter */}
+              <div className="max-w-md mx-auto">
+                <p className="text-muted-foreground text-sm mb-3">Subscribe for updates</p>
+                <div className="flex gap-2">
+                  <Input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    className="bg-white border-teal-300 text-gray-800 placeholder:text-gray-400 rounded-full px-4"
+                  />
+                  <Button className="bg-teal-500 hover:bg-teal-400 text-white rounded-full px-6">
+                    <Mail className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Products Teaser */}
+              <div className="mt-12">
+                <Link 
+                  to="/products" 
+                  className="text-teal-600 hover:text-teal-800 transition-colors text-sm underline underline-offset-4"
+                >
+                  Discover Our Premium Outputs Soon →
+                </Link>
+              </div>
+
+              {/* Copyright */}
+              <div className="mt-12">
+                <p className="text-muted-foreground text-sm">
+                  © 2025 Sansevieria Waste Refineries. All rights reserved.
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
