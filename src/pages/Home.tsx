@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChevronDown, Mail } from "lucide-react";
+import { ChevronDown, Mail, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, useInView } from "framer-motion";
@@ -10,7 +10,6 @@ import PlasticCrisisInfographic from "@/components/PlasticCrisisInfographic";
 import { TRLStatusGauge } from "@/components/TRLStatusGauge";
 import heroMountainLake from "@/assets/hero-mountain-lake.png";
 import logoColor from "@/assets/logo-color.png";
-import logoBw from "@/assets/logo-bw.png";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -116,29 +115,29 @@ const Home = () => {
 
         {/* CTA Buttons */}
         <motion.div
-          className="absolute bottom-16 md:bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-4 sm:gap-8 px-6"
+          className="absolute bottom-16 md:bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-4 sm:gap-8 px-6 z-20"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <Button 
-            size="lg"
-            className="bg-emerald-600 text-white px-8 py-3 rounded-full font-medium shadow-sm hover:bg-emerald-500 hover:shadow-md hover:scale-105 transition-all duration-200 ease-in-out flex items-center gap-2"
-            asChild
-          >
-            <Link to="/products">
-              <img src={logoBw} alt="" className="w-5 h-5 object-contain brightness-0 invert" />
+          <Link to="/products">
+            <Button 
+              size="lg"
+              className="bg-emerald-600 text-white px-8 py-3 rounded-full font-medium shadow-sm hover:bg-emerald-500 hover:shadow-md hover:scale-105 transition-all duration-200 ease-in-out flex items-center gap-2"
+            >
+              <Leaf className="w-5 h-5" />
               Learn More
-            </Link>
-          </Button>
+            </Button>
+          </Link>
           
-          <Button 
-            size="lg"
-            className="border-2 border-teal-400 text-teal-400 bg-transparent px-8 py-3 rounded-full font-medium hover:bg-teal-400/10 hover:text-teal-300 hover:scale-105 transition-all duration-200 ease-in-out"
-            asChild
-          >
-            <Link to="/contact">Get in Touch</Link>
-          </Button>
+          <Link to="/contact">
+            <Button 
+              size="lg"
+              className="border-2 border-teal-400 text-teal-400 bg-transparent px-8 py-3 rounded-full font-medium hover:bg-teal-400/10 hover:text-teal-300 hover:scale-105 transition-all duration-200 ease-in-out"
+            >
+              Get in Touch
+            </Button>
+          </Link>
         </motion.div>
 
         {/* Scroll Indicator */}
@@ -191,24 +190,24 @@ const Home = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button 
-                size="lg"
-                className="bg-white text-emerald-800 px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 flex items-center gap-2"
-                asChild
-              >
-                <Link to="/products">
-                  <img src={logoBw} alt="" className="w-5 h-5 object-contain" />
+              <Link to="/products">
+                <Button 
+                  size="lg"
+                  className="bg-white text-emerald-800 px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 flex items-center gap-2"
+                >
+                  <Leaf className="w-5 h-5" />
                   Learn More
-                </Link>
-              </Button>
+                </Button>
+              </Link>
               
-              <Button 
-                size="lg"
-                className="border-2 border-white text-white bg-transparent px-8 py-3 rounded-full font-semibold hover:bg-white/10 hover:scale-105 transition-all duration-200"
-                asChild
-              >
-                <Link to="/contact">Get in Touch</Link>
-              </Button>
+              <Link to="/contact">
+                <Button 
+                  size="lg"
+                  className="border-2 border-white text-white bg-transparent px-8 py-3 rounded-full font-semibold hover:bg-white/10 hover:scale-105 transition-all duration-200"
+                >
+                  Get in Touch
+                </Button>
+              </Link>
             </div>
 
             {/* Newsletter */}
