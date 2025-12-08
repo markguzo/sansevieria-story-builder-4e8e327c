@@ -18,10 +18,10 @@ const Navigation = () => {
   }, []);
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Technology", path: "/about" },
+    { name: "About", path: "/about" },
     { name: "Products", path: "/products" },
     { name: "Impact", path: "/impact" },
-    { name: "Journey", path: "/founder" },
+    { name: "Founder", path: "/founder" },
     { name: "Contact", path: "/contact" }
   ];
   return (
