@@ -145,60 +145,45 @@ const About = () => {
         </div>
       </section>
 
-      {/* Careers Section - The Pill List with Color Shift */}
+      {/* Careers Section - The Pill List */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative rounded-[2.5rem] p-8 md:p-12 overflow-hidden"
-            style={{
-              background: 'radial-gradient(ellipse at center, hsl(162, 36%, 94%) 0%, hsl(162, 30%, 97%) 40%, hsl(0, 0%, 100%) 80%)'
-            }}
+            className="bg-secondary/30 rounded-[2.5rem] p-8 md:p-12"
           >
-            {/* Concentric Oval Shapes */}
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-              <svg className="w-[150%] h-[150%]" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
-                <ellipse cx="400" cy="250" rx="380" ry="220" fill="none" stroke="hsl(162, 36%, 60%)" strokeWidth="1" opacity="0.08" />
-                <ellipse cx="400" cy="250" rx="300" ry="175" fill="none" stroke="hsl(162, 36%, 55%)" strokeWidth="1" opacity="0.06" />
-                <ellipse cx="400" cy="250" rx="220" ry="130" fill="none" stroke="hsl(162, 36%, 50%)" strokeWidth="1" opacity="0.05" />
-                <ellipse cx="400" cy="250" rx="140" ry="85" fill="none" stroke="hsl(162, 36%, 45%)" strokeWidth="1" opacity="0.04" />
-              </svg>
-            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-4">
+              Join the Revolution
+            </h2>
+            <p className="text-muted-foreground text-center mb-10">
+              Be part of the team transforming plastic waste into sustainable value.
+            </p>
 
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-4">
-                Join the Revolution
-              </h2>
-              <p className="text-muted-foreground text-center mb-10">
-                Be part of the team transforming plastic waste into sustainable value.
-              </p>
-
-              <div className="space-y-4">
-                {jobs.map((job, index) => (
-                  <motion.div
-                    key={job.title}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-white rounded-full px-6 py-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4"
+            <div className="space-y-4">
+              {jobs.map((job, index) => (
+                <motion.div
+                  key={job.title}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white rounded-full px-6 py-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4"
+                >
+                  <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
+                    <span className="font-semibold text-foreground">{job.title}</span>
+                    <span className="text-sm text-muted-foreground">{job.location}</span>
+                  </div>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 px-6 py-2 text-primary font-medium hover:text-primary/80 transition-colors rounded-full border border-primary/20 hover:border-primary/40"
                   >
-                    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
-                      <span className="font-semibold text-foreground">{job.title}</span>
-                      <span className="text-sm text-muted-foreground">{job.location}</span>
-                    </div>
-                    <Link
-                      to="/contact"
-                      className="inline-flex items-center gap-2 px-6 py-2 text-primary font-medium hover:text-primary/80 transition-colors rounded-full border border-primary/20 hover:border-primary/40"
-                    >
-                      Apply
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
+                    Apply
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
