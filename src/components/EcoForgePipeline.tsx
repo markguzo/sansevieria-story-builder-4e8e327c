@@ -59,17 +59,12 @@ export const EcoForgePipeline = () => {
             <p className="text-sm text-gray-600 mt-1">Any Type of Plastic Waste</p>
           </div>
 
-          {/* Arrow to Black Box with "Transform" label */}
-          <div className="flex-shrink-0 flex flex-col items-center gap-2">
-            <svg width="80" height="24" viewBox="0 0 80 24">
-              <defs>
-                <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#9ca3af" />
-                  <stop offset="100%" stopColor="#374151" />
-                </linearGradient>
-              </defs>
-              <line x1="0" y1="12" x2="60" y2="12" stroke="url(#arrowGradient)" strokeWidth="3" />
-              <polygon points="60,5 80,12 60,19" fill="#374151" />
+          {/* Arrow to Black Box with "Transform" label - matching Into style */}
+          <div className="flex-shrink-0 flex flex-col items-center justify-center gap-2">
+            <svg width="80" height="140" viewBox="0 0 80 140">
+              {/* Single horizontal arrow centered vertically */}
+              <line x1="0" y1="70" x2="58" y2="70" stroke="#374151" strokeWidth="3" />
+              <polygon points="58,63 78,70 58,77" fill="#374151" />
             </svg>
             <div className="bg-gray-100 border border-gray-300 rounded px-3 py-1">
               <span className="text-xs font-bold text-gray-700 uppercase tracking-wider">Transform</span>
