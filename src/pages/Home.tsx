@@ -9,6 +9,7 @@ import { EngineeringBlueprint } from "@/components/EngineeringBlueprint";
 import PlasticCrisisInfographic from "@/components/PlasticCrisisInfographic";
 import { TRLStatusGauge } from "@/components/TRLStatusGauge";
 import heroMountainLake from "@/assets/hero-mountain-lake.png";
+import logoColor from "@/assets/logo-color.png";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -244,15 +245,22 @@ const Home = () => {
               </Link>
             </motion.div>
 
-            {/* Copyright */}
-            <motion.p
-              className="mt-12 text-white/50 text-sm"
+            {/* Logo and Copyright */}
+            <motion.div
+              className="mt-12 flex flex-col items-center gap-4"
               initial={{ opacity: 0 }}
               animate={isFooterInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              © 2025 Sansevieria Waste Refineries. All rights reserved.
-            </motion.p>
+              <img 
+                src={logoColor} 
+                alt="Sansevieria Waste Refineries" 
+                className="h-10 w-auto opacity-80"
+              />
+              <p className="text-white/50 text-sm">
+                © 2025 Sansevieria Waste Refineries. All rights reserved.
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </section>

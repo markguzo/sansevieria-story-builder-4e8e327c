@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin } from "lucide-react";
+import logoColor from "@/assets/logo-color.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,7 +10,13 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-xl font-bold mb-4 text-accent">Sansevieria</h3>
+            <Link to="/">
+              <img 
+                src={logoColor} 
+                alt="Sansevieria Waste Refineries" 
+                className="h-12 w-auto mb-4"
+              />
+            </Link>
             <p className="text-sm text-white/80">
               Transforming plastic waste into premium fuel for a sustainable future.
             </p>

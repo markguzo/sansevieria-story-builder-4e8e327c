@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
+import logoColor from "@/assets/logo-color.png";
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -30,7 +31,16 @@ const Navigation = () => {
         ? "backdrop-blur-md bg-black/30 shadow-md shadow-black/30"
         : "bg-transparent"
     )}>
-      <div className="container mx-auto px-6 py-5 flex items-center justify-end">
+      <div className="container mx-auto px-6 py-5 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex-shrink-0">
+          <img 
+            src={logoColor} 
+            alt="Sansevieria Waste Refineries" 
+            className="h-10 md:h-12 w-auto"
+          />
+        </Link>
+
         {/* Navigation Links - Clean White Text (Desktop) */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
