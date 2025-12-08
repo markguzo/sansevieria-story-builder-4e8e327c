@@ -10,7 +10,7 @@ export const EcoForgePipeline = () => {
         {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Converting Plastic Waste Into Premium Value
+            How We Create Premium Value
           </h2>
         </div>
 
@@ -64,7 +64,7 @@ export const EcoForgePipeline = () => {
               <line x1="0" y1="12" x2="45" y2="12" stroke="url(#arrowGradient)" strokeWidth="2" />
               <polygon points="45,6 60,12 45,18" fill="#374151" />
             </svg>
-            <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-2">Transform</span>
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-[0.2em] mt-2">Transform</span>
           </div>
 
           {/* ZONE 2: THE BLACK BOX */}
@@ -133,7 +133,7 @@ export const EcoForgePipeline = () => {
               <line x1="0" y1="75" x2="50" y2="130" stroke="#374151" strokeWidth="2" />
               <polygon points="52,122 65,130 50,136" fill="#374151" />
             </svg>
-            <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">Into</span>
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-[0.2em] mt-1">Into</span>
           </div>
 
           {/* ZONE 3: VERTICAL OUTPUT STACK */}
