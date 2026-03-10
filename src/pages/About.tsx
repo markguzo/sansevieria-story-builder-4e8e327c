@@ -4,12 +4,11 @@ import { Lightbulb, Target, Leaf, ArrowRight } from "lucide-react";
 
 const About = () => {
   const team = [
-    { name: "Dr. Sarah Chen", role: "CEO & Founder", image: null },
-    { name: "Michael Torres", role: "CTO", image: null },
-    { name: "Dr. Anna Kowalski", role: "Head of R&D", image: null },
-    { name: "James Wilson", role: "COO", image: null },
-    { name: "Elena Rodriguez", role: "VP Engineering", image: null },
-    { name: "David Park", role: "VP Business Dev", image: null }
+    { name: "Dan Debby", role: "CEO", image: null },
+    { name: "Alex Robin", role: "CTO", image: null },
+    { name: "Adam Mualem", role: "COO", image: null },
+    { name: "Petr Vozka", role: "Head of R&D", image: null },
+    { name: "Ahmed Washara", role: "Pilot Plant Development", image: null },
   ];
 
   const jobs = [
