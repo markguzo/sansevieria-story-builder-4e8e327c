@@ -18,29 +18,30 @@ export const TRLStatusGauge = () => {
 
   const fillProgress = useTransform(scrollYProgress, [0, 1], [0, 0.666]);
 
-  const cx = 200;
-  const cy = 200;
-  const r = 140;
+  // S-curve path: starts bottom-left, curves right (convex), then curves left (concave), then right again up to top-right
+  // Using cubic beziers to create a smooth winding path
+  const sPath = "M 60 380 C 60 300, 340 320, 340 260 C 340 200, 60 200, 60 140 C 60 80, 340 60, 340 20";
 
-  // Map position 0-1 along arc from bottom-left (220°) sweeping 280° clockwise (visually up-left, over top, down-right)
-  const getNodePosition = (position: number) => {
-    const angleDeg = 220 - position * 280;
-    const angleRad = (angleDeg * Math.PI) / 180;
-    return {
-      x: cx + r * Math.cos(angleRad),
-      y: cy - r * Math.sin(angleRad),
-      angleDeg,
-    };
+  // Get point on cubic bezier path at parameter t
+  // We have 3 cubic segments, so we map t=0..1 across all 3
+  const getPointOnPath = (t: number) => {
+    const segments = [
+      { x0: 60, y0: 380, x1: 60, y1: 300, x2: 340, y2: 320, x3: 340, y3: 260 },
+      { x0: 340, y0: 260, x1: 340, y1: 200, x2: 60, y2: 200, x3: 60, y3: 140 },
+      { x0: 60, y0: 140, x1: 60, y1: 80, x2: 340, y2: 60, x3: 340, y3: 20 },
+    ];
+    
+    const totalSegments = segments.length;
+    const segIndex = Math.min(Math.floor(t * totalSegments), totalSegments - 1);
+    const localT = (t * totalSegments) - segIndex;
+    const s = segments[segIndex];
+    
+    const mt = 1 - localT;
+    const x = mt*mt*mt*s.x0 + 3*mt*mt*localT*s.x1 + 3*mt*localT*localT*s.x2 + localT*localT*localT*s.x3;
+    const y = mt*mt*mt*s.y0 + 3*mt*mt*localT*s.y1 + 3*mt*localT*localT*s.y2 + localT*localT*localT*s.y3;
+    
+    return { x, y };
   };
-
-  // Arc path: ~280° open circle from bottom-left to bottom-right
-  const startAngleRad = (220 * Math.PI) / 180;
-  const endAngleRad = ((220 - 280) * Math.PI) / 180;
-  const arcStartX = cx + r * Math.cos(startAngleRad);
-  const arcStartY = cy - r * Math.sin(startAngleRad);
-  const arcEndX = cx + r * Math.cos(endAngleRad);
-  const arcEndY = cy - r * Math.sin(endAngleRad);
-  const arcPath = `M ${arcStartX} ${arcStartY} A ${r} ${r} 0 1 1 ${arcEndX} ${arcEndY}`;
 
   return (
     <section 
@@ -88,16 +89,16 @@ export const TRLStatusGauge = () => {
           </p>
         </motion.div>
 
-        {/* Gauge Container */}
+        {/* S-Curve Container */}
         <div className="relative max-w-md mx-auto">
           <svg
-            viewBox="0 0 400 400"
+            viewBox="0 0 400 420"
             className="w-full h-auto"
             style={{ overflow: 'visible' }}
           >
-            {/* Dashed Grey Arc (full background path) */}
+            {/* Dashed Grey path (full background) */}
             <path
-              d={arcPath}
+              d={sPath}
               fill="none"
               stroke="#d1d5db"
               strokeWidth="8"
@@ -105,9 +106,9 @@ export const TRLStatusGauge = () => {
               strokeDasharray="8 6"
             />
             
-            {/* Solid Teal Arc (completed portion) */}
+            {/* Solid Teal path (completed portion) */}
             <motion.path
-              d={arcPath}
+              d={sPath}
               fill="none"
               stroke="#0d9488"
               strokeWidth="8"
@@ -119,26 +120,22 @@ export const TRLStatusGauge = () => {
 
             {/* Nodes */}
             {trlNodes.map((node, index) => {
-              const { x, y, angleDeg } = getNodePosition(node.position);
+              const pos = getPointOnPath(node.position);
               const isActive = node.position <= 0.666;
               const nodeSize = node.isCurrent ? 22 : 14;
-
-              // Push labels outward from circle center
-              const labelAngleRad = (angleDeg * Math.PI) / 180;
-              const labelDist = node.isCurrent ? 52 : 36;
-              const labelX = x + labelDist * Math.cos(labelAngleRad);
-              const labelY = y - labelDist * Math.sin(labelAngleRad);
               
-              const isLeftSide = angleDeg > 90 && angleDeg <= 270;
-              const textAnchor = isLeftSide ? 'end' : 'start';
+              // Determine label side: Lab & Semi Industrial are on left side of path, Pilot & Industrial on right
+              const isOnLeft = node.position === 0 || node.position === 0.666;
+              const labelX = isOnLeft ? pos.x - nodeSize - 12 : pos.x + nodeSize + 12;
+              const textAnchor = isOnLeft ? 'end' : 'start';
 
               return (
                 <g key={node.label}>
                   {/* Glow for current node */}
                   {node.isCurrent && (
                     <motion.circle
-                      cx={x}
-                      cy={y}
+                      cx={pos.x}
+                      cy={pos.y}
                       r={nodeSize + 8}
                       fill="none"
                       stroke="#0d9488"
@@ -158,8 +155,8 @@ export const TRLStatusGauge = () => {
 
                   {/* Node circle */}
                   <motion.circle
-                    cx={x}
-                    cy={y}
+                    cx={pos.x}
+                    cy={pos.y}
                     r={nodeSize}
                     fill={isActive ? '#0d9488' : '#f9fafb'}
                     stroke={isActive ? '#0d9488' : '#d1d5db'}
@@ -167,23 +164,23 @@ export const TRLStatusGauge = () => {
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.3 }}
+                    transition={{ delay: index * 0.15, duration: 0.3 }}
                   />
 
                   {/* "YOU ARE HERE" badge */}
                   {node.isCurrent && (
                     <g>
                       <rect
-                        x={labelX - (isLeftSide ? 96 : 0)}
-                        y={labelY - 28}
+                        x={isOnLeft ? labelX - 96 : labelX}
+                        y={pos.y - 32}
                         width="96"
                         height="22"
                         rx="11"
                         fill="#0d9488"
                       />
                       <text
-                        x={labelX - (isLeftSide ? 48 : -48)}
-                        y={labelY - 13}
+                        x={isOnLeft ? labelX - 48 : labelX + 48}
+                        y={pos.y - 17}
                         textAnchor="middle"
                         fill="white"
                         fontSize="10"
@@ -198,10 +195,10 @@ export const TRLStatusGauge = () => {
                   {/* Label */}
                   <text
                     x={labelX}
-                    y={node.isCurrent ? labelY + 5 : labelY + 4}
+                    y={node.isCurrent ? pos.y + 5 : pos.y + 5}
                     textAnchor={textAnchor}
                     fill={isActive ? '#111827' : '#9ca3af'}
-                    fontSize={node.isCurrent ? "13" : "11"}
+                    fontSize={node.isCurrent ? "14" : "12"}
                     fontWeight={node.isCurrent ? "bold" : "normal"}
                     style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
                   >
