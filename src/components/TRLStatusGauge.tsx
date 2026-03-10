@@ -148,19 +148,6 @@ export const TRLStatusGauge = () => {
                     transition={{ delay: index * 0.1, duration: 0.3 }}
                   />
 
-                  {/* TRL number inside circle */}
-                  <text
-                    x={cx}
-                    y={cy + 5}
-                    textAnchor="middle"
-                    fill={isActive ? 'white' : '#9ca3af'}
-                    fontSize={node.isCurrent ? "14" : "11"}
-                    fontWeight="bold"
-                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
-                  >
-                    {node.trl}
-                  </text>
-
                   {/* "YOU ARE HERE" badge - positioned higher above node */}
                   {node.isCurrent && (
                     <g>
