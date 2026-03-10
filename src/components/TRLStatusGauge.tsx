@@ -208,23 +208,6 @@ export const TRLStatusGauge = () => {
           </svg>
         </div>
 
-        {/* Bottom Anchor */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-8"
-        >
-          <div 
-            className="inline-block px-8 py-4 bg-teal-700 rounded-full"
-            style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
-          >
-            <span className="text-white font-semibold text-sm md:text-base">
-              Proven at semi-industrial scale — Ready for full industrial deployment.
-            </span>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
