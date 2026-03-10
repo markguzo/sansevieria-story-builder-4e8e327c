@@ -209,7 +209,7 @@ export const TRLStatusGauge = () => {
             style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
           >
             <span className="text-white font-semibold text-sm md:text-base">
-              System proven at industrial scale. Ready for pilot deployment.
+              Proven at semi-industrial scale — Ready for full industrial deployment.
             </span>
           </div>
         </motion.div>
