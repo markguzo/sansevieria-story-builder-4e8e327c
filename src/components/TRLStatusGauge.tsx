@@ -17,7 +17,7 @@ export const TRLStatusGauge = () => {
   });
 
   // Fill progress stops at 40% (TRL 6 position)
-  const fillProgress = useTransform(scrollYProgress, [0, 1], [0, 0.4]);
+  const fillProgress = useTransform(scrollYProgress, [0, 1], [0, 0.666]);
 
   return (
     <section 
