@@ -18,17 +18,15 @@ export const TRLStatusGauge = () => {
 
   const fillProgress = useTransform(scrollYProgress, [0, 1], [0, 0.666]);
 
-  // S-curve path: starts bottom-left, curves right (convex), then curves left (concave), then right again up to top-right
-  // Using cubic beziers to create a smooth winding path
-  const sPath = "M 60 380 C 60 300, 340 320, 340 260 C 340 200, 60 200, 60 140 C 60 80, 340 60, 340 20";
+  // Smooth ascending curve from bottom-left to top-right with gentle undulations
+  const sPath = "M 40 370 C 80 370, 80 310, 140 290 C 200 270, 220 270, 260 230 C 300 190, 340 120, 360 40";
 
-  // Get point on cubic bezier path at parameter t
-  // We have 3 cubic segments, so we map t=0..1 across all 3
+  // Get point on path using 3 cubic bezier segments
   const getPointOnPath = (t: number) => {
     const segments = [
-      { x0: 60, y0: 380, x1: 60, y1: 300, x2: 340, y2: 320, x3: 340, y3: 260 },
-      { x0: 340, y0: 260, x1: 340, y1: 200, x2: 60, y2: 200, x3: 60, y3: 140 },
-      { x0: 60, y0: 140, x1: 60, y1: 80, x2: 340, y2: 60, x3: 340, y3: 20 },
+      { x0: 40, y0: 370, x1: 80, y1: 370, x2: 80, y2: 310, x3: 140, y3: 290 },
+      { x0: 140, y0: 290, x1: 200, y1: 270, x2: 220, y2: 270, x3: 260, y3: 230 },
+      { x0: 260, y0: 230, x1: 300, y1: 190, x2: 340, y2: 120, x3: 360, y3: 40 },
     ];
     
     const totalSegments = segments.length;
