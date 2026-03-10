@@ -110,7 +110,7 @@ export const TRLStatusGauge = () => {
               const labelOffset = node.isCurrent ? 50 : 38;
 
               return (
-                <g key={node.trl}>
+                <g key={node.label}>
                   {/* Subtle glow for current node only */}
                   {node.isCurrent && (
                     <motion.circle
