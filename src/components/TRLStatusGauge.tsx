@@ -2,12 +2,10 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const trlNodes = [
-  { trl: 4, label: 'Lab Testing', position: 0 },
-  { trl: 5, label: 'Validation', position: 0.2 },
-  { trl: 6, label: 'INDUSTRIAL SCALE', position: 0.4, isCurrent: true },
-  { trl: 7, label: 'Pilot Scale', position: 0.6 },
-  { trl: 8, label: 'System Complete', position: 0.8 },
-  { trl: 9, label: 'Commercial Deployment', position: 1 },
+  { label: 'Lab', position: 0 },
+  { label: 'Pilot', position: 0.333 },
+  { label: 'Semi Industrial', position: 0.666, isCurrent: true },
+  { label: 'Industrial', position: 1 },
 ];
 
 export const TRLStatusGauge = () => {
