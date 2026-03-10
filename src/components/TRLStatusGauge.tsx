@@ -79,6 +79,12 @@ export const TRLStatusGauge = () => {
           >
             Proven Scalability
           </h2>
+          <p 
+            className="text-lg text-gray-500"
+            style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+          >
+            From laboratory precision to industrial reality.
+          </p>
         </motion.div>
 
         {/* S-Curve Container */}
