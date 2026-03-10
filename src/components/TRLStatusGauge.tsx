@@ -2,12 +2,10 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const trlNodes = [
-  { trl: 4, label: 'Lab Testing', position: 0 },
-  { trl: 5, label: 'Validation', position: 0.2 },
-  { trl: 6, label: 'INDUSTRIAL SCALE', position: 0.4, isCurrent: true },
-  { trl: 7, label: 'Pilot Scale', position: 0.6 },
-  { trl: 8, label: 'System Complete', position: 0.8 },
-  { trl: 9, label: 'Commercial Deployment', position: 1 },
+  { label: 'Lab', position: 0 },
+  { label: 'Pilot', position: 0.333 },
+  { label: 'Semi Industrial', position: 0.666, isCurrent: true },
+  { label: 'Industrial', position: 1 },
 ];
 
 export const TRLStatusGauge = () => {
@@ -19,7 +17,7 @@ export const TRLStatusGauge = () => {
   });
 
   // Fill progress stops at 40% (TRL 6 position)
-  const fillProgress = useTransform(scrollYProgress, [0, 1], [0, 0.4]);
+  const fillProgress = useTransform(scrollYProgress, [0, 1], [0, 0.666]);
 
   return (
     <section 
@@ -105,14 +103,14 @@ export const TRLStatusGauge = () => {
               const cx = 200 + radius * Math.cos(angle);
               const cy = 200 - radius * Math.sin(angle);
               
-              const isActive = node.position <= 0.4;
+              const isActive = node.position <= 0.666;
               const nodeSize = node.isCurrent ? 22 : 14;
 
               // Calculate label position - all labels go below the arc for clarity
               const labelOffset = node.isCurrent ? 50 : 38;
 
               return (
-                <g key={node.trl}>
+                <g key={node.label}>
                   {/* Subtle glow for current node only */}
                   {node.isCurrent && (
                     <motion.circle
@@ -149,19 +147,6 @@ export const TRLStatusGauge = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1, duration: 0.3 }}
                   />
-
-                  {/* TRL number inside circle */}
-                  <text
-                    x={cx}
-                    y={cy + 5}
-                    textAnchor="middle"
-                    fill={isActive ? 'white' : '#9ca3af'}
-                    fontSize={node.isCurrent ? "14" : "11"}
-                    fontWeight="bold"
-                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
-                  >
-                    {node.trl}
-                  </text>
 
                   {/* "YOU ARE HERE" badge - positioned higher above node */}
                   {node.isCurrent && (
@@ -224,7 +209,7 @@ export const TRLStatusGauge = () => {
             style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
           >
             <span className="text-white font-semibold text-sm md:text-base">
-              System proven at industrial scale. Ready for pilot deployment.
+              Proven at semi-industrial scale — Ready for full industrial deployment.
             </span>
           </div>
         </motion.div>
