@@ -103,7 +103,7 @@ export const TRLStatusGauge = () => {
               const cx = 200 + radius * Math.cos(angle);
               const cy = 200 - radius * Math.sin(angle);
               
-              const isActive = node.position <= 0.4;
+              const isActive = node.position <= 0.666;
               const nodeSize = node.isCurrent ? 22 : 14;
 
               // Calculate label position - all labels go below the arc for clarity
