@@ -16,8 +16,31 @@ export const TRLStatusGauge = () => {
     offset: ["start end", "center center"]
   });
 
-  // Fill progress stops at 40% (TRL 6 position)
   const fillProgress = useTransform(scrollYProgress, [0, 1], [0, 0.666]);
+
+  const cx = 200;
+  const cy = 200;
+  const r = 140;
+
+  // Map position 0-1 along arc from bottom-left (220°) sweeping 280° clockwise (visually up-left, over top, down-right)
+  const getNodePosition = (position: number) => {
+    const angleDeg = 220 - position * 280;
+    const angleRad = (angleDeg * Math.PI) / 180;
+    return {
+      x: cx + r * Math.cos(angleRad),
+      y: cy - r * Math.sin(angleRad),
+      angleDeg,
+    };
+  };
+
+  // Arc path: ~280° open circle from bottom-left to bottom-right
+  const startAngleRad = (220 * Math.PI) / 180;
+  const endAngleRad = ((220 - 280) * Math.PI) / 180;
+  const arcStartX = cx + r * Math.cos(startAngleRad);
+  const arcStartY = cy - r * Math.sin(startAngleRad);
+  const arcEndX = cx + r * Math.cos(endAngleRad);
+  const arcEndY = cy - r * Math.sin(endAngleRad);
+  const arcPath = `M ${arcStartX} ${arcStartY} A ${r} ${r} 0 1 1 ${arcEndX} ${arcEndY}`;
 
   return (
     <section 
@@ -49,7 +72,7 @@ export const TRLStatusGauge = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
           <h2 
             className="text-3xl md:text-4xl font-bold text-black mb-4"
@@ -66,65 +89,64 @@ export const TRLStatusGauge = () => {
         </motion.div>
 
         {/* Gauge Container */}
-        <div className="relative max-w-3xl mx-auto">
-          {/* SVG Gauge */}
+        <div className="relative max-w-md mx-auto">
           <svg
-            viewBox="0 0 400 240"
+            viewBox="0 0 400 400"
             className="w-full h-auto"
             style={{ overflow: 'visible' }}
           >
-            {/* Dashed Grey Arc (future TRL 7-9) */}
+            {/* Dashed Grey Arc (full background path) */}
             <path
-              d="M 40 200 A 160 160 0 0 1 360 200"
+              d={arcPath}
               fill="none"
               stroke="#d1d5db"
-              strokeWidth="6"
+              strokeWidth="8"
               strokeLinecap="round"
               strokeDasharray="8 6"
             />
             
-            {/* Solid Teal Arc (completed TRL 4-6) - drawn on top */}
+            {/* Solid Teal Arc (completed portion) */}
             <motion.path
-              d="M 40 200 A 160 160 0 0 1 360 200"
+              d={arcPath}
               fill="none"
               stroke="#0d9488"
-              strokeWidth="6"
+              strokeWidth="8"
               strokeLinecap="round"
               style={{
                 pathLength: fillProgress,
               }}
             />
 
-            {/* TRL Nodes */}
+            {/* Nodes */}
             {trlNodes.map((node, index) => {
-              // Calculate position on arc
-              const angle = Math.PI - (node.position * Math.PI);
-              const radius = 160;
-              const cx = 200 + radius * Math.cos(angle);
-              const cy = 200 - radius * Math.sin(angle);
-              
+              const { x, y, angleDeg } = getNodePosition(node.position);
               const isActive = node.position <= 0.666;
               const nodeSize = node.isCurrent ? 22 : 14;
 
-              // Calculate label position - all labels go below the arc for clarity
-              const labelOffset = node.isCurrent ? 50 : 38;
+              // Push labels outward from circle center
+              const labelAngleRad = (angleDeg * Math.PI) / 180;
+              const labelDist = node.isCurrent ? 52 : 36;
+              const labelX = x + labelDist * Math.cos(labelAngleRad);
+              const labelY = y - labelDist * Math.sin(labelAngleRad);
+              
+              const isLeftSide = angleDeg > 90 && angleDeg <= 270;
+              const textAnchor = isLeftSide ? 'end' : 'start';
 
               return (
                 <g key={node.label}>
-                  {/* Subtle glow for current node only */}
+                  {/* Glow for current node */}
                   {node.isCurrent && (
                     <motion.circle
-                      cx={cx}
-                      cy={cy}
-                      r={nodeSize + 6}
+                      cx={x}
+                      cy={y}
+                      r={nodeSize + 8}
                       fill="none"
                       stroke="#0d9488"
                       strokeWidth="2"
                       opacity="0.3"
-                      initial={{ scale: 1 }}
                       animate={{ 
                         opacity: [0.3, 0.6, 0.3], 
-                        scale: [1, 1.2, 1] 
+                        scale: [1, 1.15, 1] 
                       }}
                       transition={{ 
                         duration: 2.5, 
@@ -136,8 +158,8 @@ export const TRLStatusGauge = () => {
 
                   {/* Node circle */}
                   <motion.circle
-                    cx={cx}
-                    cy={cy}
+                    cx={x}
+                    cy={y}
                     r={nodeSize}
                     fill={isActive ? '#0d9488' : '#f9fafb'}
                     stroke={isActive ? '#0d9488' : '#d1d5db'}
@@ -148,43 +170,38 @@ export const TRLStatusGauge = () => {
                     transition={{ delay: index * 0.1, duration: 0.3 }}
                   />
 
-                  {/* "YOU ARE HERE" badge - positioned higher above node */}
+                  {/* "YOU ARE HERE" badge */}
                   {node.isCurrent && (
                     <g>
                       <rect
-                        x={cx - 48}
-                        y={cy - 75}
+                        x={labelX - (isLeftSide ? 96 : 0)}
+                        y={labelY - 28}
                         width="96"
-                        height="26"
-                        rx="13"
+                        height="22"
+                        rx="11"
                         fill="#0d9488"
                       />
                       <text
-                        x={cx}
-                        y={cy - 57}
+                        x={labelX - (isLeftSide ? 48 : -48)}
+                        y={labelY - 13}
                         textAnchor="middle"
                         fill="white"
-                        fontSize="11"
+                        fontSize="10"
                         fontWeight="bold"
                         style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
                       >
                         YOU ARE HERE
                       </text>
-                      {/* Small arrow pointing down */}
-                      <polygon
-                        points={`${cx - 6},${cy - 49} ${cx + 6},${cy - 49} ${cx},${cy - 40}`}
-                        fill="#0d9488"
-                      />
                     </g>
                   )}
 
-                  {/* Label below node */}
+                  {/* Label */}
                   <text
-                    x={cx}
-                    y={cy + labelOffset}
-                    textAnchor="middle"
+                    x={labelX}
+                    y={node.isCurrent ? labelY + 5 : labelY + 4}
+                    textAnchor={textAnchor}
                     fill={isActive ? '#111827' : '#9ca3af'}
-                    fontSize={node.isCurrent ? "12" : "10"}
+                    fontSize={node.isCurrent ? "13" : "11"}
                     fontWeight={node.isCurrent ? "bold" : "normal"}
                     style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
                   >
@@ -202,7 +219,7 @@ export const TRLStatusGauge = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
+          className="text-center mt-8"
         >
           <div 
             className="inline-block px-8 py-4 bg-teal-700 rounded-full"
